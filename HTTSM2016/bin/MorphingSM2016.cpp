@@ -71,6 +71,7 @@ int main(int argc, char** argv) {
     string input_folder_tt="USCMS/";
     string input_folder_mm="USCMS/";
     string input_folder_ttbar="USCMS/";
+    string only_init = "";
     string postfix="";
     bool auto_rebin = false;
     bool manual_rebin = false;
@@ -94,6 +95,7 @@ int main(int argc, char** argv) {
     ("input_folder_mm", po::value<string>(&input_folder_mm)->default_value("USCMS"))
     ("input_folder_ttbar", po::value<string>(&input_folder_ttbar)->default_value("USCMS"))
     
+    ("only_init", po::value<string>(&only_init)->default_value(""))
     ("postfix", po::value<string>(&postfix)->default_value(""))
     ("auto_rebin", po::value<bool>(&auto_rebin)->default_value(false))
     ("real_data", po::value<bool>(&real_data)->default_value(false))
@@ -296,9 +298,12 @@ int main(int argc, char** argv) {
     
     ch::AddSMRun2Systematics(cb, control_region, mm_fit, ttbar_fit);
     
-    
-        
-    
+    if (! only_init.empty()) {
+        std::cout << "Write datacards (without shapes) to directory \"" << only_init << "\" and quit." << std::endl;
+        ch::CardWriter tmpWriter("$TAG/$ANALYSIS_$ERA_$CHANNEL_$BINID_$MASS.txt", "$TAG/dummy.root");
+        tmpWriter.WriteCards(only_init, cb);
+        return 0;
+    }
     
     //! [part7]
     for (string chn:chns){
