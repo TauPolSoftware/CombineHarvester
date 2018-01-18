@@ -301,6 +301,10 @@ int main(int argc, char** argv) {
     if (! only_init.empty()) {
         std::cout << "Write datacards (without shapes) to directory \"" << only_init << "\" and quit." << std::endl;
         
+        ch::CardWriter tmpWriter("$TAG/$ANALYSIS_$ERA_$CHANNEL_$BINID_$MASS.txt", "$TAG/dummy.root");
+        tmpWriter.WriteCards(only_init, cb);
+        
+        /*
         ch::CardWriter tmpWriter("$TAG/cmb.txt", "$TAG/dummy.root");
         tmpWriter.WriteCards(only_init, cb);
         
@@ -325,7 +329,7 @@ int main(int argc, char** argv) {
                             }
                             else if (mass != "*")
                             {
-                                ch::CombineHarvester cbMass = cbBinId.cp().mass({mass});
+                                ch::CombineHarvester cbMass = cbBinId.cp().mass({mass, "*"});
                                 std::string path = only_init+"/"+analysis+"_"+era+"_"+channel+"_"+std::to_string(binId)+"_"+mass+".txt";
                                 cbMass.WriteDatacard(path, only_init+"/dummy.root");
                             }
@@ -334,6 +338,7 @@ int main(int argc, char** argv) {
                 }
             }
         }
+        */
         
         return 0;
     }
