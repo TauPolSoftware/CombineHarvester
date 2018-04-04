@@ -238,8 +238,9 @@ int main() {
   RooRealVar mh("MH", "", 125, 90, 145);
   mh.setConstant(true);
 
-  // TFile demo("htt_sm_morphing_debug.root", "RECREATE");
+  //TFile demo("htt_sm_morphing_debug.root", "RECREATE");
   //! [part1]
+
   bool do_morphing = true;
   if (do_morphing) {
     // RooMsgService::instance().setGlobalKillBelow(RooFit::WARNING);
@@ -248,7 +249,7 @@ int main() {
       for (auto bin : bins) {
         for (auto p : sig_procs) {
           ch::BuildRooMorphing(ws, cb, bin, p, mh, "norm",
-                               can_morph[chn], true, nullptr /*&demo*/);
+                               can_morph[chn], true);
         }
       }
     }
