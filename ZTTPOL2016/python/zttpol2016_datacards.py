@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+
+import logging
+
+import CombineHarvester.CombineTools.ch as ch
+import CombineHarvester.ZTTPOL2016.datacards as datacards
+import CombineHarvester.ZTTPOL2016.zttpol2016_systematics as zttpol_systematics
+
+
 class ZttPolarisationDatacards(datacards.Datacards):
     ''' Datacard class for the polarisation analysis. '''
 
@@ -178,6 +187,3 @@ class ZttPolarisationDatacards(datacards.Datacards):
             # ======================================================================
             # Groups of systematics
             self.cb.SetGroup("syst", [".*"])
-
-            if log.isEnabledFor(logging.DEBUG):
-                self.cb.PrintAll()
