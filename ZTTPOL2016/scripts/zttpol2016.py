@@ -15,13 +15,28 @@ import CombineHarvester.CombineTools.ch as ch
 import CombineHarvester.ZTTPOL2016.zttpol2016_datacards as zttdatacards
 import CombineHarvester.ZTTPOL2016.zttpol2016_systematics as zttpol_systematics
 
-def CreateDatacard(zttdatacards):
+#Colors
+OKGREEN = '\033[92m'
+WARNING = '\033[93m'
+ENDC = '\033[0m'
 
-    datacards = zttdatacards.ZttPolarisationDatacards()
+def CreateDatacard(zttdatacards):
+    '''Create an instance of the python datacards modul, which includes a combine harvester instance.'''
+    try:
+        datacards = zttdatacards.ZttPolarisationDatacards()
+
+        
+    except:
+        print "CreateDatacard failed:"
+        (ty, val, tb)=sys.exc_info()
+        print WARNING + "Err Type : " + ENDC, ty
+        print WARNING + "Err Value: " + ENDC, val
+        print WARNING + "Trace    : " + ENDC, tb
 
     return datacards
 
 def ExtractShapes():
+    '''Extract the Shape uncertainties from root input histograms. '''
 
     return None
 
@@ -37,7 +52,7 @@ def FilterSystematics():
 
     return None
 
-def Write Datacard():
+def WriteDatacard():
 
     return None
 
@@ -46,26 +61,25 @@ def Write Datacard():
 
 
 if __name__ == "__main__":
+    #Arguments for the ArgParse parser
+    parser = argparse.ArgumentParser(description="Create ROOT inputs and datacards for ZTT polarisation analysis.",
+                                     parents=[logger.loggingParser])
 
-    cb = ch.CombineHarvester()
+    parser.add_argument("-i", "--input-dir", required=False,
+                        help="Input directory.")
 
-
-
-    #Extracting shapes
-
-    #Bin errors and bin-by-bin uncertainties
-
-    print '----- Creating processes and observations...                 -----'
+    #Create Datacards
+    print OKGREEN + '----- Creating datacard with processes and systematics...    -----' + ENDC
     datacards = CreateDatacard(zttdatacards)
 
-    print '----- Adding systematic uncertainties...                     -----'
+    print OKGREEN + '----- Adding systematic uncertainties...                     -----' + ENDC
 
-    print '----- Extracting histograms from input root files...         -----'
+    print OKGREEN + '----- Extracting histograms from input root files...         -----' + ENDC
 
-    print '----- Scaling signal process rates...                        -----'
+    print OKGREEN + '----- Scaling signal process rates...                        -----' + ENDC
 
-    print '----- Merging bin errors and generating bbb uncertainties... -----'
+    print OKGREEN + '----- Merging bin errors and generating bbb uncertainties... -----' + ENDC
 
-    print '----- Setting standardised bin names...                      -----'
+    print OKGREEN + '----- Setting standardised bin names...                      -----' + ENDC
 
-    print '----- Done                                                   -----'
+    print OKGREEN + '----- Done                                                   -----' + ENDC
