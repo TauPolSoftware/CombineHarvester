@@ -21,7 +21,8 @@ class ZttPolarisationDatacards(datacards.Datacards):
             # MT channel
             self.add_processes(
                     channel="mt",
-                    categories=["mt_"+category for category in ["rho", "oneprong"]], # "a1"
+                    categories=["mt_"+category for category in ["rho", "oneprong", "a1", "a1_2", "rho_2", "oneprong_2", "oneprong_1",
+                                                                "combined_a1_oneprong", "combined_rho_oneprong", "combined_oneprong_oneprong"]], # "a1"
                     bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
@@ -61,7 +62,8 @@ class ZttPolarisationDatacards(datacards.Datacards):
             # ET channel
             self.add_processes(
                     channel="et",
-                    categories=["et_"+category for category in ["rho", "oneprong"]], # "a1"
+                    categories=["et_"+category for category in ["rho", "oneprong", "a1", "a1_2", "rho_2", "oneprong_2", "oneprong_1",
+                                                                "combined_a1_oneprong", "combined_rho_oneprong", "combined_oneprong_oneprong"]], # "a1"
                     bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
@@ -101,7 +103,9 @@ class ZttPolarisationDatacards(datacards.Datacards):
             # TT channel
             self.add_processes(
                     channel="tt",
-                    categories=["tt_"+category for category in ["rho", "rho_1", "rho_2", "oneprong", "combined_oneprong_oneprong", "combined_rho_rho"]], # "a1"
+                    categories=["tt_"+category for category in ["rho", "rho_1", "rho_2", "oneprong", "oneprong_1", "oneprong_2",
+                                                                 "a1","a1_1","a1_2","combined_a1_a1","combined_a1_rho","combined_a1_oneprong",  "combined_oneprong_oneprong",
+                                                                "combined_rho_rho","combined_rho_oneprong"]], # "a1"
                     bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
