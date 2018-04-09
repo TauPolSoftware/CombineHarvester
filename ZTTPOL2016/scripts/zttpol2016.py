@@ -9,8 +9,6 @@ import copy
 import os
 import sys
 
-import CombineHarvester.ZTTPOL2016.datacards as datacards
-
 import CombineHarvester.CombineTools.ch as ch
 import CombineHarvester.ZTTPOL2016.zttpol2016_datacards as zttdatacards
 import CombineHarvester.ZTTPOL2016.zttpol2016_systematics as zttpol_systematics
@@ -21,23 +19,16 @@ WARNING = '\033[93m'
 FAIL = '\033[91m'
 ENDC = '\033[0m'
 
-def CreateDatacard(zttdatacards):
+def CreateDatacard():
     '''Create an instance of the python datacards modul, which includes a combine harvester instance.'''
-    try:
-        datacards = zttdatacards.ZttPolarisationDatacards()
 
-        #Modify the datacard
-        datacards.cb
+    datacards = zttdatacards.ZttPolarisationDatacards()
 
-    except:
-        print FAIL + "Extracting Shapes from input files failed:" + ENDC
-        (ty, val, tb)=sys.exc_info()
-        print FAIL + "Error on line :" + ENDC + '{}'.format(sys.exc_info()[-1].tb_lineno)
-        print FAIL + "Err Type      :" + ENDC, ty
-        print FAIL + "Err Value     :" + ENDC, val
-        print FAIL + "Trace         :" + ENDC, tb
+    #Modify the datacard
+    datacards.cb
 
     return datacards
+
 
 def ExtractShapes():
     '''Extract the Shape uncertainties from root input histograms. '''
@@ -84,10 +75,17 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    #1.Create Datacards
+    if args.channel != parser.get_default("channel"):
+        args.channel = args.channel[len(parser.get_default("channel")):]
+
+    if args.categories != parser.get_default("categories"):
+        args.categories = args.categories[len(parser.get_default("categories")):]
+    args.categories = (args.categories * len(args.channel))[:len(args.channel)]
+
+    #1.-----Create Datacards
     print OKGREEN + '----- Creating datacard with processes and systematics...    -----' + ENDC
 
-    datacards = CreateDatacard(zttdatacards)
+    datacards = CreateDatacard()
 
     datacards.cb.channel(args.channel)
 
@@ -103,11 +101,7 @@ if __name__ == "__main__":
         # restrict CombineHarvester to configured categories:
         datacards.cb.FilterAll(lambda obj : (obj.channel() == channel) and (obj.bin() not in categories))
 
-    #DEBUG
-    print WARNING + "datacards: channel_set" + ENDC, datacards.cb.channel_set()
-    print WARNING + "datacards: bin_set" + ENDC, datacards.cb.bin_set()
-
-    #2.Extract shapes from input root files or from samples with HP
+    #2.-----Extract shapes from input root files or from samples with HP
     print OKGREEN + '----- Extracting histograms from input root files...         -----' + ENDC
 
     if not args.HarryPlotter:

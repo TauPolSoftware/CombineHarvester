@@ -1,19 +1,66 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import copy
+import re
 
 import CombineHarvester.CombineTools.ch as ch
-import CombineHarvester.ZTTPOL2016.datacards as datacards
 import CombineHarvester.ZTTPOL2016.zttpol2016_systematics as zttpol_systematics
 
 
-class ZttPolarisationDatacards(datacards.Datacards):
+class ZttPolarisationDatacards(object):
     ''' Datacard class for the polarisation analysis. '''
 
-    def __init__(self, cb=None):
-        super(ZttPolarisationDatacards, self).__init__(cb)
+    def add_processes(self, channel, categories, bkg_processes, sig_processes=["ztt"], add_data=True, *args, **kwargs):
+        ''' Add Observation and Process to the combine harvester instance. Uses the bin mapping from mapping_category2binid. '''
+        bin = [(self._mapping_category2binid.get(channel, {}).get(category, 0), category) for category in categories]
 
-        if cb is None:
+        for key in ["channel", "procs", "bin", "signal"]:
+            if key in kwargs:
+                kwargs.pop(key)
+
+        non_sig_kwargs = copy.deepcopy(kwargs)
+        if "mass" in non_sig_kwargs:
+            non_sig_kwargs.pop("mass")
+
+        if add_data:
+            self.cb.AddObservations(channel=[channel], mass=["*"], bin=bin, *args, **non_sig_kwargs)
+        self.cb.AddProcesses(channel=[channel], mass=["*"], procs=bkg_processes, bin=bin, signal=False, *args, **non_sig_kwargs)
+        self.cb.AddProcesses(channel=[channel], procs=sig_processes, bin=bin, signal=True, *args, **kwargs)
+
+
+    def __init__(self, cb=None):
+        super(ZttPolarisationDatacards, self).__init__()
+
+        self.cb = cb
+
+        self._mapping_category2binid = {
+            "mt" : {
+
+                "mt_a1" : 1010,
+                "mt_rho" : 1020,
+                "mt_oneprong" : 1030,
+            },
+            "et" : {
+
+                "et_a1" : 1010,
+                "et_rho" : 1020,
+                "et_oneprong" : 1030,
+            },
+            "em" : {
+
+                "em_oneprong" : 1030,
+            },
+            "tt" : {
+                "tt_a1" : 1010,
+                "tt_rho" : 1020,
+                "tt_oneprong" : 1030,
+            },
+        }
+
+        if self.cb is None:
+
+            self.cb = ch.CombineHarvester()
 
             systematics = zttpol_systematics.SystematicLibary()
 
