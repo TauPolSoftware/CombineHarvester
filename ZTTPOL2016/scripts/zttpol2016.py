@@ -30,9 +30,6 @@ def CreateDatacard():
 
     datacards = zttdatacards.ZttPolarisationDatacards()
 
-    #Modify the datacard
-    datacards.cb
-
     return datacards
 
 
@@ -62,10 +59,6 @@ def ExtractShapes(datacards,input_dir):
     return datacards
 
 
-def ScaleSignalProcess():
-
-    return None
-
 def BinErrorsAndBBB(datacards, AddThreshold, MergeTreshold, FixNorm):
     '''Function to add bin by bin uncertainties. '''
 
@@ -75,9 +68,6 @@ def BinErrorsAndBBB(datacards, AddThreshold, MergeTreshold, FixNorm):
     bbb.AddBinByBin(datacards.cb.cp().backgrounds(), datacards.cb)
     return None
 
-def FilterSystematics():
-
-    return None
 
 def WriteDatacard(datacards,output_dir):
     ''' Write datacards. '''
@@ -87,12 +77,8 @@ def WriteDatacard(datacards,output_dir):
 
     return writer.WriteCards(output_dir, datacards.cb)
 
-def hp_inputsfromsamples():
 
-    return None
-
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:
 if __name__ == "__main__":
     #Arguments for the ArgParse parser
     parser = argparse.ArgumentParser(description="Create ROOT inputs and datacards for ZTT polarisation analysis.",
@@ -120,7 +106,7 @@ if __name__ == "__main__":
 
 
     #1.-----Create Datacards
-    print WARNING + '-----      Creating datacard with processes and systematics...    -----' + ENDC
+    print WARNING + '-----      Creating datacard with processes and systematics...        -----' + ENDC
 
     datacards = CreateDatacard()
 
@@ -142,22 +128,24 @@ if __name__ == "__main__":
     print OKGREEN + 'Datacard categories :' + ENDC, datacards.cb.bin_set()
     print OKGREEN + 'Datacard systematics :' + ENDC, datacards.cb.syst_name_set()
 
+
     #2.-----Extract shapes from input root files or from samples with HP
-    print WARNING + '-----      Extracting histograms from input root files...         -----' + ENDC
+    print WARNING + '-----      Extracting histograms from input root files...             -----' + ENDC
 
     ExtractShapes(datacards,args.input_dir)
 
 
-    #3.-----
-    print WARNING + '-----      Scaling signal process rates...                        -----' + ENDC
-
-    print WARNING + '-----      Merging bin errors and generating bbb uncertainties... -----' + ENDC
+    #3.-----Add BBB
+    print WARNING + '-----      Merging bin errors and generating bbb uncertainties...     -----' + ENDC
 
     BinErrorsAndBBB(datacards, 0.1, 0.5, True)
 
-    #4.----- Write Cards
-    print WARNING + '-----      Writing Datacards...                                   -----' + ENDC
+
+    #4.-----Write Cards
+    print WARNING + '-----      Writing Datacards...                                       -----' + ENDC
 
     WriteDatacard(datacards,args.output_dir)
 
-    print WARNING + '-----      Done                                                   -----' + ENDC
+
+    #5.-----Done
+    print WARNING + '-----      Done                                                       -----' + ENDC
