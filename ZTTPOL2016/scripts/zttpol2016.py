@@ -42,7 +42,6 @@ def ExtractShapes(datacards,input_dir):
     for chn in datacards.cb.channel_set():
         bins = filter(lambda bin: bin.split('_')[0] == chn,datacards.cb.bin_set())
         for bin in bins:
-            print WARNING + 'Extracting Shapes for:' + ENDC, bin
             try:
                 file = args.input_dir + "/ztt_" + chn +"_" + bin + "_13TeV.root"
                 datacards.cb.cp().channel([chn]).bin([bin]).backgrounds().ExtractShapes(
@@ -51,6 +50,7 @@ def ExtractShapes(datacards,input_dir):
                 datacards.cb.cp().channel([chn]).bin([bin]).backgrounds().ExtractShapes(
                     file, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC'
                 )
+                print OKGREEN + 'Extracting Shapes for:' + ENDC, bin
             except Exception as e:
                 print FAIL + "Extracting Shapes from input files failed:" + ENDC
                 (ty, val, tb)=sys.exc_info()
@@ -66,8 +66,13 @@ def ScaleSignalProcess():
 
     return None
 
-def BinErrorsAndBBB():
+def BinErrorsAndBBB(datacards, AddThreshold, MergeTreshold, FixNorm):
+    '''Function to add bin by bin uncertainties. '''
 
+    bbb = ch.BinByBinFactory()
+    bbb.SetAddThreshold(AddThreshold).SetMergeThreshold(MergeTreshold).SetFixNorm(FixNorm)
+    bbb.MergeBinErrors(datacards.cb.cp().backgrounds())
+    bbb.AddBinByBin(datacards.cb.cp().backgrounds(), datacards.cb)
     return None
 
 def FilterSystematics():
@@ -115,7 +120,7 @@ if __name__ == "__main__":
 
 
     #1.-----Create Datacards
-    print OKGREEN + '----- Creating datacard with processes and systematics...    -----' + ENDC
+    print WARNING + '-----      Creating datacard with processes and systematics...    -----' + ENDC
 
     datacards = CreateDatacard()
 
@@ -133,25 +138,26 @@ if __name__ == "__main__":
         # restrict CombineHarvester to configured categories:
         datacards.cb.FilterAll(lambda obj : (obj.channel() == channel) and (obj.bin() not in categories))
 
-    print WARNING + 'Datacard channels:' + ENDC, datacards.cb.channel_set()
-    print WARNING + 'Datacard categories :' + ENDC, datacards.cb.bin_set()
-
+    print OKGREEN + 'Datacard channels:' + ENDC, datacards.cb.channel_set()
+    print OKGREEN + 'Datacard categories :' + ENDC, datacards.cb.bin_set()
+    print OKGREEN + 'Datacard systematics :' + ENDC, datacards.cb.syst_name_set()
 
     #2.-----Extract shapes from input root files or from samples with HP
-    print OKGREEN + '----- Extracting histograms from input root files...         -----' + ENDC
+    print WARNING + '-----      Extracting histograms from input root files...         -----' + ENDC
 
     ExtractShapes(datacards,args.input_dir)
 
 
     #3.-----
-    print OKGREEN + '----- Scaling signal process rates...                        -----' + ENDC
+    print WARNING + '-----      Scaling signal process rates...                        -----' + ENDC
 
-    print OKGREEN + '----- Merging bin errors and generating bbb uncertainties... -----' + ENDC
+    print WARNING + '-----      Merging bin errors and generating bbb uncertainties... -----' + ENDC
 
+    BinErrorsAndBBB(datacards, 0.1, 0.5, True)
 
     #4.----- Write Cards
-    print OKGREEN + '----- Writing Datacards...                                   -----' + ENDC
+    print WARNING + '-----      Writing Datacards...                                   -----' + ENDC
 
     WriteDatacard(datacards,args.output_dir)
 
-    print OKGREEN + '----- Done                                                   -----' + ENDC
+    print WARNING + '-----      Done                                                   -----' + ENDC
