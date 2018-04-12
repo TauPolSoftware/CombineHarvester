@@ -839,9 +839,6 @@ class SystematicLibary(object):
 				(["13TeV"], ["mt"], 1.0)
 				(["13TeV"], ["tt"], 1.0)
 		]
-
-
-
 		self.massres_syst_args = [
 			"CMS_scale_massRes_$CHANNEL_$ERA",
 			"shape",
