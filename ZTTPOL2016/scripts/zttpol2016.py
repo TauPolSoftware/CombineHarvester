@@ -35,9 +35,13 @@ def CreateDatacard():
 
 def ExtractShapes(datacards,input_dir):
     '''Extract the Shape uncertainties from root input histograms. '''
+    #Find the files present in the input_dir
+    files_in_input_dir = [file.split("_") for file in os.listdir(input_dir) if os.path.isfile(os.path.join(input_dir, file))]
+    categories_in_input_dir = [reduce( lambda x,y: x + "_" + y, strings[2:-1]) for strings in files_in_input_dir]
 
     for chn in datacards.cb.channel_set():
         bins = filter(lambda bin: bin.split('_')[0] == chn,datacards.cb.bin_set())
+        bins = filter(lambda x: categories_in_input_dir.count(x) >= 1, bins)
         for bin in bins:
             try:
                 file = args.input_dir + "/ztt_" + chn +"_" + bin + "_13TeV.root"
@@ -95,6 +99,8 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output-dir",
 	                    default="$CMSSW_BASE/src/plots/ztt_polarisation_datacards/",
 	                    help="Output directory. [Default: %(default)s]")
+    parser.add_argument("--SMHTTsystematics", action="store_true", default = False,
+                        help = "Use the SM HTT2016 Systematics.")
     args = parser.parse_args()
 
     if args.channel != parser.get_default("channel"):
@@ -109,8 +115,11 @@ if __name__ == "__main__":
     print WARNING + '-----      Creating datacard with processes and systematics...        -----' + ENDC
 
     datacards = CreateDatacard()
+    if args.SMHTTsystematics:
+        datacards.AddHTTSM2016Systematics()
 
     datacards.cb.channel(args.channel)
+
 
     for index, (channel, categories) in enumerate(zip(args.channel, args.categories)):
 
