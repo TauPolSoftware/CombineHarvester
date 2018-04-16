@@ -13,7 +13,6 @@ import ROOT
 
 import CombineHarvester.CombineTools.ch as ch
 import CombineHarvester.ZTTPOL2016.zttpol2016_datacards as zttdatacards
-import CombineHarvester.ZTTPOL2016.zttpol2016_systematics as zttpol_systematics
 
 #Colors
 HEADER = '\033[95m'
@@ -76,8 +75,8 @@ def BinErrorsAndBBB(datacards, AddThreshold, MergeTreshold, FixNorm):
 def WriteDatacard(datacards,output_dir):
     ''' Write datacards. '''
 
-    writer = ch.CardWriter(os.path.join(output_dir + "zttpol_datacard.txt"),
-                           os.path.join(output_dir + "zttpol_datacard_rootfile.root"))
+    writer = ch.CardWriter(os.path.join(output_dir + "/zttpol_datacard.txt"),
+                           os.path.join(output_dir + "/zttpol_datacard_rootfile.root"))
 
     return writer.WriteCards(output_dir, datacards.cb)
 

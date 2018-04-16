@@ -5,7 +5,6 @@ import copy
 import re
 
 import CombineHarvester.CombineTools.ch as ch
-import CombineHarvester.ZTTPOL2016.zttpol2016_systematics as zttpol_systematics
 
 
 class ZttPolarisationDatacards(object):
@@ -62,8 +61,6 @@ class ZttPolarisationDatacards(object):
 
             self.cb = ch.CombineHarvester()
 
-            systematics = zttpol_systematics.SystematicLibary()
-
             # ======================================================================
             # MT channel
             self.add_processes(
@@ -78,32 +75,56 @@ class ZttPolarisationDatacards(object):
             )
 
             # efficiencies
-            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, *systematics.muon_efficiency_syst_args)
+            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, "CMS_eff_m", "lnN", ch.SystMap("era")
+                                                                                                                                                    (["7TeV", "8TeV"], 1.02)
+                                                                                                                                                    (       ["13TeV"], 1.03))
 
-            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_efficiency_corr_syst_args)
-            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_es_syst_args)
-            #self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_efficiency_syst_args)
+            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_eff_t_$ERA", "lnN", ch.SystMap("era", "channel")
+                                                                                                                                 (["7TeV", "8TeV"], ["mt", "et"], 1.08)
+                                                                                                                                 (["7TeV", "8TeV"], ["tt"],       1.19)
+                                                                                                                                 (       ["13TeV"], ["mt", "et", "tt"], 1.05))
+            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
+                                                                                                                                              (["13TeV"], ["mt"], 1.0)
+                                                                                                                                              (["13TeV"], ["et"], 1.0)
+                                                                                                                                              (["13TeV"], ["tt"], 1.0))
+            #self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era", "channel")
+            #                                                                                                                              (["7TeV", "8TeV"], ["mt", "et"], 1.08)
+            #                                                                                                                              (["7TeV", "8TeV"], ["tt"],       1.19)
+            #                                                                                                                              (       ["13TeV"], ["mt", "et", "tt"], 1.03))
 
             # from Yuta
-            self.cb.cp().channel(["mt"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, *systematics.boson_scale_met_syst_args)
-            self.cb.cp().channel(["mt"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, *systematics.boson_resolution_met_syst_args)
-            self.cb.cp().channel(["mt"]).process(["TT", "VV"]).AddSyst(self.cb, *systematics.ewk_top_scale_met_syst_args)
-            self.cb.cp().channel(["mt"]).process(["TT", "VV"]).AddSyst(self.cb, *systematics.ewk_top_resolution_met_syst_args)
+            self.cb.cp().channel(["mt"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, "CMS_$ANALYSIS_boson_scale_met", "lnN", ch.SystMap("channel")
+                                                                                                                                       (["mt"], 1.02))
+            self.cb.cp().channel(["mt"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, "CMS_$ANALYSIS_boson_reso_met", "lnN", ch.SystMap("channel")
+                                                                                                                                      (["mt"], 1.02))
+            self.cb.cp().channel(["mt"]).process(["TT", "VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_ewkTop_scale_met", "lnN", ch.SystMap("channel")
+                                                                                                                                   (["mt"], 1.03))
+            self.cb.cp().channel(["mt"]).process(["TT", "VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_ewkTop_reso_met", "lnN", ch.SystMap("channel")
+                                                                                                                                  (["mt"], 1.01))
 
             # extrapolation uncertainty
-            self.cb.cp().channel(["mt"]).process(["TT"]).AddSyst(self.cb, *systematics.ttj_extrapol_syst_args)
-            self.cb.cp().channel(["mt"]).process(["W"]).AddSyst(self.cb, *systematics.wj_extrapol_syst_args)
+            self.cb.cp().channel(["mt"]).process(["TT"]).AddSyst(self.cb, "CMS_$ANALYSIS_ttjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                             (["13TeV"], ["TTJ", "TT"], 1.10))
+            self.cb.cp().channel(["mt"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                           (       ["13TeV"], ["WJ", "W"], 1.2))
 
             # Tau ES
-            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_es_syst_args)
+            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
+                                                                                                                                              (["13TeV"], ["mt"], 1.0)
+                                                                                                                                              (["13TeV"], ["et"], 1.0)
+                                                                                                                                              (["13TeV"], ["tt"], 1.0))
 
             # fake-rate
-            self.cb.cp().channel(["mt"]).process(["ZL"]).AddSyst(self.cb, *systematics.eFakeTau_vloose_syst_args)
-            self.cb.cp().channel(["mt"]).process(["ZL"]).AddSyst(self.cb, *systematics.muFakeTau_syst_args)
-            self.cb.cp().channel(["mt"]).process(["ZJ"]).AddSyst(self.cb, *systematics.zjFakeTau_syst_args)
+            self.cb.cp().channel(["mt"]).process(["ZL"]).AddSyst(self.cb, "CMS_$ANALYSIS_rate_eFakeTau_vloose_$ERA", "lnN", ch.SystMap("era", "process", "channel")
+                                                                                                                                      (       ["13TeV"], ["ZLL", "ZL"], ["mt", "tt"], 1.10))
+            self.cb.cp().channel(["mt"]).process(["ZL"]).AddSyst(self.cb, "CMS_$ANALYSIS_mFakeTau_$ERA", "lnN", ch.SystMap("era", "process",)
+                                                                                                                          (       ["13TeV"], ["ZLL", "ZL"], 2.00))
+            self.cb.cp().channel(["mt"]).process(["ZJ"]).AddSyst(self.cb, "CMS_$ANALYSIS_zjFakeTau_$ERA", "lnN", ch.SystMap("era", "process",)
+                                                                                                                           (       ["13TeV"], ["ZLL", "ZL"], 1.30))
 
             # Top pT reweight
-            #self.cb.cp().channel(["mt"]).process(["TT"]).AddSyst(self.cb, *systematics.ttj_syst_args)
+            #self.cb.cp().channel(["mt"]).process(["TT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")
+            #                                                                                                            (["13TeV"], 1.0))
 
             # ======================================================================
             # ET channel
@@ -119,32 +140,56 @@ class ZttPolarisationDatacards(object):
             )
 
             # efficiencies
-            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, *systematics.electron_efficiency_syst_args)
+            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, "CMS_eff_e", "lnN", ch.SystMap("era")
+                                                                                                                                                    (["7TeV", "8TeV"], 1.02)
+                                                                                                                                                    (       ["13TeV"], 1.04))
 
-            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_efficiency_corr_syst_args)
-            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_es_syst_args)
-            #self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_efficiency_syst_args)
+            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_eff_t_$ERA", "lnN", ch.SystMap("era", "channel")
+                                                                                                                                 (["7TeV", "8TeV"], ["mt", "et"], 1.08)
+                                                                                                                                 (["7TeV", "8TeV"], ["tt"],       1.19)
+                                                                                                                                 (       ["13TeV"], ["mt", "et", "tt"], 1.05))
+            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
+                                                                                                                                              (["13TeV"], ["mt"], 1.0)
+                                                                                                                                              (["13TeV"], ["et"], 1.0)
+                                                                                                                                              (["13TeV"], ["tt"], 1.0))
+            #self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era", "channel")
+            #                                                                                                                              (["7TeV", "8TeV"], ["mt", "et"], 1.08)
+            #                                                                                                                              (["7TeV", "8TeV"], ["tt"],       1.19)
+            #                                                                                                                              (       ["13TeV"], ["mt", "et", "tt"], 1.03))
 
             # from Yuta
-            self.cb.cp().channel(["et"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, *systematics.boson_scale_met_syst_args)
-            self.cb.cp().channel(["et"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, *systematics.boson_resolution_met_syst_args)
-            self.cb.cp().channel(["et"]).process(["TT", "VV"]).AddSyst(self.cb, *systematics.ewk_top_scale_met_syst_args)
-            self.cb.cp().channel(["et"]).process(["TT", "VV"]).AddSyst(self.cb, *systematics.ewk_top_resolution_met_syst_args)
+            self.cb.cp().channel(["et"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, "CMS_$ANALYSIS_boson_scale_met", "lnN", ch.SystMap("channel")
+                                                                                                                                       (["mt"], 1.02))
+            self.cb.cp().channel(["et"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, "CMS_$ANALYSIS_boson_reso_met", "lnN", ch.SystMap("channel")
+                                                                                                                                      (["mt"], 1.02))
+            self.cb.cp().channel(["et"]).process(["TT", "VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_ewkTop_scale_met", "lnN", ch.SystMap("channel")
+                                                                                                                                   (["mt"], 1.03))
+            self.cb.cp().channel(["et"]).process(["TT", "VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_ewkTop_reso_met", "lnN", ch.SystMap("channel")
+                                                                                                                                  (["mt"], 1.01))
 
             # extrapolation uncertainty
-            self.cb.cp().channel(["et"]).process(["TT"]).AddSyst(self.cb, *systematics.ttj_extrapol_syst_args)
-            self.cb.cp().channel(["et"]).process(["W"]).AddSyst(self.cb, *systematics.wj_extrapol_syst_args)
+            self.cb.cp().channel(["et"]).process(["TT"]).AddSyst(self.cb, "CMS_$ANALYSIS_ttjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                             (["13TeV"], ["TTJ", "TT"], 1.10))
+            self.cb.cp().channel(["et"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                           (       ["13TeV"], ["WJ", "W"], 1.2))
 
             # Tau ES
-            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_es_syst_args)
+            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
+                                                                                                                                              (["13TeV"], ["mt"], 1.0)
+                                                                                                                                              (["13TeV"], ["et"], 1.0)
+                                                                                                                                              (["13TeV"], ["tt"], 1.0))
 
             # fake-rate
-            self.cb.cp().channel(["et"]).process(["ZL"]).AddSyst(self.cb, *systematics.eFakeTau_tight_syst_args)
-            self.cb.cp().channel(["et"]).process(["ZL"]).AddSyst(self.cb, *systematics.muFakeTau_syst_args)
-            self.cb.cp().channel(["et"]).process(["ZJ"]).AddSyst(self.cb, *systematics.zjFakeTau_syst_args)
+            self.cb.cp().channel(["et"]).process(["ZL"]).AddSyst(self.cb, "CMS_$ANALYSIS_rate_eFakeTau_vloose_$ERA", "lnN", ch.SystMap("era", "process", "channel")
+                                                                                                                                      (       ["13TeV"], ["ZLL", "ZL"], ["mt", "tt"], 1.10))
+            self.cb.cp().channel(["et"]).process(["ZL"]).AddSyst(self.cb, "CMS_$ANALYSIS_mFakeTau_$ERA", "lnN", ch.SystMap("era", "process",)
+                                                                                                                          (       ["13TeV"], ["ZLL", "ZL"], 2.00))
+            self.cb.cp().channel(["et"]).process(["ZJ"]).AddSyst(self.cb, "CMS_$ANALYSIS_zjFakeTau_$ERA", "lnN", ch.SystMap("era", "process",)
+                                                                                                                           (       ["13TeV"], ["ZLL", "ZL"], 1.30))
 
             # Top pT reweight
-            #self.cb.cp().channel(["et"]).process(["TT"]).AddSyst(self.cb, *systematics.ttj_syst_args)
+            #self.cb.cp().channel(["et"]).process(["TT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")
+            #                                                                                                            (["13TeV"], 1.0))
 
             # ======================================================================
             # TT channel
@@ -161,30 +206,52 @@ class ZttPolarisationDatacards(object):
             )
 
             # efficiencies
-            self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_efficiency_corr_syst_args)
-            self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_es_syst_args)
-            #self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_efficiency_syst_args)
+            self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_eff_t_$ERA", "lnN", ch.SystMap("era", "channel")
+                                                                                                                                 (["7TeV", "8TeV"], ["mt", "et"], 1.08)
+                                                                                                                                 (["7TeV", "8TeV"], ["tt"],       1.19)
+                                                                                                                                 (       ["13TeV"], ["mt", "et", "tt"], 1.05))
+            self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
+                                                                                                                                              (["13TeV"], ["mt"], 1.0)
+                                                                                                                                              (["13TeV"], ["et"], 1.0)
+                                                                                                                                              (["13TeV"], ["tt"], 1.0))
+            #self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era", "channel")
+            #                                                                                                                              (["7TeV", "8TeV"], ["mt", "et"], 1.08)
+            #                                                                                                                              (["7TeV", "8TeV"], ["tt"],       1.19)
+            #                                                                                                                              (       ["13TeV"], ["mt", "et", "tt"], 1.03))
 
             # from Yuta
-            self.cb.cp().channel(["tt"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, *systematics.boson_scale_met_syst_args)
-            self.cb.cp().channel(["tt"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, *systematics.boson_resolution_met_syst_args)
-            self.cb.cp().channel(["tt"]).process(["TT", "VV"]).AddSyst(self.cb, *systematics.ewk_top_scale_met_syst_args)
-            self.cb.cp().channel(["tt"]).process(["TT", "VV"]).AddSyst(self.cb, *systematics.ewk_top_resolution_met_syst_args)
+            self.cb.cp().channel(["tt"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, "CMS_$ANALYSIS_boson_scale_met", "lnN", ch.SystMap("channel")
+                                                                                                                                       (["mt"], 1.02))
+            self.cb.cp().channel(["tt"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, "CMS_$ANALYSIS_boson_reso_met", "lnN", ch.SystMap("channel")
+                                                                                                                                      (["mt"], 1.02))
+            self.cb.cp().channel(["tt"]).process(["TT", "VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_ewkTop_scale_met", "lnN", ch.SystMap("channel")
+                                                                                                                                   (["mt"], 1.03))
+            self.cb.cp().channel(["tt"]).process(["TT", "VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_ewkTop_reso_met", "lnN", ch.SystMap("channel")
+                                                                                                                                  (["mt"], 1.01))
 
             # extrapolation uncertainty
-            self.cb.cp().channel(["mt"]).process(["TT"]).AddSyst(self.cb, *systematics.ttj_extrapol_syst_args)
-            self.cb.cp().channel(["tt"]).process(["W"]).AddSyst(self.cb, *systematics.wj_extrapol_syst_args)
+            self.cb.cp().channel(["tt"]).process(["TT"]).AddSyst(self.cb, "CMS_$ANALYSIS_ttjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                             (["13TeV"], ["TTJ", "TT"], 1.10))
+            self.cb.cp().channel(["tt"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                           (       ["13TeV"], ["WJ", "W"], 1.2))
 
             # Tau ES
-            self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.tau_es_syst_args)
+            self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
+                                                                                                                                              (["13TeV"], ["mt"], 1.0)
+                                                                                                                                              (["13TeV"], ["et"], 1.0)
+                                                                                                                                              (["13TeV"], ["tt"], 1.0))
 
             # fake-rate
-            self.cb.cp().channel(["tt"]).process(["ZL"]).AddSyst(self.cb, *systematics.eFakeTau_tight_syst_args)
-            self.cb.cp().channel(["tt"]).process(["ZL"]).AddSyst(self.cb, *systematics.muFakeTau_syst_args)
-            self.cb.cp().channel(["tt"]).process(["ZJ"]).AddSyst(self.cb, *systematics.zjFakeTau_syst_args)
+            self.cb.cp().channel(["tt"]).process(["ZL"]).AddSyst(self.cb, "CMS_$ANALYSIS_rate_eFakeTau_vloose_$ERA", "lnN", ch.SystMap("era", "process", "channel")
+                                                                                                                                      (       ["13TeV"], ["ZLL", "ZL"], ["mt", "tt"], 1.10))
+            self.cb.cp().channel(["tt"]).process(["ZL"]).AddSyst(self.cb, "CMS_$ANALYSIS_mFakeTau_$ERA", "lnN", ch.SystMap("era", "process",)
+                                                                                                                          (       ["13TeV"], ["ZLL", "ZL"], 2.00))
+            self.cb.cp().channel(["tt"]).process(["ZJ"]).AddSyst(self.cb, "CMS_$ANALYSIS_zjFakeTau_$ERA", "lnN", ch.SystMap("era", "process",)
+                                                                                                                           (       ["13TeV"], ["ZLL", "ZL"], 1.30))
 
             # Top pT reweight
-            #self.cb.cp().channel(["tt"]).process(["TT"]).AddSyst(self.cb, *systematics.ttj_syst_args)
+            #self.cb.cp().channel(["tt"]).process(["TT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")
+            #                                                                                                            (["13TeV"], 1.0))
 
             # ======================================================================
             # EM channel
@@ -199,41 +266,64 @@ class ZttPolarisationDatacards(object):
             )
 
             # efficiencies
-            self.cb.cp().channel(["em"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, *systematics.electron_efficiency_syst_args)
-            self.cb.cp().channel(["em"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, *systematics.muon_efficiency_syst_args)
+            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, "CMS_eff_e", "lnN", ch.SystMap("era")
+                                                                                                                                                    (["7TeV", "8TeV"], 1.02)
+                                                                                                                                                    (       ["13TeV"], 1.04))
+            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, "CMS_eff_m", "lnN", ch.SystMap("era")
+                                                                                                                                                    (["7TeV", "8TeV"], 1.02)
+                                                                                                                                                    (       ["13TeV"], 1.03))
 
             # from Yuta
-            self.cb.cp().channel(["em"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, *systematics.boson_scale_met_syst_args)
-            self.cb.cp().channel(["em"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, *systematics.boson_resolution_met_syst_args)
-            self.cb.cp().channel(["em"]).process(["TT", "VV"]).AddSyst(self.cb, *systematics.ewk_top_scale_met_syst_args)
-            self.cb.cp().channel(["em"]).process(["TT", "VV"]).AddSyst(self.cb, *systematics.ewk_top_resolution_met_syst_args)
+            self.cb.cp().channel(["et"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, "CMS_$ANALYSIS_boson_scale_met", "lnN", ch.SystMap("channel")
+                                                                                                                                       (["mt"], 1.02))
+            self.cb.cp().channel(["em"]).process(["ZL", "ZJ", "W"]).AddSyst(self.cb, "CMS_$ANALYSIS_boson_reso_met", "lnN", ch.SystMap("channel")
+                                                                                                                                      (["mt"], 1.02))
+            self.cb.cp().channel(["em"]).process(["TT", "VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_ewkTop_scale_met", "lnN", ch.SystMap("channel")
+                                                                                                                                   (["mt"], 1.03))
+            self.cb.cp().channel(["em"]).process(["TT", "VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_ewkTop_reso_met", "lnN", ch.SystMap("channel")
+                                                                                                                                  (["mt"], 1.01))
 
             # extrapolation uncertainty
-            self.cb.cp().channel(["em"]).process(["TT"]).AddSyst(self.cb, *systematics.ttj_extrapol_syst_args)
-            self.cb.cp().channel(["em"]).process(["W"]).AddSyst(self.cb, *systematics.wj_extrapol_syst_args)
+            self.cb.cp().channel(["em"]).process(["TT"]).AddSyst(self.cb, "CMS_$ANALYSIS_ttjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                             (["13TeV"], ["TTJ", "TT"], 1.10))
+            self.cb.cp().channel(["em"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                           (       ["13TeV"], ["WJ", "W"], 1.2))
 
             # Top pT reweight
-            #self.cb.cp().channel(["em"]).process(["TT"]).AddSyst(self.cb, *systematics.ttj_syst_args)
+            #self.cb.cp().channel(["em"]).process(["TT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")
+            #                                                                                                            (["13TeV"], 1.0))
 
             # ======================================================================
             # All channels
             #self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "ZTTPOSPOL_uniform_2", "ZTTNEGPOL_uniform_2", "lnU", ch.SystMap()(2.0))
 
             # lumi
-            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, *systematics.lumi_syst_args)
+            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, "lumi_$ERA", "lnN", ch.SystMap("era")
+                                                                                                                                    (["7TeV", "8TeV"], 1.026)
+                                                                                                                                    (       ["13TeV"], 1.027))
 
             # cross section
-            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ"]).AddSyst(self.cb, *systematics.zll_cross_section_syst_args)
-            self.cb.cp().process(["VV"]).AddSyst(self.cb, *systematics.vv_cross_section_syst_args)
-            self.cb.cp().process(["TT"]).AddSyst(self.cb, *systematics.ttj_cross_section_syst_args)
-            self.cb.cp().process(["W"]).AddSyst(self.cb, *systematics.wj_cross_section_syst_args)
+            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ"]).AddSyst(self.cb, "CMS_$ANALYSIS_zjXsec_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                                        (       ["13TeV"], ["ZLL", "ZL", "ZJ"], 1.04))
+            self.cb.cp().process(["VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_vvXsec_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                        (["7TeV", "8TeV"], ["VV"], 1.15)
+                                                                                                        (       ["13TeV"], ["VV", "VVT", "VVJ"], 1.10))
+            self.cb.cp().process(["TT"]).AddSyst(self.cb, "CMS_$ANALYSIS_ttjXsec_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                         ( ["7TeV"], ["TTJ"], 1.08)
+                                                                                                         ( ["8TeV"], ["TTJ"], 1.1)
+                                                                                                         (["13TeV"], ["TTJ", "TT", "TTT", "TTJJ"], 1.06))
+            self.cb.cp().process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjXsec_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                       (       ["13TeV"], ["WJ", "W"], 1.04))
 
             # signal acceptance/efficiency
-            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.ztt_pdf_scale_syst_args)
-            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, *systematics.ztt_qcd_scale_syst_args)
+            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_$ANALYSIS_pdf_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                         (["13TeV"], ["ZTT"], 1.015))
+            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_$ANALYSIS_QCDscale_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                                              (["13TeV"], ["ZTT"], 1.005))
 
             # QCD systematic
-            self.cb.cp().process(["QCD"]).AddSyst(self.cb, *systematics.qcd_syst_inclusive_args)
+            self.cb.cp().process(["QCD"]).AddSyst(self.cb, "CMS_$ANALYSIS_qcdSyst_$ERA", "lnN", ch.SystMap("era", "process")
+                                                                                                          (["13TeV"], ["QCD"], 1.10))
 
             # ======================================================================
             # Groups of systematics
