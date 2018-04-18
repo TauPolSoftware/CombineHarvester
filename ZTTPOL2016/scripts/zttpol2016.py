@@ -48,12 +48,14 @@ def ExtractShapes(datacards,input_dir):
         bins = filter(lambda x: categories_in_input_dir.count(x) >= 1, bins)
         for bin in bins:
             try:
+                #Background shapes
                 file = args.input_dir + "/ztt_" + chn +"_" + bin + "_13TeV.root"
                 datacards.cb.cp().channel([chn]).bin([bin]).backgrounds().ExtractShapes(
                    file, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC'
                 )
-                datacards.cb.cp().channel([chn]).bin([bin]).backgrounds().ExtractShapes(
-                    file, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC'
+                #Signal shapes
+                datacards.cb.cp().channel([chn]).bin([bin]).signals().ExtractShapes(
+                    file, '$BIN/$PROCESS', '$BIN/$PROCESS'
                 )
                 print OKGREEN + 'Extracting Shapes for:' + ENDC, bin
             except Exception as e:
@@ -196,7 +198,7 @@ if __name__ == "__main__":
         datacards_workspaces = {datacard : os.path.splitext(datacard)[0]+"_workspace"+".root" for datacard in datacards_cbs.keys()}
 
 
-        """
+
         #7.-----totstatuncs
         print WARNING + '-----      Tot and stat uncs                                          -----' + ENDC
 
@@ -239,6 +241,10 @@ if __name__ == "__main__":
 
             prepared_tmp_args = re.sub("-n -n", "-n ", prepared_tmp_args)
 
+            #DEBUG
+            print OKBLUE + " workspace: " + ENDC, [(datacard , workspace) for datacard,workspace in datacards_workspaces.iteritems()]
+
+
             commands = []
             for chunk_index, (chunk_min, chunk_max) in enumerate(chunks):
                 commands.extend([[
@@ -254,16 +260,15 @@ if __name__ == "__main__":
                                 WORKSPACE="-d " + workspace
                         ).format(RMIN=datacards_poi_ranges.get(datacard, ["", ""])[0], RMAX=datacards_poi_ranges.get(datacard, ["", ""])[1]),
                         os.path.dirname(workspace)
-                ] for datacard, workspace in datacards_workspaces.items()])
+                ] for datacard, workspace in datacards_workspaces.iteritems()])
 
             #tools.parallelize(_call_command, commands, n_processes=4, description="combine")
             for command in commands:
-                os.system(command[0]+command[1])
-
-            for datacard, workspace in datacards_workspaces.items():
-                print OKBLUE + "glob.glob :" + ENDC, (os.path.join(os.path.dirname(workspace), "higgsCombine"+new_name+"."+method+".*.root"))
+                print OKBLUE + "combine call: " + ENDC, command[0]
+                os.system(command[0])
 
 
             #for datacard, workspace in datacards_workspaces.items():
             #    datacards_workspaces[datacard] = glob.glob(os.path.join(os.path.dirname(workspace), "higgsCombine"+new_name+"."+method+".*.root"))
-        """
+
+            break
