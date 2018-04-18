@@ -1,8 +1,7 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import logging
-import Artus.Utility.logger as logger
-log = logging.getLogger(__name__)
 
 import argparse
 import copy
@@ -94,8 +93,7 @@ def WriteDatacard(datacards,output_dir):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MAIN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:
 if __name__ == "__main__":
     #Arguments for the ArgParse parser
-    parser = argparse.ArgumentParser(description="Create ROOT inputs and datacards for ZTT polarisation analysis.",
-                                     parents=[logger.loggingParser])
+    parser = argparse.ArgumentParser(description="Create ROOT inputs and datacards for ZTT polarisation analysis.")
 
     parser.add_argument("-i", "--input-dir", required=False,
                         help="Input directory of the root files. In case of HP for the samples.")
@@ -241,10 +239,6 @@ if __name__ == "__main__":
 
             prepared_tmp_args = re.sub("-n -n", "-n ", prepared_tmp_args)
 
-            #DEBUG
-            print OKBLUE + " workspace: " + ENDC, [(datacard , workspace) for datacard,workspace in datacards_workspaces.iteritems()]
-
-
             commands = []
             for chunk_index, (chunk_min, chunk_max) in enumerate(chunks):
                 commands.extend([[
@@ -264,7 +258,7 @@ if __name__ == "__main__":
 
             #tools.parallelize(_call_command, commands, n_processes=4, description="combine")
             for command in commands:
-                print OKBLUE + "combine call: " + ENDC, command[0]
+                print OKGREEN + "combine call: " + ENDC, command[0] , "\n"
                 os.system(command[0])
 
 
