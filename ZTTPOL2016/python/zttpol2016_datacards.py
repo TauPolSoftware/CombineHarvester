@@ -39,12 +39,32 @@ class ZttPolarisationDatacards(object):
                 "mt_a1" : 1010,
                 "mt_rho" : 1020,
                 "mt_oneprong" : 1030,
+
+                "mt_combined_rho_oneprong" : 1040,
+                "mt_combined_a1_oneprong" : 1050,
+                "mt_combined_oneprong_oneprong" : 1060,
+
+                "mt_a1_2" : 1012,
+                "mt_rho_2" : 1022,
+                "mt_oneprong_1" : 1031,
+                "mt_oneprong_2" : 1032,
+
             },
             "et" : {
 
                 "et_a1" : 1010,
                 "et_rho" : 1020,
                 "et_oneprong" : 1030,
+
+                "et_combined_rho_oneprong" : 1040,
+                "et_combined_a1_oneprong" : 1050,
+                "et_combined_oneprong_oneprong" : 1060,
+
+                "et_a1_2" : 1012,
+                "et_rho_2" : 1021,
+                "et_oneprong_1" : 1031,
+                "et_oneprong_2" : 1032,
+
             },
             "em" : {
 
@@ -54,6 +74,22 @@ class ZttPolarisationDatacards(object):
                 "tt_a1" : 1010,
                 "tt_rho" : 1020,
                 "tt_oneprong" : 1030,
+
+                "tt_combined_rho_oneprong" : 1040,
+                "tt_combined_a1_oneprong" : 1050,
+                "tt_combined_oneprong_oneprong" : 1060,
+
+                "tt_combined_a1_a1" : 1070,
+                "tt_combined_a1_rho" : 1080,
+                "tt_combined_rho_rho" : 1090,
+
+                "tt_a1_1" : 1011,
+                "tt_a1_2" : 1012,
+                "tt_rho_1" : 1021,
+                "tt_rho_2" : 1022,
+                "tt_oneprong_1" : 1031,
+                "tt_oneprong_2" : 1032,
+
             },
         }
 
@@ -214,7 +250,7 @@ class ZttPolarisationDatacards(object):
                                                                                                                                               (["13TeV"], ["mt"], 1.0)
                                                                                                                                               (["13TeV"], ["et"], 1.0)
                                                                                                                                               (["13TeV"], ["tt"], 1.0))
-            #self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era", "channel")
+            #self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era", "channel")
             #                                                                                                                              (["7TeV", "8TeV"], ["mt", "et"], 1.08)
             #                                                                                                                              (["7TeV", "8TeV"], ["tt"],       1.19)
             #                                                                                                                              (       ["13TeV"], ["mt", "et", "tt"], 1.03))
@@ -327,7 +363,7 @@ class ZttPolarisationDatacards(object):
 
             # ======================================================================
             # Groups of systematics
-            self.cb.SetGroup("syst", [".*"])
+            #self.cb.SetGroup("syst", [".*"])
 
     def AddHTTSM2016Systematics(self):
 
