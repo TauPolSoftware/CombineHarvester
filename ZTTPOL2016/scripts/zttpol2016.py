@@ -9,6 +9,7 @@ import os
 import sys
 import re
 import glob
+from types import *
 
 import ROOT
 
@@ -44,14 +45,16 @@ if __name__ == "__main__":
                         default=[["all"]] * len(parser.get_default("channel")),
                        help="Categories per channel. This agument needs to be set as often as --channels. [Default: %(default)s]")
     parser.add_argument("-o", "--output-dir",
-                        default="$CMSSW_BASE/src/plots/ztt_polarisation_datacards/",
                         help="Output directory. [Default: %(default)s]")
     parser.add_argument("--SMHTTsystematics", action="store_true", default = False,
                         help = "Use the SM HTT2016 Systematics.")
     parser.add_argument("-a", "--analysis", action = "store_true", default = False,
                         help = "Perform an Statistical Analysis")
     parser.add_argument("--no-shape-uncs", default=False, action="store_true",
-	                    help="Do not include shape-uncertainties. [Default: %(default)s]")
+                        help="Do not include shape-uncertainties. [Default: %(default)s]")
+    parser.add_argument("--use-asimov-dataset", action="store_true", default=False,
+                        help="Use s+b expectation as observation instead of real data. [Default: %(default)s]")
+
     args = parser.parse_args()
 
     if args.channel != parser.get_default("channel"):
@@ -95,6 +98,8 @@ if __name__ == "__main__":
 
     #2.-----Extract shapes from input root files or from samples with HP
     print WARNING + '-----      Extracting histograms from input root files...             -----' + ENDC
+    assert type(args.input_dir) is not NoneType, FAIL + "Input dir is not specified" + ENDC
+    assert type(args.output_dir) is not NoneType, FAIL + "Output dir is not specified" + ENDC
 
     ExtractShapes(datacards, args.input_dir)
     datacards.cb.SetGroup("syst", [".*"])
@@ -111,36 +116,25 @@ if __name__ == "__main__":
     datacards_cbs = WriteDatacard(datacards, args.output_dir)
 
     #5.-----Done
-    print WARNING + '-----      Done                                                       -----' + ENDC
+    print WARNING + '-----      '+OKGREEN+'Done'+WARNING +'                                                       -----' + ENDC
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ StatisticalAnalysis ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:
     if args.analysis:
         print WARNING + UNDERLINE  + '-----      Performing statistical analysis                            -----' + ENDC
 
+        if args.use_asimov_dataset:
+            datacards = use_asimov_dataset(datacards)
+            print OKGREEN + "Using asimov dataset!" + ENDC
+        print OKBLUE + "datacards observations: " + ENDC, datacards.cb.PrintProcs()
+
         #6.-----text2workspace
         print WARNING + '-----      text2workspace                                             -----' + ENDC
 
         physicsmodel = "TauPolSoftware.StatisticalAnalysis.taupolarisationmodels:ztt_pol"
-
-        commands = ["text2workspace.py -m {MASS} -P {PHYSICSMODEL} {DATACARD} -o {OUTPUT}".format(
-                PHYSICSMODEL=physicsmodel,
-                MASS= 0, #datacards.cb.mass_set()[0],
-                DATACARD=datacard,
-                OUTPUT=os.path.splitext(datacard)[0]+"_workspace"+".root"
-        ) for datacard, cb in datacards_cbs.iteritems()]
-
-        #tools.parallelize(_call_command, commands, n_processes=4, description="text2workspace.py")
-        for command in commands:
-            os.system(command)
-
-        datacards_workspaces = {datacard : os.path.splitext(datacard)[0]+"_workspace"+".root" for datacard in datacards_cbs.keys()}
-        print OKGREEN + "Done " + ENDC
+        datacards_workspaces = text2workspace(datacards,datacards_cbs,physicsmodel,"workspace")
 
         #7.-----totstatuncs
         print WARNING + '-----      Tot and stat uncs                                          -----' + ENDC
-
-        split_stat_syst_uncs_options = [""]
-        split_stat_syst_uncs_names = [""]
 
         stable_options = r"--robustFit 1 --preFitValue 1.0 --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerAlgo Minuit2 --cminDefaultMinimizerStrategy 0 --cminFallbackAlgo Minuit2,0:1.0"
 
@@ -162,8 +156,6 @@ if __name__ == "__main__":
             "TotUnc",
             "StatUnc",
         ]
-
-
 
         for split_stat_syst_uncs_index, (split_stat_syst_uncs_option, split_stat_syst_uncs_name) in enumerate(zip(split_stat_syst_uncs_options, split_stat_syst_uncs_names)):
             prepared_tmp_args = None

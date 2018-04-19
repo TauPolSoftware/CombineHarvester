@@ -88,3 +88,50 @@ def WriteDatacard(datacards,output_dir):
                            os.path.join(output_dir + "/zttpol_datacard_rootfile.root"))
 
     return writer.WriteCards(output_dir, datacards.cb)
+
+def text2workspace(datacards,datacards_cbs,Physicsmodel,workspace_file_name):
+
+    commands = ["text2workspace.py -m {MASS} -P {PHYSICSMODEL} {DATACARD} -o {OUTPUT}".format(
+            PHYSICSMODEL=Physicsmodel,
+            MASS= 0, #datacards.cb.mass_set()[0],
+            DATACARD=datacard,
+            OUTPUT=os.path.splitext(datacard)[0]+"_"+workspace_file_name+".root"
+    ) for datacard, cb in datacards_cbs.iteritems()]
+
+    #tools.parallelize(_call_command, commands, n_processes=4, description="text2workspace.py")
+    for command in commands:
+        os.system(command)
+
+    return {datacard : os.path.splitext(datacard)[0]+"_workspace"+".root" for datacard in datacards_cbs.keys()}
+
+def use_asimov_dataset(datacards, pol=-0.159, r=1.0, signal_mass = None, signal_processes=None):
+
+    def _replace_observation_by_asimov_dataset(observation):
+        cb = datacards.cb.cp().analysis([observation.analysis()]).era([observation.era()]).channel([observation.channel()]).bin([observation.bin()])
+        background = cb.cp().backgrounds()
+
+        signal = cb.cp().signals()
+        if signal_mass:
+            if signal_processes:
+                signal = cb.cp().signals().process(signal_processes).mass([signal_mass])
+            else:
+                signal = cb.cp().signals().mass([signal_mass])
+        elif signal_processes:
+            signal = cb.cp().signals().process(signal_processes)
+
+        observation.set_shape(background.GetShape() + signal.GetShape(), True)
+        observation.set_rate(background.GetRate() + signal.GetRate())
+
+    pospol_signals = datacards.cb.cp().signals()
+    pospol_signals.FilterAll(lambda obj : ("pospol" not in obj.process().lower()))
+
+    negpol_signals = datacards.cb.cp().signals()
+    negpol_signals.FilterAll(lambda obj : ("negpol" not in obj.process().lower()))
+
+    datacards.cb.cp().ForEachObs(_replace_observation_by_asimov_dataset)
+
+    pospol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() * (r * (1.0 + pol))))
+    negpol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() * (r * (1.0 - pol))))
+
+
+    return datacards
