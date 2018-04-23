@@ -130,7 +130,7 @@ if __name__ == "__main__":
         #6.-----text2workspace
         print WARNING + '-----      text2workspace                                             -----' + ENDC
 
-        physicsmodel = "TauPolSoftware.StatisticalAnalysis.taupolarisationmodels:ztt_pol"
+        physicsmodel = "CombineHarvester.ZTTPOL2016.taupolarisationmodels:ztt_pol"
         datacards_workspaces = text2workspace(datacards,datacards_cbs,physicsmodel,"workspace")
 
         #7.-----totstatuncs
