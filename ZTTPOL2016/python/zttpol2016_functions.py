@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 # -*- coding: utf-8 -*-
 
 import logging
@@ -130,8 +130,8 @@ def use_asimov_dataset(datacards, pol=-0.159, r=1.0, signal_mass = None, signal_
 
     datacards.cb.cp().ForEachObs(_replace_observation_by_asimov_dataset)
 
-    pospol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() * (r * (1.0 + pol))))
-    negpol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() * (r * (1.0 - pol))))
+    pospol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() * (r * (1.0 + pol) / 2.0)))
+    negpol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() * (r * (1.0 - pol) / 2.0)))
 
 
     return datacards
