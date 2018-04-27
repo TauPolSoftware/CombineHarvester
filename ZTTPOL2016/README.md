@@ -2,7 +2,7 @@
 
 Check out CH with the correct branch:
 ```
-git clone git@github.com:TauPolSoftware/CombineHarvester.git CombineHarvester -b ZTTPOL2016
+git clone --recursive git@github.com:TauPolSoftware/CombineHarvester.git CombineHarvester -b ZTTPOL2016
 ```
 
 The morphing script `scripts/zttpol2016.py` is structured into functions for creating the datacard from `python/zttpol2016_datacards.py`
