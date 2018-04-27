@@ -1,0 +1,3 @@
+[submodule "ZTTPOL2016/python/uncertainties"]
+	path = ZTTPOL2016/python/uncertainties
+	url = https://github.com/lebigot/uncertainties.git
