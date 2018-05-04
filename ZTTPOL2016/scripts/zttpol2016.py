@@ -68,28 +68,14 @@ if __name__ == "__main__":
     #1.-----Create Datacards
     print WARNING + UNDERLINE + '-----      Creating datacard with processes and systematics...        -----' + ENDC
 
-    datacards = CreateDatacard()
+    datacards = CreateDatacard(args)
     if args.SMHTTsystematics:
         datacards.AddHTTSM2016Systematics()
 
-    datacards.cb.channel(args.channel)
 
     if args.no_shape_uncs:
         print("No shape uncs")
         datacards.cb.FilterSysts(lambda systematic : systematic.type() == "shape")
-
-
-    for index, (channel, categories) in enumerate(zip(args.channel, args.categories)):
-
-        # prepare category settings based on args and datacards
-        if (len(categories) == 1) and (categories[0] == "all"):
-            categories = datacards.cb.cp().channel([channel]).bin_set()
-        else:
-            categories = list(set(categories).intersection(set(datacards.cb.cp().channel([channel]).bin_set())))
-        args.categories[index] = categories
-
-        # restrict CombineHarvester to configured categories:
-        datacards.cb.FilterAll(lambda obj : (obj.channel() == channel) and (obj.bin() not in categories))
 
     print OKGREEN + 'Datacard channels:' + ENDC, datacards.cb.channel_set()
     print OKGREEN + 'Datacard categories :' + ENDC, datacards.cb.bin_set()
@@ -125,7 +111,6 @@ if __name__ == "__main__":
         if args.use_asimov_dataset:
             datacards = use_asimov_dataset(datacards)
             print OKGREEN + "Using asimov dataset!" + ENDC
-        print OKBLUE + "datacards observations: " + ENDC, datacards.cb.PrintProcs()
 
         #6.-----text2workspace
         print WARNING + '-----      text2workspace                                             -----' + ENDC

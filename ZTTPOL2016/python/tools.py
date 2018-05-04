@@ -114,9 +114,10 @@ def _call_command(args):
 	if not cwd is None:
 		old_cwd = os.getcwd()
 		os.chdir(cwd)
-	print command
+	print '\033[94m' + "Executing command: " + '\033[0m',command
 	#log.debug(command)
 	#logger.subprocessCall(command, shell=True)
-
+	os.system(command)
+	
 	if not cwd is None:
 		os.chdir(old_cwd)

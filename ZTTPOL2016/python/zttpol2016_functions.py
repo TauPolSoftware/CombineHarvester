@@ -28,10 +28,24 @@ ENDC = '\033[0m'
 BOLD = '\033[1m'
 UNDERLINE = '\033[4m'
 
-def CreateDatacard():
+def CreateDatacard(args):
     '''Create an instance of the python datacards modul, which includes a combine harvester instance.'''
 
     datacards = zttdatacards.ZttPolarisationDatacards()
+
+    for index, (channel, categories) in enumerate(zip(args.channel, args.categories)):
+
+        # prepare category settings based on args and datacards
+        if (len(categories) == 1) and (categories[0] == "all"):
+            categories = datacards.cb.cp().channel([channel]).bin_set()
+        else:
+            categories = list(set(categories).intersection(set(datacards.cb.cp().channel([channel]).bin_set())))
+        args.categories[index] = categories
+
+        # restrict CombineHarvester to configured categories:
+        datacards.cb.FilterAll(lambda obj : (obj.channel() == channel) and (obj.bin() not in categories))
+
+        datacards.cb.channel(args.channel)
 
     return datacards
 
@@ -128,10 +142,14 @@ def use_asimov_dataset(datacards, pol=-0.159, r=1.0, signal_mass = None, signal_
     negpol_signals = datacards.cb.cp().signals()
     negpol_signals.FilterAll(lambda obj : ("negpol" not in obj.process().lower()))
 
-    datacards.cb.cp().ForEachObs(_replace_observation_by_asimov_dataset)
 
     pospol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() * (r * (1.0 + pol) / 2.0)))
     negpol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() * (r * (1.0 - pol) / 2.0)))
+
+    datacards.cb.cp().ForEachObs(_replace_observation_by_asimov_dataset)
+
+    pospol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() / (r * (1.0 + pol))))
+    negpol_signals.ForEachProc(lambda process: process.set_rate(process.no_norm_rate() / (r * (1.0 - pol))))
 
 
     return datacards
