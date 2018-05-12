@@ -225,8 +225,8 @@ class ZttPolarisationDatacards(object):
             self.cb.cp().channel(["et"]).process(["ZJ"]).AddSyst(self.cb, "CMS_$ANALYSIS_zjFakeTau_$ERA", "lnN", ch.SystMap("era", "process",)
                                                                                                                            (       ["13TeV"], ["ZLL", "ZL"], 1.30))
                                                                                                                            
-            self.cb.cp().channel(["et"]).process(["ZL"])..AddSyst(self.cb, "CMS_eFakeTau_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
-            self.cb.cp().channel(["et"]).process(["ZL"])..AddSyst(self.cb, "CMS_eFakeTau_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
+            self.cb.cp().channel(["et"]).process(["ZL"]).AddSyst(self.cb, "CMS_eFakeTau_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
+            self.cb.cp().channel(["et"]).process(["ZL"]).AddSyst(self.cb, "CMS_eFakeTau_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
 
 
             # Top pT reweight
