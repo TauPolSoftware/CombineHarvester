@@ -98,8 +98,8 @@ class ZttPolarisationDatacards(object):
             self.cb = ch.CombineHarvester()
 
             sig_procs = ["ZTTPOSPOL", "ZTTNEGPOL"]
-            all_mc_bkgs = ["ZL", "ZJ", "TT", "VV", "W", "QCD"]
-            all_mc_bkgs_no_WQCD = ["ZL", "ZJ", "TT", "VV"]
+            all_mc_bkgs_no_WQCD = ["ZLL", "ZL", "ZJ", "TT", "VV"]
+            all_mc_bkgs = copy.deepcopy(all_mc_bkgs_no_WQCD)+["W", "QCD"]
 
 
             # ======================================================================
@@ -282,7 +282,7 @@ class ZttPolarisationDatacards(object):
             self.add_processes(
                     channel="em",
                     categories=["em_"+category for category in ["oneprong"]],
-                    bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
+                    bkg_processes=["ZLL", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
                     era=["13TeV"],
@@ -290,9 +290,9 @@ class ZttPolarisationDatacards(object):
             )
 
             # efficiencies
-            self.cb.cp().channel(["em"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, "CMS_eff_e", "lnN", ch.SystMap("era")
+            self.cb.cp().channel(["em"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZLL", "TT", "VV"]).AddSyst(self.cb, "CMS_eff_e", "lnN", ch.SystMap("era")
                                                                                                                                                     (       ["13TeV"], 1.02))
-            self.cb.cp().channel(["em"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "TT", "VV"]).AddSyst(self.cb, "CMS_eff_m", "lnN", ch.SystMap("era")
+            self.cb.cp().channel(["em"]).process(["ZTTPOSPOL", "ZTTNEGPOL", "ZLL", "TT", "VV"]).AddSyst(self.cb, "CMS_eff_m", "lnN", ch.SystMap("era")
                                                                                                                                                     (       ["13TeV"], 1.02))
 
             # extrapolation uncertainty
@@ -318,7 +318,7 @@ class ZttPolarisationDatacards(object):
                                                                                                                    (["13TeV"], 1.025))
 
             # cross section
-            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ"]).AddSyst(self.cb, "CMS_$ANALYSIS_zjXsec_$ERA", "lnN", ch.SystMap("era", "process")
+            self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZLL", "ZL", "ZJ"]).AddSyst(self.cb, "CMS_$ANALYSIS_zjXsec_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                                                         (       ["13TeV"], ["ZLL", "ZL", "ZJ"], 1.04))
             self.cb.cp().process(["VV"]).AddSyst(self.cb, "CMS_$ANALYSIS_vvXsec_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                         (       ["13TeV"], ["VV", "VVT", "VVJ"], 1.10))
