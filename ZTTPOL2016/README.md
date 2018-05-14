@@ -18,3 +18,15 @@ The script looks in <input_dir> for the samples to extract shapes from. The form
 ```
 ztt_<channel>_<channel>_<categorie>_<era>.root
 ```
+
+## Text2Workspace
+
+```bash
+combineTool.py -M T2W -i <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/ztt*13TeV.txt -o workspace.root -P CombineHarvester.ZTTPOL2016.taupolarisationmodels:ztt_pol --parallel 8
+```
+
+## Fitting
+
+```bash
+combineTool.py -M MultiDimFit -d <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --algo singles -P pol --redefineSignalPOIs pol
+```
