@@ -96,12 +96,12 @@ class ZttPolarisationDatacards(object):
         if self.cb is None:
 
             self.cb = ch.CombineHarvester()
-            
+
             sig_procs = ["ZTTPOSPOL", "ZTTNEGPOL"]
             all_mc_bkgs = ["ZL", "ZJ", "TT", "VV", "W", "QCD"]
             all_mc_bkgs_no_WQCD = ["ZL", "ZJ", "TT", "VV"]
-            
-            
+
+
             # ======================================================================
             # MT channel
             self.add_processes(
@@ -124,13 +124,13 @@ class ZttPolarisationDatacards(object):
 
             self.cb.cp().channel(["mt"]).process(sig_procs + all_mc_bkgs).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era", "channel")
                                                                                                                                             (["13TeV"], ["mt", "et", "tt"], 1.02))
-            
+
             # Tau ID
             self.cb.cp().channel(["mt"]).process(sig_procs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_oneprong", 0))]).AddSyst(self.cb, "CMS_tauDMReco_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["mt"]).process(sig_procs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_rho", 0))]).AddSyst(self.cb, "CMS_tauDMReco_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["mt"]).process(sig_procs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_a1", 0))]).AddSyst(self.cb, "CMS_tauDMReco_3prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
 
-            
+
 
             # extrapolation uncertainty
             self.cb.cp().channel(["mt"]).process(["TT"]).AddSyst(self.cb, "CMS_$ANALYSIS_ttjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
@@ -138,12 +138,12 @@ class ZttPolarisationDatacards(object):
             self.cb.cp().channel(["mt"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                                            (       ["13TeV"], ["WJ", "W"], 1.2))
 
-            # Tau ES  
+            # Tau ES
             self.cb.cp().channel(["mt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_oneprong", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["mt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_rho", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["mt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_a1", 0))]).AddSyst(self.cb,"CMS_scale_t_3prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
-            
-            
+
+
             # fake-rate
             self.cb.cp().channel(["mt"]).process(["ZL"]).AddSyst(self.cb, "CMS_$ANALYSIS_rate_eFakeTau_vloose_$ERA", "lnN", ch.SystMap("era", "process", "channel")
                                                                                                                                       (       ["13TeV"], ["ZLL", "ZL"], ["mt", "tt"], 1.10))
@@ -157,11 +157,11 @@ class ZttPolarisationDatacards(object):
             # Top pT reweight
             #self.cb.cp().channel(["mt"]).process(["TT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")
             #                                                                                                            (["13TeV"], 1.0))
-            
+
             # Trigger
             self.cb.cp().process(sig_procs +  all_mc_bkgs_no_WQCD).channel(["mt"]).AddSyst(self.cb,
                                          "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.02))
-            
+
             # ======================================================================
             # ET channel
             self.add_processes(
@@ -184,13 +184,13 @@ class ZttPolarisationDatacards(object):
 
             self.cb.cp().channel(["et"]).process(sig_procs + all_mc_bkgs).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era", "channel")
                                                                                                                                             (["13TeV"], ["mt", "et", "tt"], 1.02))
-                                                                                                                                
+               
             # Tau ID
             self.cb.cp().channel(["et"]).process(sig_procs).bin_id([int(self._mapping_category2binid.get("et", {}).get("et_oneprong", 0))]).AddSyst(self.cb, "CMS_tauDMReco_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["et"]).process(sig_procs).bin_id([int(self._mapping_category2binid.get("et", {}).get("et_rho", 0))]).AddSyst(self.cb, "CMS_tauDMReco_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["et"]).process(sig_procs).bin_id([int(self._mapping_category2binid.get("et", {}).get("et_a1", 0))]).AddSyst(self.cb, "CMS_tauDMReco_3prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
 
-            
+
 
             # extrapolation uncertainty
             self.cb.cp().channel(["et"]).process(["TT"]).AddSyst(self.cb, "CMS_$ANALYSIS_ttjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
@@ -198,11 +198,11 @@ class ZttPolarisationDatacards(object):
             self.cb.cp().channel(["et"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                                            (       ["13TeV"], ["WJ", "W"], 1.2))
 
-            # Tau ES  
+            # Tau ES
             self.cb.cp().channel(["et"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("et", {}).get("et_oneprong", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["et"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("et", {}).get("et_rho", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["et"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("et", {}).get("et_a1", 0))]).AddSyst(self.cb,"CMS_scale_t_3prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
-            
+
             # fake-rate
             self.cb.cp().channel(["et"]).process(["ZL"]).AddSyst(self.cb, "CMS_$ANALYSIS_rate_eFakeTau_vloose_$ERA", "lnN", ch.SystMap("era", "process", "channel")
                                                                                                                                       (       ["13TeV"], ["ZLL", "ZL"], ["mt", "tt"], 1.10))
@@ -210,7 +210,7 @@ class ZttPolarisationDatacards(object):
                                                                                                                           (       ["13TeV"], ["ZLL", "ZL"], 2.00))
             self.cb.cp().channel(["et"]).process(["ZJ"]).AddSyst(self.cb, "CMS_$ANALYSIS_zjFakeTau_$ERA", "lnN", ch.SystMap("era", "process",)
                                                                                                                            (       ["13TeV"], ["ZLL", "ZL"], 1.30))
-                                                                                                                           
+         
             self.cb.cp().channel(["et"]).process(["ZL"]).AddSyst(self.cb, "CMS_eFakeTau_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["et"]).process(["ZL"]).AddSyst(self.cb, "CMS_eFakeTau_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
 
@@ -218,10 +218,10 @@ class ZttPolarisationDatacards(object):
             # Top pT reweight
             #self.cb.cp().channel(["et"]).process(["TT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")
             #                                                                                                            (["13TeV"], 1.0))
-            
+
             # Trigger
             self.cb.cp().process(sig_procs + all_mc_bkgs_no_WQCD).channel(["et"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.02))
-            
+
             # ======================================================================
             # TT channel
             self.add_processes(
@@ -240,27 +240,27 @@ class ZttPolarisationDatacards(object):
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).AddSyst(self.cb, "CMS_eff_t_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.09))
 
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.04))
-            
+
             self.cb.cp().channel(["tt"]).process(["ZJ","W"]).AddSyst(self.cb, "CMS_eff_t_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.06))
 
             self.cb.cp().channel(["tt"]).process(["ZJ","W"]).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.02))
-            
+
             #self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era", "channel")
             #                                                                                                                              (["7TeV", "8TeV"], ["mt", "et"], 1.08)
             #                                                                                                                              (["7TeV", "8TeV"], ["tt"],       1.19)
             #                                                                                                                              (       ["13TeV"], ["mt", "et", "tt"], 1.03))
-            
+
             # extrapolation uncertainty
             self.cb.cp().channel(["tt"]).process(["TT"]).AddSyst(self.cb, "CMS_$ANALYSIS_ttjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                                              (["13TeV"], ["TTJ", "TT"], 1.10))
             self.cb.cp().channel(["tt"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                                            (       ["13TeV"], ["WJ", "W"], 1.2))
 
-            # Tau ES                                                                                                                         
+            # Tau ES       
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("tt", {}).get("tt_oneprong", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("tt", {}).get("tt_rho", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("tt", {}).get("tt_a1", 0))]).AddSyst(self.cb,"CMS_scale_t_3prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
-                                                                                                                                              
+                            
 
             # fake-rate
             self.cb.cp().channel(["tt"]).process(["ZL"]).AddSyst(self.cb, "CMS_$ANALYSIS_rate_eFakeTau_vloose_$ERA", "lnN", ch.SystMap("era", "process", "channel")
@@ -273,7 +273,7 @@ class ZttPolarisationDatacards(object):
             # Top pT reweight
             #self.cb.cp().channel(["tt"]).process(["TT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")
             #                                                                                                            (["13TeV"], 1.0))
-            
+
             # Trigger
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.10))
 
@@ -304,7 +304,7 @@ class ZttPolarisationDatacards(object):
             # Top pT reweight
             #self.cb.cp().channel(["em"]).process(["TT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")
             #                                                                                                            (["13TeV"], 1.0))
-            
+
             # Trigger
             self.cb.cp().process(sig_procs + all_mc_bkgs).channel(["em"]).AddSyst(self.cb,
                                          "CMS_eff_trigger_em_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.02))
@@ -336,7 +336,7 @@ class ZttPolarisationDatacards(object):
             # QCD systematic
             self.cb.cp().process(["QCD"]).AddSyst(self.cb, "CMS_$ANALYSIS_qcdSyst_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                           (["13TeV"], ["QCD"], 1.10))
-                                                                                                          
+
             # jet and met energy scale
             self.cb.cp().channel(["et","mt","tt","em"]).process(sig_procs + all_mc_bkgs).AddSyst(self.cb, "CMS_scale_met_clustered_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
             self.cb.cp().channel(["et","mt","tt","em"]).process(sig_procs + all_mc_bkgs).AddSyst(self.cb, "CMS_scale_met_unclustered_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
@@ -366,7 +366,7 @@ class ZttPolarisationDatacards(object):
 
         self.cb.cp().process(sig_procs + ["VV","VVT","VVJ","ggH_hww125","qqH_hww125"] ).AddSyst(self.cb,
                                     "lumi_13TeV", "lnN", ch.SystMap()(1.025))
-                                    
+
         #Add luminosity uncertainty for W in em, tt, ttbar and the mm region as norm is from MC
         self.cb.cp().process(["W"]).channel(["tt","em","mm","ttbar"]).AddSyst(self.cb,
                                             "lumi_13TeV", "lnN", ch.SystMap()(1.025))
@@ -620,5 +620,5 @@ class ZttPolarisationDatacards(object):
 
         self.cb.cp().process( ["W"]).channel(["tt","mt","et"]).bin_id([1,2,3,13,14,15]).AddSyst(self.cb,
                                                                 "CMS_htt_jetToTauFake_$ERA", "shape", ch.SystMap()(1.00))
-                                                            
+
     
