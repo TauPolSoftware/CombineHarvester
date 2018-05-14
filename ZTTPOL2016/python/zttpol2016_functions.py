@@ -90,7 +90,7 @@ def BinErrorsAndBBB(datacards, AddThreshold, MergeTreshold, FixNorm):
     bbb.MergeBinErrors(datacards.cb.cp().backgrounds())
     bbb.AddBinByBin(datacards.cb.cp().backgrounds(), datacards.cb)
 
-    datacards.cb.SetGroup("bbb", [".*_bin_\\d+"])
+    #datacards.cb.SetGroup("bbb", [".*_bin_\\d+"])
 
     return None
 
