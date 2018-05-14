@@ -94,16 +94,20 @@ def BinErrorsAndBBB(datacards, AddThreshold, MergeTreshold, FixNorm):
 
     return None
 
-
-def WriteDatacard(datacards,output_dir):
+def WriteDatacard(datacards, datacard_filename_template, root_filename_template, output_directory):
     ''' Write datacards. '''
+    
+    # http://cms-analysis.github.io/CombineHarvester/classch_1_1_card_writer.html#details
+    writer = ch.CardWriter(os.path.join("$TAG", datacard_filename_template),
+                           os.path.join("$TAG", root_filename_template))
 
-    writer = ch.CardWriter(os.path.join(output_dir + "/zttpol_datacard.txt"),
-                           os.path.join(output_dir + "/zttpol_datacard_rootfile.root"))
+    # enable writing datacards in cases where the mass does not have its original meaning
+    if (len(datacards.cb.mass_set()) == 1) and (datacards.cb.mass_set()[0] == "*"):
+        writer.SetWildcardMasses([])
 
-    return writer.WriteCards(output_dir, datacards.cb)
+    return writer.WriteCards(output_directory[:-1] if output_directory.endswith("/") else output_directory, datacards.cb)
 
-def text2workspace(datacards,datacards_cbs,Physicsmodel,workspace_file_name):
+def text2workspace(datacards, datacards_cbs, Physicsmodel, workspace_file_name):
 
     commands = ["text2workspace.py -m {MASS} -P {PHYSICSMODEL} {DATACARD} -o {OUTPUT}".format(
             PHYSICSMODEL=Physicsmodel,

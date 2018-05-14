@@ -99,7 +99,7 @@ if __name__ == "__main__":
     #4.-----Write Cards
     print WARNING + '-----      Writing Datacards...                                       -----' + ENDC
 
-    datacards_cbs = WriteDatacard(datacards, args.output_dir)
+    datacards_cbs = WriteDatacard(datacards, "zttpol_datacard.txt", "zttpol_datacard_rootfile.root", args.output_dir)
 
     #5.-----Done
     print WARNING + '-----      '+OKGREEN+'Done'+WARNING +'                                                       -----' + ENDC
