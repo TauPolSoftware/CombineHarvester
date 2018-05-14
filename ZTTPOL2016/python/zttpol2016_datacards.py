@@ -18,14 +18,10 @@ class ZttPolarisationDatacards(object):
             if key in kwargs:
                 kwargs.pop(key)
 
-        non_sig_kwargs = copy.deepcopy(kwargs)
-        if "mass" in non_sig_kwargs:
-            non_sig_kwargs.pop("mass")
-
         if add_data:
-            self.cb.AddObservations(channel=[channel], mass=["*"], bin=bin, *args, **non_sig_kwargs)
-        self.cb.AddProcesses(channel=[channel], mass=["*"], procs=bkg_processes, bin=bin, signal=False, *args, **non_sig_kwargs)
-        self.cb.AddProcesses(channel=[channel], procs=sig_processes, bin=bin, signal=True, *args, **kwargs)
+            self.cb.AddObservations(channel=[channel], mass=["*"], bin=bin, *args, **kwargs)
+        self.cb.AddProcesses(channel=[channel], mass=["*"], procs=bkg_processes, bin=bin, signal=False, *args, **kwargs)
+        self.cb.AddProcesses(channel=[channel], mass=["*"], procs=sig_processes, bin=bin, signal=True, *args, **kwargs)
 
 
     def __init__(self, cb=None):
@@ -111,8 +107,7 @@ class ZttPolarisationDatacards(object):
                     bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
-                    era=["13TeV"],
-                    mass=["0"]
+                    era=["13TeV"]
             )
 
             # efficiencies
@@ -171,8 +166,7 @@ class ZttPolarisationDatacards(object):
                     bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
-                    era=["13TeV"],
-                    mass=["0"]
+                    era=["13TeV"]
             )
 
             # efficiencies
@@ -232,8 +226,7 @@ class ZttPolarisationDatacards(object):
                     bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
-                    era=["13TeV"],
-                    mass=["0"]
+                    era=["13TeV"]
             )
 
             # efficiencies
@@ -285,8 +278,7 @@ class ZttPolarisationDatacards(object):
                     bkg_processes=["ZLL", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
-                    era=["13TeV"],
-                    mass=["0"]
+                    era=["13TeV"]
             )
 
             # efficiencies
