@@ -124,11 +124,7 @@ class ZttPolarisationDatacards(object):
 
             self.cb.cp().channel(["mt"]).process(sig_procs + all_mc_bkgs).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era", "channel")
                                                                                                                                             (["13TeV"], ["mt", "et", "tt"], 1.02))
-                                                                                                                                 
-            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
-                                                                                                                                              (["13TeV"], ["mt"], 1.0)
-                                                                                                                                              (["13TeV"], ["et"], 1.0)
-                                                                                                                                              (["13TeV"], ["tt"], 1.0))
+            
             # Tau ID
             self.cb.cp().channel(["mt"]).process(sig_procs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_oneprong", 0))]).AddSyst(self.cb, "CMS_tauDMReco_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["mt"]).process(sig_procs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_rho", 0))]).AddSyst(self.cb, "CMS_tauDMReco_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
@@ -142,12 +138,7 @@ class ZttPolarisationDatacards(object):
             self.cb.cp().channel(["mt"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                                            (       ["13TeV"], ["WJ", "W"], 1.2))
 
-            # Tau ES
-            self.cb.cp().channel(["mt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
-                                                                                                                                              (["13TeV"], ["mt"], 1.0)
-                                                                                                                                              (["13TeV"], ["et"], 1.0)
-                                                                                                                                              (["13TeV"], ["tt"], 1.0))
-            
+            # Tau ES  
             self.cb.cp().channel(["mt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_oneprong", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["mt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_rho", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["mt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("mt", {}).get("mt_a1", 0))]).AddSyst(self.cb,"CMS_scale_t_3prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
@@ -207,12 +198,7 @@ class ZttPolarisationDatacards(object):
             self.cb.cp().channel(["et"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                                            (       ["13TeV"], ["WJ", "W"], 1.2))
 
-            # Tau ES
-            self.cb.cp().channel(["et"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
-                                                                                                                                              (["13TeV"], ["mt"], 1.0)
-                                                                                                                                              (["13TeV"], ["et"], 1.0)
-                                                                                                                                              (["13TeV"], ["tt"], 1.0))
-
+            # Tau ES  
             self.cb.cp().channel(["et"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("et", {}).get("et_oneprong", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["et"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("et", {}).get("et_rho", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["et"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("et", {}).get("et_a1", 0))]).AddSyst(self.cb,"CMS_scale_t_3prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
@@ -255,10 +241,6 @@ class ZttPolarisationDatacards(object):
 
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.04))
             
-            self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
-                                                                                                                                              (["13TeV"], ["mt"], 1.0)
-                                                                                                                                              (["13TeV"], ["et"], 1.0)
-                                                                                                                                              (["13TeV"], ["tt"], 1.0))
             self.cb.cp().channel(["tt"]).process(["ZJ","W"]).AddSyst(self.cb, "CMS_eff_t_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.06))
 
             self.cb.cp().channel(["tt"]).process(["ZJ","W"]).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap("era")(["13TeV"],1.02))
@@ -274,12 +256,7 @@ class ZttPolarisationDatacards(object):
             self.cb.cp().channel(["tt"]).process(["W"]).AddSyst(self.cb, "CMS_$ANALYSIS_wjExtrapol_$ERA", "lnN", ch.SystMap("era", "process")
                                                                                                                            (       ["13TeV"], ["WJ", "W"], 1.2))
 
-            # Tau ES
-            self.cb.cp().channel(["tt"]).process(["ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_scale_t_$CHANNEL_$ERA", "shape", ch.SystMap("era", "channel")
-                                                                                                                                              (["13TeV"], ["mt"], 1.0)
-                                                                                                                                              (["13TeV"], ["et"], 1.0)
-                                                                                                                                              (["13TeV"], ["tt"], 1.0))
-                                                                                                                                              
+            # Tau ES                                                                                                                         
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("tt", {}).get("tt_oneprong", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("tt", {}).get("tt_rho", 0))]).AddSyst(self.cb,"CMS_scale_t_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
             self.cb.cp().channel(["tt"]).process(sig_procs + all_mc_bkgs).bin_id([int(self._mapping_category2binid.get("tt", {}).get("tt_a1", 0))]).AddSyst(self.cb,"CMS_scale_t_3prong_$ERA", "shape", ch.SystMap("era")(["13TeV"],1.00))
