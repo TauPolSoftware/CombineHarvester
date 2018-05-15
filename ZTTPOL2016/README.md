@@ -28,5 +28,5 @@ combineTool.py -M T2W -i <output_dir>/datacards/{individual/*/*,category/*,chann
 ## Fitting
 
 ```bash
-combineTool.py -M MultiDimFit -d <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --algo singles -P pol --redefineSignalPOIs pol
+combineTool.py -M MultiDimFit -d <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --algo singles -P pol --redefineSignalPOIs pol --there --parallel 8
 ```
