@@ -1,5 +1,4 @@
 #include "CombineHarvester/CombineTools/interface/ParseCombineWorkspace.h"
-#include "HiggsAnalysis/CombinedLimit/interface/CMSHistErrorPropagator.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,7 +7,6 @@
 #include "RooCategory.h"
 #include "RooAddPdf.h"
 #include "RooProdPdf.h"
-#include "RooRealSumPdf.h"
 #include "RooStats/ModelConfig.h"
 #include "CombineHarvester/CombineTools/interface/Logging.h"
 
@@ -52,49 +50,23 @@ void ParseCombineWorkspace(CombineHarvester& cb, RooWorkspace& ws,
     RooAbsData *idat = dynamic_cast<RooAbsData*>(split->At(i));
     cats.push_back(idat->GetName());
     FNLOGC(std::cout, v) << "Found data for category: " << cats.back() << "\n";
+    ws.import(*idat);
 
     ch::Observation obs;
     obs.set_bin(cats.back());
     cb.InsertObservation(obs);
 
-    bool delete_pdfs = false;
-
-    RooAbsReal *ipdf = FindAddPdf(pdf->getPdf(cats.back().c_str()));
+    RooAddPdf *ipdf = FindAddPdf(pdf->getPdf(cats.back().c_str()));
     if (ipdf) {
-      std::unique_ptr<RooArgSet> pdf_obs(ipdf->getObservables(data->get()));
-      idat = idat->reduce(*pdf_obs);
-      ws.import(*idat);
-      RooAddPdf *ipdf_add = dynamic_cast<RooAddPdf*>(ipdf);
-      RooRealSumPdf *ipdf_sum = dynamic_cast<RooRealSumPdf*>(ipdf);
-      RooArgList const* coeffs = nullptr;
-      RooArgList const* pdfs = nullptr;
-      if (ipdf_add) {
-        FNLOGC(std::cout, v) << "Found RooAddPdf: " << ipdf_add->GetName() << "\n";
-        coeffs = &(ipdf_add->coefList());
-        pdfs = &(ipdf_add->pdfList());
-        if (coeffs->getSize() != pdfs->getSize()) {
-          throw std::runtime_error(FNERROR("This RooAddPdf is not extended!"));
-        }
+      FNLOGC(std::cout, v) << "Found RooAddPdf: " << ipdf->GetName() << "\n";
+      RooArgList const& coeffs = ipdf->coefList();
+      RooArgList const& pdfs = ipdf->pdfList();
+      if (coeffs.getSize() != pdfs.getSize()) {
+        throw std::runtime_error(FNERROR("This RooAddPdf is not extended!"));
       }
-      if (ipdf_sum) {
-        FNLOGC(std::cout, v) << "Found RooRealSumPdf: " << ipdf_sum->GetName() << "\n";
-        coeffs = &(ipdf_sum->coefList());
-        pdfs = &(ipdf_sum->funcList());
-        if (coeffs->getSize() != pdfs->getSize()) {
-          throw std::runtime_error(FNERROR("This RooRealSumPdf is not extended!"));
-        }
-        if (pdfs->getSize() == 1) {
-           CMSHistErrorPropagator *err = dynamic_cast<CMSHistErrorPropagator*>(pdfs->at(0));
-           if (err) {
-             coeffs = &(err->coefList());
-             pdfs = new RooArgList(err->wrapperList());
-             delete_pdfs = true;
-           }
-        }
-      }
-      for (int j = 0; j < coeffs->getSize(); ++j) {
-        RooAbsReal *jcoeff = dynamic_cast<RooAbsReal*>(coeffs->at(j));
-        RooAbsReal *jpdf = dynamic_cast<RooAbsReal*>(pdfs->at(j));
+      for (int j = 0; j < coeffs.getSize(); ++j) {
+        RooAbsReal *jcoeff = dynamic_cast<RooAbsReal*>(coeffs.at(j));
+        RooAbsPdf *jpdf = dynamic_cast<RooAbsPdf*>(pdfs.at(j));
         FNLOGC(std::cout, v) << "Component " << j << "\t" << jcoeff->GetName()
                              << "\t" << jpdf->GetName() << "\n";
         ch::Process proc;
@@ -108,7 +80,6 @@ void ParseCombineWorkspace(CombineHarvester& cb, RooWorkspace& ws,
             {proc.bin(), proc.process(), jpdf->GetName(), jcoeff->GetName()});
         cb.InsertProcess(proc);
       }
-      if (delete_pdfs) delete pdfs;
     }
   }
   cb.AddWorkspace(ws);
@@ -125,18 +96,16 @@ void ParseCombineWorkspace(CombineHarvester& cb, RooWorkspace& ws,
   }
 }
 
-RooAbsReal* FindAddPdf(RooAbsReal* input) {
+RooAddPdf* FindAddPdf(RooAbsPdf* input) {
   RooAddPdf *as_add = dynamic_cast<RooAddPdf*>(input);
-  RooRealSumPdf *as_sum = dynamic_cast<RooRealSumPdf*>(input);
   if (as_add) return as_add;
-  if (as_sum) return as_sum;
   RooProdPdf *as_prod = dynamic_cast<RooProdPdf*>(input);
   if (as_prod) {
     RooArgList const& comps = as_prod->pdfList();
     for (int i = 0; i < comps.getSize(); ++i) {
-      RooAbsReal* try_add = FindAddPdf(dynamic_cast<RooAbsReal*>(comps.at(i)));
+      RooAddPdf* try_add = FindAddPdf(dynamic_cast<RooAbsPdf*>(comps.at(i)));
       if (try_add) return try_add;
-    }
+    }    
   }
   return nullptr;
 }

@@ -19,7 +19,7 @@ using boost::starts_with;
 namespace po = boost::program_options;
 
 int main(int argc, char** argv) {
-
+  
   std::string input_file, output_file;
   double lumi = -1.;
   bool add_shape_sys = true;
@@ -68,8 +68,6 @@ int main(int argc, char** argv) {
   //std::string proc_fakes = "fakes_mc";
   std::string proc_fakes = "fakes_data";
 
-  //vector<string> bkg_procs = {"TT", "TTW", "TTZ", "EWK", "Rares", proc_fakes};
-  //vector<string> bkg_procs = {"TTW", "TTZ", "EWK", proc_fakes};
   vector<string> bkg_procs = {"TTW", "TTZ", "EWK", "Rares", proc_fakes};
   cb.AddProcesses({"*"}, {"*"}, {"13TeV"}, {"*"}, bkg_procs, cats, false);
 
@@ -88,8 +86,7 @@ int main(int argc, char** argv) {
   //! [part5]
   cb.cp().signals()
       .AddSyst(cb, "lumi_$ERA", "lnN", SystMap<era>::init
-	       //({"13TeV"}, 1.027));
-	       ({"13TeV_2016"}, 1.026));
+      ({"13TeV"}, 1.027));
   //! [part5]
 
   //! [part6]
@@ -97,14 +94,12 @@ int main(int argc, char** argv) {
       .AddSyst(cb, "pdf_Higgs", "lnN", SystMap<>::init(1.036));
   cb.cp().process(sig_procs)
     .AddSyst(cb, "QCDscale_ttH", "lnN", SystMapAsymm<>::init(0.915, 1.058));
-  if ( add_shape_sys ) {
-    cb.cp().process(sig_procs)
+  cb.cp().process(sig_procs)
       .AddSyst(cb, "CMS_ttHl_thu_shape_ttH_x1", "shape", SystMap<>::init(1.0));
-    cb.cp().process(sig_procs)
+  cb.cp().process(sig_procs)
       .AddSyst(cb, "CMS_ttHl_thu_shape_ttH_y1", "shape", SystMap<>::init(1.0));
-  }
 
-  // CV: PDF and scale uncertainties for tt+jets background taken from
+  // CV: PDF and scale uncertainties for tt+jets background taken from 
   //      https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
   /*cb.cp().process({"TT"})
       .AddSyst(cb, "pdf_qqbar", "lnN", SystMap<>::init(1.03));
@@ -115,27 +110,23 @@ int main(int argc, char** argv) {
       .AddSyst(cb, "pdf_qqbar", "lnN", SystMap<>::init(1.04));
   cb.cp().process({"TTW"})
       .AddSyst(cb, "QCDscale_ttW", "lnN", SystMap<>::init(1.12));
-  if ( add_shape_sys ) {
-    cb.cp().process({"TTW"})
+  cb.cp().process({"TTW"})
       .AddSyst(cb, "CMS_ttHl_thu_shape_ttW_x1", "shape", SystMap<>::init(1.0));
-    cb.cp().process({"TTW"})
+  cb.cp().process({"TTW"})
       .AddSyst(cb, "CMS_ttHl_thu_shape_ttW_y1", "shape", SystMap<>::init(1.0));
-  }
 
   cb.cp().process({"TTZ"})
       .AddSyst(cb, "pdf_gg", "lnN", SystMap<>::init(0.966));
   cb.cp().process({"TTZ"})
       .AddSyst(cb, "QCDscale_ttZ", "lnN", SystMap<>::init(1.11));
-  if ( add_shape_sys ) {
-    cb.cp().process({"TTZ"})
+  cb.cp().process({"TTZ"})
       .AddSyst(cb, "CMS_ttHl_thu_shape_ttZ_x1", "shape", SystMap<>::init(1.0));
-    cb.cp().process({"TTZ"})
+  cb.cp().process({"TTZ"})
       .AddSyst(cb, "CMS_ttHl_thu_shape_ttZ_y1", "shape", SystMap<>::init(1.0));
-  }
 
   cb.cp().process({"EWK"})
       .AddSyst(cb, "CMS_ttHl_EWK", "lnN", SystMap<>::init(1.5));
-
+  
   cb.cp().process({"Rares"})
       .AddSyst(cb, "CMS_ttHl_Rares", "lnN", SystMap<>::init(1.5));
 
@@ -143,19 +134,19 @@ int main(int argc, char** argv) {
       .AddSyst(cb, "CMS_ttHl_fakes", "lnN", SystMap<>::init(1.6));
 
   cb.cp().process(ch::JoinStr({sig_procs, {"TTW", "TTZ", "EWK", "Rares"}}))
-      .AddSyst(cb, "CMS_ttHl_trigger_uncorr", "lnN", SystMap<>::init(1.03));
+      .AddSyst(cb, "CMS_ttHl_trigger_uncorr", "lnN", SystMap<>::init(1.01));
   cb.cp().process(ch::JoinStr({sig_procs, {"TTW", "TTZ", "EWK", "Rares"}}))
       .AddSyst(cb, "CMS_ttHl_lepEff_elloose", "lnN", SystMap<>::init(1.02));
   cb.cp().process(ch::JoinStr({sig_procs, {"TTW", "TTZ", "EWK", "Rares"}}))
-      .AddSyst(cb, "CMS_ttHl_lepEff_muloose", "lnN", SystMap<>::init(1.02));
+      .AddSyst(cb, "CMS_ttHl_lepEff_muloose", "lnN", SystMap<>::init(1.015));
   cb.cp().process(ch::JoinStr({sig_procs, {"TTW", "TTZ", "EWK", "Rares"}}))
-      .AddSyst(cb, "CMS_ttHl_lepEff_tight", "lnN", SystMap<>::init(1.03));
+      .AddSyst(cb, "CMS_ttHl_lepEff_tight", "lnN", SystMap<>::init(1.06));
   cb.cp().process(ch::JoinStr({sig_procs, {"TTW", "TTZ", "EWK", "Rares"}}))
       .AddSyst(cb, "CMS_ttHl_tauID", "lnN", SystMap<>::init(1.12));
   if ( add_shape_sys ) {
     cb.cp().process(ch::JoinStr({sig_procs, {"TTW", "TTZ", "EWK", "Rares"}}))
         .AddSyst(cb, "CMS_ttHl_JES", "shape", SystMap<>::init(1.0));
-
+  
     cb.cp().process(ch::JoinStr({sig_procs, {"TTW", "TTZ", "EWK", "Rares"}}))
         .AddSyst(cb, "CMS_ttHl_tauES", "shape", SystMap<>::init(1.0));
   }
@@ -174,17 +165,17 @@ int main(int argc, char** argv) {
   //! [part7]
   cb.cp().backgrounds().ExtractShapes(
       aux_shapes + input_file,
-      "$PROCESS",
-      "$PROCESS_$SYSTEMATIC");
+      "x_$PROCESS",
+      "x_$PROCESS_$SYSTEMATIC");
   cb.cp().signals().ExtractShapes(
       aux_shapes + input_file,
-      "$PROCESS",
-      "$PROCESS_$SYSTEMATIC");
+      "x_$PROCESS",
+      "x_$PROCESS_$SYSTEMATIC");
   //! [part7]
 
   // CV: scale yield of all signal and background processes by lumi/2.3,
   //     with 2.3 corresponding to integrated luminosity of 2015 dataset
-  if ( lumi > 0. ) {
+  if ( lumi > 0. ) {  
     std::cout << "scaling signal and background yields to L=" << lumi << "fb^-1 @ 13 TeV." << std::endl;
     cb.cp().process(ch::JoinStr({sig_procs, {"TTW", "TTZ", "EWK", "Rares", proc_fakes}})).ForEachProc([&](ch::Process* proc) {
       proc->set_rate(proc->rate()*lumi/2.3);
@@ -225,7 +216,7 @@ int main(int argc, char** argv) {
     //cb.cp().bin({b}).mass({"*"}).WriteDatacard(
     //	b + ".txt", output);
     cb.cp().bin({b}).mass({"*"}).WriteDatacard(
-      TString(output_file.data()).ReplaceAll(".root", ".txt").Data(), output);
+      TString(output_file.data()).ReplaceAll(".root", ".txt").Data(), output);	
   }
   //! [part9]
 

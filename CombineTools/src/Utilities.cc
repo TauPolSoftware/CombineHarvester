@@ -173,7 +173,6 @@ TH1F RebinHist(TH1F const& hist) {
              static_cast<float>(hist.GetNbinsX()));
   for (int i = 1; i <= hist.GetNbinsX(); ++i) {
     shape.SetBinContent(i, hist.GetBinContent(i));
-    shape.SetBinError(i, hist.GetBinError(i));
   }
   return shape;
 }

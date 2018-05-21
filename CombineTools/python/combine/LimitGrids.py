@@ -54,16 +54,6 @@ class AsymptoticGrid(CombineToolBase):
       else : blacklisted_points.extend(itertools.product(utils.split_vals(igrid[0]), utils.split_vals(igrid[1]), utils.split_vals(igrid[2])))
     POIs = cfg['POIs']
     opts = cfg['opts']
-    
-    # remove problematic points (points with NaN values)
-    points_to_remove = [];
-    grids_to_remove = cfg.get('grids_to_remove', None)
-    if grids_to_remove is not None :
-        for igrid in grids_to_remove:
-            assert(len(igrid) == 2)
-            points_to_remove.extend(itertools.product(utils.split_vals(igrid[0]),utils.split_vals(igrid[1])))
-    for p in points_to_remove:
-        points.remove(p)
 
     # Have to merge some arguments from both the command line and the "opts" in the json file
     to_freeze = []
@@ -209,7 +199,7 @@ class HybridNewGrid(CombineToolBase):
             print '>> Warning, HypoTestResult from file(s) %s does not contain any toy results, did something go wrong in your fits?' % '+'.join(files)
         return results[0]
 
-    def ValidateHypoTest(self, hyp_res, min_toys, max_toys, contours, signif, cl, output=False, verbose=False, precomputed=None, feldman_cousins=False):
+    def ValidateHypoTest(self, hyp_res, min_toys, max_toys, contours, signif, cl, output=False, verbose=False, precomputed=None):
         results = {}
 
         if hyp_res is None and precomputed is None:
@@ -275,13 +265,8 @@ class HybridNewGrid(CombineToolBase):
             if hyp_res is not None:
                 # Currently assume we always want to use CLs, should provide option
                 # for CLs+b at some point
-                if not feldman_cousins:
-                    CLs = hyp_res.CLs()
-                    CLsErr = hyp_res.CLsError()
-                else:
-                    #For simplicity label CLs+b the same as CLs when using FC mode...
-                    CLs = hyp_res.CLsplusb()
-                    CLsErr = hyp_res.CLsplusbError()
+                CLs = hyp_res.CLs()
+                CLsErr = hyp_res.CLsError()
                 testStatObs = hyp_res.GetTestStatisticData()
             if precomputed is not None:
                 CLs = precomputed[contour][0]
@@ -339,7 +324,6 @@ class HybridNewGrid(CombineToolBase):
         incomplete      = cfg.get('output_incomplete', False)
         outfile         = cfg.get('output','hybrid_grid.root')
         from_asymptotic_settings = cfg.get('from_asymptotic_settings', dict())
-        feldman_cousins = cfg.get('FC',False)
         # NB: blacklisting not yet implemented for this method
 
         # Have to merge some arguments from both the command line and the "opts" in the json file
@@ -535,8 +519,7 @@ class HybridNewGrid(CombineToolBase):
                 cl       = cl,
                 output   = self.args.output,
                 verbose  = verbose,
-                precomputed = precomputed,
-                feldman_cousins=feldman_cousins)
+                precomputed = precomputed)
 
             print '>> Point %s [%i toys, %s]' % (name, point_res['ntoys'], 'DONE' if ok else 'INCOMPLETE')
 
@@ -582,23 +565,9 @@ class HybridNewGrid(CombineToolBase):
 
                 # Build to combine command. Here we'll take responsibility for setting the name and the
                 # model parameters, making sure the latter are frozen
-                if not feldman_cousins:
-                    set_arg = ','.join(['%s=%s,%s=%s' % (POIs[0], key[0], POIs[1], key[1])] + to_set)
-                    freeze_arg = ','.join(['%s,%s' % (POIs[0], POIs[1])] + to_freeze)
-                    point_args = '-n .%s --setPhysicsModelParameters %s --freezeNuisances %s' % (name, set_arg, freeze_arg)
-                else:
-                    single_point_arg = '.'.join(['%s=%s,%s=%s' % (POIs[0], key[0], POIs[1], key[1])])
-                    if len(to_set) > 0 and len(to_freeze) > 0:
-                        point_args = '-n .%s --singlePoint %s --setPhysicsModelParameters %s --freezeNuisances %s' % (name, single_point_arg, to_set, to_freeze)
-                    elif len(to_set) > 0:
-                        point_args = '-n .%s --singlePoint %s --setPhysicsModelParameters %s' % (name, single_point_arg, to_set)
-                    elif len(to_freeze) > 0:
-                        point_args = '-n .%s --singlePoint %s --freezeNuisances %s' % (name, single_point_arg, to_freeze)
-                    else :
-                        point_args = '-n .%s --singlePoint %s ' % (name, single_point_arg)
-
-
-
+                set_arg = ','.join(['%s=%s,%s=%s' % (POIs[0], key[0], POIs[1], key[1])] + to_set)
+                freeze_arg = ','.join(['%s,%s' % (POIs[0], POIs[1])] + to_freeze)
+                point_args = '-n .%s --setPhysicsModelParameters %s --freezeNuisances %s' % (name, set_arg, freeze_arg)
                 if self.args.from_asymptotic:
                     mval = key[0]
                     command = []

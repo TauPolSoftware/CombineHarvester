@@ -57,7 +57,7 @@ class ZttPolarisationDatacards(object):
                 "et_combined_oneprong_oneprong" : 1060,
 
                 "et_a1_2" : 1012,
-                "et_rho_2" : 1022,
+                "et_rho_2" : 1021,
                 "et_oneprong_1" : 1031,
                 "et_oneprong_2" : 1032,
 
