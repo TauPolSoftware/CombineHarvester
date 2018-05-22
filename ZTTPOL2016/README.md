@@ -22,11 +22,26 @@ ztt_<channel>_<channel>_<categorie>_<era>.root
 ## Text2Workspace
 
 ```bash
-combineTool.py -M T2W -i <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/ztt*13TeV.txt -o workspace.root -P CombineHarvester.ZTTPOL2016.taupolarisationmodels:ztt_pol --parallel 8
+combineTool.py -M T2W -o workspace.root -P CombineHarvester.ZTTPOL2016.taupolarisationmodels:ztt_pol -m 0 -i <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/ztt*13TeV.txt --parallel 8
 ```
 
 ## Fitting
 
+### Simple MultiDimFit
+
 ```bash
-combineTool.py -M MultiDimFit -d <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --algo singles -P pol --redefineSignalPOIs pol
+combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --there -m 0 -d <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --parallel 8
 ```
+
+### Likelihood scan for polarisation (1D)
+
+```bash
+combineTool.py -M MultiDimFit --points 100 --redefineSignalPOIs pol --algo grid --there -n .pol -m 0 -d <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --parallel 8 # --setPhysicsModelParameterRanges pol=-1,1
+```
+
+### Likelihood scan for polarisation and signal strength (2D)
+
+```bash
+combineTool.py -M MultiDimFit --points 2500 --redefineSignalPOIs pol,r --algo grid --there -n .pol_r -m 0 -d <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --parallel 8
+```
+ 
