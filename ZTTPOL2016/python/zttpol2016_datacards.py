@@ -31,7 +31,8 @@ class ZttPolarisationDatacards(object):
 
         self._mapping_category2binid = {
             "mt" : {
-
+                "mt_inclusive" : 1000,
+                
                 "mt_a1" : 1010,
                 "mt_rho" : 1020,
                 "mt_oneprong" : 1030,
@@ -47,6 +48,7 @@ class ZttPolarisationDatacards(object):
 
             },
             "et" : {
+                "et_inclusive" : 1000,
 
                 "et_a1" : 1010,
                 "et_rho" : 1020,
@@ -63,10 +65,13 @@ class ZttPolarisationDatacards(object):
 
             },
             "em" : {
+                "em_inclusive" : 1000,
 
                 "em_oneprong" : 1030,
             },
             "tt" : {
+                "tt_inclusive" : 1000,
+                
                 "tt_a1" : 1010,
                 "tt_rho" : 1020,
                 "tt_oneprong" : 1030,
@@ -102,7 +107,7 @@ class ZttPolarisationDatacards(object):
             # MT channel
             self.add_processes(
                     channel="mt",
-                    categories=["mt_"+category for category in ["rho", "oneprong", "a1", "a1_2", "rho_2", "oneprong_2", "oneprong_1",
+                    categories=["mt_"+category for category in ["inclusive", "rho", "oneprong", "a1", "a1_2", "rho_2", "oneprong_2", "oneprong_1",
                                                                 "combined_a1_oneprong", "combined_rho_oneprong", "combined_oneprong_oneprong"]], # "a1"
                     bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
@@ -161,7 +166,7 @@ class ZttPolarisationDatacards(object):
             # ET channel
             self.add_processes(
                     channel="et",
-                    categories=["et_"+category for category in ["rho", "oneprong", "a1", "a1_2", "rho_2", "oneprong_2", "oneprong_1",
+                    categories=["et_"+category for category in ["inclusive", "rho", "oneprong", "a1", "a1_2", "rho_2", "oneprong_2", "oneprong_1",
                                                                 "combined_a1_oneprong", "combined_rho_oneprong", "combined_oneprong_oneprong"]], # "a1"
                     bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
@@ -220,7 +225,7 @@ class ZttPolarisationDatacards(object):
             # TT channel
             self.add_processes(
                     channel="tt",
-                    categories=["tt_"+category for category in ["rho", "rho_1", "rho_2", "oneprong", "oneprong_1", "oneprong_2",
+                    categories=["tt_"+category for category in ["inclusive", "rho", "rho_1", "rho_2", "oneprong", "oneprong_1", "oneprong_2",
                                                                  "a1","a1_1","a1_2","combined_a1_a1","combined_a1_rho","combined_a1_oneprong",  "combined_oneprong_oneprong",
                                                                 "combined_rho_rho","combined_rho_oneprong"]], # "a1"
                     bkg_processes=["ZL", "ZJ", "TT", "VV", "W", "QCD"],
@@ -274,7 +279,7 @@ class ZttPolarisationDatacards(object):
             # EM channel
             self.add_processes(
                     channel="em",
-                    categories=["em_"+category for category in ["oneprong"]],
+                    categories=["em_"+category for category in ["inclusive", "oneprong", "oneprong_1", "oneprong_2"]],
                     bkg_processes=["ZLL", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
