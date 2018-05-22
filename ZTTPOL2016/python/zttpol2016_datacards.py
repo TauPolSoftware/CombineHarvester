@@ -68,6 +68,11 @@ class ZttPolarisationDatacards(object):
                 "em_inclusive" : 1000,
 
                 "em_oneprong" : 1030,
+
+                "em_oneprong_1" : 1031,
+                "em_oneprong_2" : 1032,
+                
+                "em_combined_oneprong_oneprong" : 1060,
             },
             "tt" : {
                 "tt_inclusive" : 1000,
@@ -279,7 +284,7 @@ class ZttPolarisationDatacards(object):
             # EM channel
             self.add_processes(
                     channel="em",
-                    categories=["em_"+category for category in ["inclusive", "oneprong", "oneprong_1", "oneprong_2"]],
+                    categories=["em_"+category for category in ["inclusive", "oneprong", "oneprong_1", "oneprong_2", "combined_oneprong_oneprong"]],
                     bkg_processes=["ZLL", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
