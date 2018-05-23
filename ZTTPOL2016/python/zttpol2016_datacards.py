@@ -164,14 +164,14 @@ class ZttPolarisationDatacards(object):
             #                                                                                                            (["13TeV"], 1.0))
             
             # DY
-            self.cb.cp().channel(["mt"]).process( ["ZTT","ZJ","ZL"]).AddSyst(self.cb, "CMS_htt_dyShape_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
+            #self.cb.cp().channel(["mt"]).process( ["ZTT","ZJ","ZL"]).AddSyst(self.cb, "CMS_htt_dyShape_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
             
             # TTbar
             self.cb.cp().channel(["mt"]).process( ["TTJ","TTT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
             
             # ZL
-            self.cb.cp().channel(["mt"]).process( ["ZL"]).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
-            self.cb.cp().channel(["mt"]).process( ["ZL"]).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
+            # self.cb.cp().channel(["mt"]).process( ["ZL"]).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
+            # self.cb.cp().channel(["mt"]).process( ["ZL"]).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong1pizero_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
             
             # Trigger
             self.cb.cp().channel(["mt"]).process(sig_procs +  all_mc_bkgs_no_WQCD).AddSyst(self.cb,
@@ -234,7 +234,7 @@ class ZttPolarisationDatacards(object):
             #                                                                                                            (["13TeV"], 1.0))
             
             # DY
-            self.cb.cp().channel(["et"]).process( ["ZTT","ZJ","ZL"]).AddSyst(self.cb, "CMS_htt_dyShape_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
+            #self.cb.cp().channel(["et"]).process( ["ZTT","ZJ","ZL"]).AddSyst(self.cb, "CMS_htt_dyShape_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
             
             # TTbar
             self.cb.cp().channel(["et"]).process( ["TTJ","TTT"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
@@ -291,7 +291,7 @@ class ZttPolarisationDatacards(object):
                                                                                                                            (       ["13TeV"], ["ZLL", "ZL"], 1.30))
 
             # DY
-            self.cb.cp().channel(["tt"]).process( ["ZTT","ZJ","ZL"]).AddSyst(self.cb, "CMS_htt_dyShape_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
+            #self.cb.cp().channel(["tt"]).process( ["ZTT","ZJ","ZL"]).AddSyst(self.cb, "CMS_htt_dyShape_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
             
             # TTBar
             self.cb.cp().channel(["tt"]).process( ["TTJ","TTT","TTJ_rest"]).AddSyst(self.cb, "CMS_htt_ttbarShape_$ERA", "shape", ch.SystMap("era")(["13TeV"], 1.00))
