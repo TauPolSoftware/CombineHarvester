@@ -311,7 +311,7 @@ class ZttPolarisationDatacards(object):
             # EM channel
             self.add_processes(
                     channel="em",
-                    categories=["em_"+category for category in ["inclusive", "oneprong"]],
+                    categories=["em_"+category for category in ["inclusive", "oneprong","oneprong_1","oneprong_2","combined_oneprong_oneprong"]],
                     bkg_processes=["ZLL", "TT", "VV", "W", "QCD"],
                     sig_processes=["ZTTPOSPOL", "ZTTNEGPOL"],
                     analysis=["ztt"],
