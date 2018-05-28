@@ -53,7 +53,7 @@ combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --t
 ```bash
 combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --there -n .pol -m 0 -d <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --parallel 8
 
-for FIT_RESULT in plots/2018-05-25_ztt_polarisation_datacards_mt_singletau_m_vis_nosysts/datacards/{individual/*/*,category/*,channel/*,combined}/fitDiagnostics.pol.root; do PostFitShapesFromWorkspace --postfit -w `echo ${FIT_RESULT} | sed -e "s@/fitDiagnostics.pol.root@/workspace.root@g"` -d `echo ${FIT_RESULT} | sed -e "s@/fitDiagnostics.pol.root@/ztt*_13TeV.txt@g"` -o `echo ${FIT_RESULT} | sed -e "s@/fitDiagnostics.pol.root@/prefitPostfitShapes.pol.root@g"` -m 0 -f ${FIT_RESULT}:fit_s ; done
+for FIT_RESULT in <output_dir>/datacards/{individual/*/*,category/*,channel/*,combined}/fitDiagnostics.pol.root; do PostFitShapesFromWorkspace --postfit -w `echo ${FIT_RESULT} | sed -e "s@/fitDiagnostics.pol.root@/workspace.root@g"` -d `echo ${FIT_RESULT} | sed -e "s@/fitDiagnostics.pol.root@/ztt*_13TeV.txt@g"` -o `echo ${FIT_RESULT} | sed -e "s@/fitDiagnostics.pol.root@/prefitPostfitShapes.pol.root@g"` -m 0 -f ${FIT_RESULT}:fit_s ; done
 ```
 
 ### Likelihood scan for polarisation (1D)
