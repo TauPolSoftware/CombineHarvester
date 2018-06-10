@@ -300,5 +300,5 @@ class ZttPolarisationDatacards(object):
 
 			# ======================================================================
 			# Groups of systematics
-			#self.cb.SetGroup("syst", [".*"])
+			self.cb.SetGroup("syst", [".*"])
 
