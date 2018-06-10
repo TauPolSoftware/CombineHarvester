@@ -37,15 +37,14 @@ class ZttPolarisationDatacards(object):
                 "mt_rho" : 1020,
                 "mt_oneprong" : 1030,
 
-                "mt_combined_rho_oneprong" : 1040,
-                "mt_combined_a1_oneprong" : 1050,
-                "mt_combined_oneprong_oneprong" : 1060,
+                "mt_combined_a1_oneprong" : 1060,
+                "mt_combined_rho_oneprong" : 1080,
+                "mt_combined_oneprong_oneprong" : 1090,
 
                 "mt_a1_2" : 1012,
                 "mt_rho_2" : 1022,
                 "mt_oneprong_1" : 1031,
                 "mt_oneprong_2" : 1032,
-
             },
             "et" : {
                 "et_inclusive" : 1000,
@@ -54,15 +53,14 @@ class ZttPolarisationDatacards(object):
                 "et_rho" : 1020,
                 "et_oneprong" : 1030,
 
-                "et_combined_rho_oneprong" : 1040,
-                "et_combined_a1_oneprong" : 1050,
-                "et_combined_oneprong_oneprong" : 1060,
+                "et_combined_a1_oneprong" : 1060,
+                "et_combined_rho_oneprong" : 1080,
+                "et_combined_oneprong_oneprong" : 1090,
 
                 "et_a1_2" : 1012,
                 "et_rho_2" : 1022,
                 "et_oneprong_1" : 1031,
                 "et_oneprong_2" : 1032,
-
             },
             "em" : {
                 "em_inclusive" : 1000,
@@ -72,7 +70,7 @@ class ZttPolarisationDatacards(object):
                 "em_oneprong_1" : 1031,
                 "em_oneprong_2" : 1032,
 
-                "em_combined_oneprong_oneprong" : 1060,
+                "em_combined_oneprong_oneprong" : 1090,
             },
             "tt" : {
                 "tt_inclusive" : 1000,
@@ -81,21 +79,19 @@ class ZttPolarisationDatacards(object):
                 "tt_rho" : 1020,
                 "tt_oneprong" : 1030,
 
-                "tt_combined_rho_oneprong" : 1040,
-                "tt_combined_a1_oneprong" : 1050,
-                "tt_combined_oneprong_oneprong" : 1060,
-
-                "tt_combined_a1_a1" : 1070,
-                "tt_combined_a1_rho" : 1080,
-                "tt_combined_rho_rho" : 1090,
-
+                "tt_combined_a1_a1" : 1040,
+                "tt_combined_a1_rho" : 1050,
+                "tt_combined_a1_oneprong" : 1060,
+                "tt_combined_rho_rho" : 1070,
+                "tt_combined_rho_oneprong" : 1080,
+                "tt_combined_oneprong_oneprong" : 1090,
+                
                 "tt_a1_1" : 1011,
                 "tt_a1_2" : 1012,
                 "tt_rho_1" : 1021,
                 "tt_rho_2" : 1022,
                 "tt_oneprong_1" : 1031,
                 "tt_oneprong_2" : 1032,
-
             },
         }
 
