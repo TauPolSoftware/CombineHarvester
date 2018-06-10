@@ -46,8 +46,6 @@ if __name__ == "__main__":
                        help="Categories per channel. This agument needs to be set as often as --channels. [Default: %(default)s]")
     parser.add_argument("-o", "--output-dir",
                         help="Output directory. [Default: %(default)s]")
-    parser.add_argument("--SMHTTsystematics", action="store_true", default = False,
-                        help = "Use the SM HTT2016 Systematics.")
     parser.add_argument("-a", "--analysis", action = "store_true", default = False,
                         help = "Perform an Statistical Analysis")
     parser.add_argument("--no-shape-uncs", default=False, action="store_true",
@@ -69,9 +67,6 @@ if __name__ == "__main__":
     print WARNING + UNDERLINE + '-----      Creating datacard with processes and systematics...        -----' + ENDC
 
     datacards = CreateDatacard(args)
-    if args.SMHTTsystematics:
-        datacards.AddHTTSM2016Systematics()
-
 
     if args.no_shape_uncs:
         print("No shape uncs")
