@@ -235,13 +235,25 @@ def find_combination(datacards_path, fit_rootfile_name = 'higgsCombine.Test.Mult
 	fit_result_pathes = filter(lambda x: x[2].count(fit_rootfile_name) > 0,os.walk(datacards_path))
 	
 	individual_pathes = filter(lambda x: x[0].split("/")[-3] == 'individual', fit_result_pathes)
-		
-	polarisation_values = {"em":{},"et":{},"mt":{},"tt":{}}
-	for path in individual_pathes:
+	combined_pathes = filter(lambda x: x[0].split("/")[-1] == 'combined', fit_result_pathes)
+	channel_pathes = filter(lambda x: x[0].split("/")[-2] == 'channel', fit_result_pathes)
+ 		
+	polarisation_values_individual = {"em":{},"et":{},"mt":{},"tt":{}}
+ 	for path in individual_pathes:
+ 		[pol, p1s, m1s] = GetPolarisationValues(path[0] +"/"+ fit_rootfile_name)
+		polarisation_values_individual[path[0].split("/")[-2]].update( {path[0].split("/")[-1]: [pol, p1s - pol,  pol - m1s]})
+ 		
+	polarisation_values_combined = {}
+	for path in combined_pathes:
 		[pol, p1s, m1s] = GetPolarisationValues(path[0] +"/"+ fit_rootfile_name)
-		polarisation_values[path[0].split("/")[-2]].update( {path[0].split("/")[-1]: [pol, p1s, m1s]})
+		polarisation_values_combined.update({path[0].split("/")[-3] +"_"+ path[0].split("/")[-4]: [pol, p1s - pol,  pol- m1s]})
 		
-	print OKBLUE + "Categories and polarisation values:" + ENDC, polarisation_values
-	
-	#Calculate the most efficient combination
+	polarisation_values_channel = {"em":{},"et":{},"mt":{},"tt":{}}
+	for path in channel_pathes:
+		[pol, p1s, m1s] = GetPolarisationValues(path[0] +"/"+ fit_rootfile_name)
+		polarisation_values_channel[path[0].split("/")[-1]].update({path[0].split("/")[-1] +"_"+ path[0].split("/")[-4]: [pol, p1s - pol,  pol- m1s]})
+		
+	return polarisation_values_combined,polarisation_values_individual,polarisation_values_channel
+ 	
+		
 	
