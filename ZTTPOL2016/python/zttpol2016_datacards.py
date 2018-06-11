@@ -268,10 +268,8 @@ class ZttPolarisationDatacards(object):
 			# ZL shape and electron/muon to tau fake only in mt and et channels (updated March 22)
 			###############################################################################
 
-			#self.cb.cp().process( ["ZL"]).channel(["mt", "et"]).bin(et_oneprong_categories+mt_oneprong_categories).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong_$ERA", "shape", ch.SystMap()(1.00))
-			#self.cb.cp().process( ["ZL"]).channel(["mt", "et"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong1pizero_$ERA", "shape", ch.SystMap()(1.00))
-			self.cb.cp().process( ["ZL"]).channel(["mt"]).bin(et_oneprong_categories+mt_oneprong_categories).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong_$ERA", "shape", ch.SystMap()(1.00))
-			self.cb.cp().process( ["ZL"]).channel(["mt"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong1pizero_$ERA", "shape", ch.SystMap()(1.00))
+			self.cb.cp().process( ["ZL"]).channel(["mt", "et"]).bin(et_oneprong_categories+mt_oneprong_categories).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong_$ERA", "shape", ch.SystMap()(1.00))
+			self.cb.cp().process( ["ZL"]).channel(["mt", "et"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "CMS_ZLShape_$CHANNEL_1prong1pizero_$ERA", "shape", ch.SystMap()(1.00))
 
 			self.cb.cp().process( ["ZL"]).channel(["mt"]).bin(mt_oneprong_categories).AddSyst(self.cb, "CMS_mFakeTau_1prong_$ERA", "shape", ch.SystMap()(1.00))
 			self.cb.cp().process( ["ZL"]).channel(["mt"]).bin(mt_rho_categories).AddSyst(self.cb, "CMS_mFakeTau_1prong1pizero_$ERA", "shape", ch.SystMap()(1.00))
