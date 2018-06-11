@@ -143,7 +143,7 @@ class ZttPolarisationDatacards(object):
 			
 			# ======================================================================
 			# EM channel
-			em_oneprong_categories = ["tt_"+category for category in ["inclusive", "oneprong", "oneprong_1", "oneprong_2", "combined_oneprong_oneprong"]]
+			em_oneprong_categories = ["em_"+category for category in ["inclusive", "oneprong", "oneprong_1", "oneprong_2", "combined_oneprong_oneprong"]]
 			em_rho_categories = []
 			em_a1_categories = []
 			self.add_processes(
