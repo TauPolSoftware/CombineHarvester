@@ -160,7 +160,29 @@ class ZttPolarisationDatacards(object):
 			all_mc_bkgs = ["ZL", "ZJ", "ZTTPOSPOL", "ZTTNEGPOL", "TTJ", "TTT", "TT", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest", "VV", "VVT", "VVJ", "EWKZ"]
 			all_mc_bkgs_no_W = ["ZL", "ZJ", "ZTTPOSPOL", "ZTTNEGPOL", "TTJ", "TTT", "TT", "ZJ_rest", "TTJ_rest", "VVJ_rest", "VV", "VVT", "VVJ", "EWKZ"]
 			all_mc_bkgs_no_TTJ = ["ZL", "ZJ", "ZTTPOSPOL", "ZTTNEGPOL", "TTT", "TT", "ZJ_rest", "TTJ_rest", "VVJ_rest", "VV", "VVT", "VVJ", "EWKZ"]
+			
+			# ##############################################################################
+			#   lumi
+			# ##############################################################################
 
+			self.cb.cp().process(["VV", "VVT", "VVJ"]).AddSyst(self.cb, "lumi_13TeV", "lnN", SystMap()(1.025))
+			self.cb.cp().process(["W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).AddSyst(self.cb, "lumi_13TeV", "lnN", SystMap()(1.025))
+
+			# Add luminosity uncertainty for W in em, tt, ttbar and the mm region as norm is from MC
+			self.cb.cp().process(["W"]).channel(["tt", "em"]).AddSyst(self.cb, "lumi_13TeV", "lnN", SystMap()(1.025))
+
+			# ##############################################################################
+			#   trigger
+			# ##############################################################################
+
+			cb.cp().process(all_mc_bkgs_no_W).channel(["mt", "et"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", SystMap()(1.02))
+			cb.cp().process(all_mc_bkgs).channel(["em"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", SystMap()(1.02))
+			cb.cp().process(all_mc_bkgs).channel(["tt"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", SystMap()(1.10));
+
+			# ##############################################################################
+			#   Electron, muon and tau Id  efficiencies
+			# ##############################################################################
+			
 			self.cb.cp().AddSyst(self.cb, "CMS_eff_m", "lnN", ch.SystMap("channel", "process")
 					(["mt"], all_mc_bkgs_no_W, 1.02)
 					(["em"], all_mc_bkgs, 1.02))
