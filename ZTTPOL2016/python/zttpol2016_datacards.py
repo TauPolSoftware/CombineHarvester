@@ -165,19 +165,19 @@ class ZttPolarisationDatacards(object):
 			#   lumi
 			# ##############################################################################
 
-			self.cb.cp().process(["VV", "VVT", "VVJ"]).AddSyst(self.cb, "lumi_13TeV", "lnN", SystMap()(1.025))
-			self.cb.cp().process(["W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).AddSyst(self.cb, "lumi_13TeV", "lnN", SystMap()(1.025))
+			self.cb.cp().process(["VV", "VVT", "VVJ"]).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
+			self.cb.cp().process(["W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
 
 			# Add luminosity uncertainty for W in em, tt, ttbar and the mm region as norm is from MC
-			self.cb.cp().process(["W"]).channel(["tt", "em"]).AddSyst(self.cb, "lumi_13TeV", "lnN", SystMap()(1.025))
+			self.cb.cp().process(["W"]).channel(["tt", "em"]).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
 
 			# ##############################################################################
 			#   trigger
 			# ##############################################################################
 
-			cb.cp().process(all_mc_bkgs_no_W).channel(["mt", "et"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", SystMap()(1.02))
-			cb.cp().process(all_mc_bkgs).channel(["em"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", SystMap()(1.02))
-			cb.cp().process(all_mc_bkgs).channel(["tt"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", SystMap()(1.10));
+			self.cb.cp().process(all_mc_bkgs_no_W).channel(["mt", "et"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", ch.SystMap()(1.02))
+			self.cb.cp().process(all_mc_bkgs).channel(["em"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", ch.SystMap()(1.02))
+			self.cb.cp().process(all_mc_bkgs).channel(["tt"]).AddSyst(self.cb, "CMS_eff_trigger_$CHANNEL_$ERA", "lnN", ch.SystMap()(1.10));
 
 			# ##############################################################################
 			#   Electron, muon and tau Id  efficiencies
