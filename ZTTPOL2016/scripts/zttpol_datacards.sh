@@ -8,11 +8,11 @@ if [ -x "$(command -v makePlots_datacardsZttPolarisation.py)" ]
 then
 	## ===== omegaBarSvfit =============================================================================
 
-	## polarisationOmegaBarSvfit_1 (em, et, mt)
-	#$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/omegaBarSvfit_1 -c em --categories em_oneprong_1 -c et --categories et_oneprong_1 -c mt --categories mt_oneprong_1 --clear-output-dir --use-asimov-dataset
+	# polarisationOmegaBarSvfit_1 (em, et, mt)
+	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/omegaBarSvfit_1 -c em --categories em_oneprong_1 -c et --categories et_oneprong_1 -c mt --categories mt_oneprong_1 --clear-output-dir --use-asimov-dataset
 
-	## polarisationOmegaBarSvfit_1 (em, et, mt), polarisationOmegaBarSvfit_1/2 (tt)
-	#$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/omegaBarSvfit_2 -c em --categories em_oneprong_2 -c et --categories et_a1 et_rho et_oneprong -c mt --categories mt_a1 mt_rho mt_oneprong -c tt --categories tt_a1 tt_rho tt_oneprong --clear-output-dir --use-asimov-dataset
+	# polarisationOmegaBarSvfit_2 (em, et, mt), polarisationOmegaBarSvfit_1/2 (tt)
+	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/omegaBarSvfit_2 -c em --categories em_oneprong_2 -c et --categories et_a1 et_rho et_oneprong -c mt --categories mt_a1 mt_rho mt_oneprong -c tt --categories tt_a1 tt_rho tt_oneprong --clear-output-dir --use-asimov-dataset
 
 	# polarisationCombinedOmegaBarSvfit (em, et, mt, tt)
 	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/combinedOmegaBarSvfit -c em --categories em_combined_oneprong_oneprong -c et --categories et_combined_a1_oneprong et_combined_rho_oneprong et_combined_oneprong_oneprong -c mt --categories mt_combined_a1_oneprong mt_combined_rho_oneprong mt_combined_oneprong_oneprong -c tt --categories tt_combined_a1_a1 tt_combined_a1_rho tt_combined_a1_oneprong tt_combined_rho_rho tt_combined_rho_oneprong tt_combined_oneprong_oneprong --clear-output-dir --use-asimov-dataset
@@ -20,11 +20,11 @@ then
 
 	## ===== omegaBarSvfitM91 ==========================================================================
 
-	## polarisationOmegaBarSvfitM91_1 (em, et, mt)
-	#$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/omegaBarSvfitM91_1 -c em --categories em_oneprong_1 -c et --categories et_oneprong_1 -c mt --categories mt_oneprong_1 --clear-output-dir --use-asimov-dataset --omega-version BarSvfitM91
+	# polarisationOmegaBarSvfitM91_1 (em, et, mt)
+	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/omegaBarSvfitM91_1 -c em --categories em_oneprong_1 -c et --categories et_oneprong_1 -c mt --categories mt_oneprong_1 --clear-output-dir --use-asimov-dataset --omega-version BarSvfitM91
 
-	## polarisationOmegaBarSvfitM91_1 (em, et, mt), polarisationOmegaBarSvfit_1/2 (tt)
-	#$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/omegaBarSvfitM91_2 -c em --categories em_oneprong_2 -c et --categories et_a1 et_rho et_oneprong -c mt --categories mt_a1 mt_rho mt_oneprong -c tt --categories tt_a1 tt_rho tt_oneprong --clear-output-dir --use-asimov-dataset --omega-version BarSvfitM91
+	# polarisationOmegaBarSvfitM91_2 (em, et, mt), polarisationOmegaBarSvfit_1/2 (tt)
+	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/omegaBarSvfitM91_2 -c em --categories em_oneprong_2 -c et --categories et_a1 et_rho et_oneprong -c mt --categories mt_a1 mt_rho mt_oneprong -c tt --categories tt_a1 tt_rho tt_oneprong --clear-output-dir --use-asimov-dataset --omega-version BarSvfitM91
 
 	# polarisationCombinedOmegaBarSvfitM91 (em, et, mt, tt)
 	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/combinedOmegaBarSvfitM91 -c em --categories em_combined_oneprong_oneprong -c et --categories et_combined_a1_oneprong et_combined_rho_oneprong et_combined_oneprong_oneprong -c mt --categories mt_combined_a1_oneprong mt_combined_rho_oneprong mt_combined_oneprong_oneprong -c tt --categories tt_combined_a1_a1 tt_combined_a1_rho tt_combined_a1_oneprong tt_combined_rho_rho tt_combined_rho_oneprong tt_combined_oneprong_oneprong --clear-output-dir --use-asimov-dataset --omega-version BarSvfitM91
@@ -41,11 +41,11 @@ then
 
 	## ===== visible mass ==============================================================================
 
-	## m_vis, inclusive (em, et, mt, tt)
-	#$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/m_vis_inclusive -c em --categories em_oneprong_1 -c et --categories et_oneprong_1 -c mt --categories mt_oneprong_1 -c tt --categories inclusive --clear-output-dir --use-asimov-dataset -x m_vis
+	# m_vis, inclusive (em, et, mt, tt)
+	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/m_vis_inclusive -c em --categories em_oneprong_1 -c et --categories et_oneprong_1 -c mt --categories mt_oneprong_1 -c tt --categories inclusive --clear-output-dir --use-asimov-dataset -x m_vis
 
-	## m_vis, omega categorisation (em, et, mt, tt)
-	#$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/m_vis_omegaCategories -c em --categories em_oneprong_2 -c et --categories et_a1 et_rho et_oneprong -c mt --categories mt_a1 mt_rho mt_oneprong -c tt --categories tt_a1 tt_rho tt_oneprong --clear-output-dir --use-asimov-dataset -x m_vis
+	# m_vis, omega categorisation (tt)
+	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/m_vis_omegaCategories -c tt --categories tt_a1 tt_rho tt_oneprong --clear-output-dir --use-asimov-dataset -x m_vis
 
 	# m_vis, combinedOmega categorisation (em, et, mt, tt)
 	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py -i $1 -n 8 -o $2/m_vis_combinedOmegaCategories -c em --categories em_combined_oneprong_oneprong -c et --categories et_combined_a1_oneprong et_combined_rho_oneprong et_combined_oneprong_oneprong -c mt --categories mt_combined_a1_oneprong mt_combined_rho_oneprong mt_combined_oneprong_oneprong -c tt --categories tt_combined_a1_a1 tt_combined_a1_rho tt_combined_a1_oneprong tt_combined_rho_rho tt_combined_rho_oneprong tt_combined_oneprong_oneprong --clear-output-dir --use-asimov-dataset -x m_vis
