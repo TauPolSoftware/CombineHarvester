@@ -2,7 +2,7 @@
 
 # Mandatory options
 # $1: datacards output base directory
-# $2: www base directory
+
 
 for WORKSPACE in `ls $1/best_choice/datacards/combined/workspace.root $1/workspace.root 2> /dev/null`
 do
