@@ -59,5 +59,5 @@ fi
 
 # ===== text2workspace ============================================================================
 
-combineTool.py -M T2W -o workspace.root -P CombineHarvester.ZTTPOL2016.taupolarisationmodels:ztt_pol -m 0 -i $2/best_choice/datacards/{individual/*/*,category/*,channel/*,combined}/ztt*13TeV.txt --parallel 8
+combineTool.py -M T2W -o workspace.root -P CombineHarvester.ZTTPOL2016.taupolarisationmodels:ztt_pol -m 0 -i $2/*/datacards/{individual/*/*,category/*,channel/*,combined}/ztt*13TeV.txt --parallel 8
 
