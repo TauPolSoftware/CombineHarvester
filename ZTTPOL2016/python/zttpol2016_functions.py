@@ -50,31 +50,18 @@ def CreateDatacard(args):
 	return datacards
 
 
-def ExtractShapes(datacards,input_dir):
+def ExtractShapes(datacards, input_dir):
 	'''Extract the Shape uncertainties from root input histograms. '''
-	#Find the files present in the input_dir
-	files_in_input_dir = [file.split("_") for file in os.listdir(input_dir) if os.path.isfile(os.path.join(input_dir, file))]
-	categories_in_input_dir = [reduce( lambda x,y: x + "_" + y, strings[2:-1]) for strings in files_in_input_dir]
-
 	for chn in datacards.cb.channel_set():
-		bins = filter(lambda bin: bin.split('_')[0] == chn,datacards.cb.bin_set())
-		bins = filter(lambda x: categories_in_input_dir.count(x) >= 1, bins)
-		for bin in bins:
+		for category in datacards.cb.cp().channel([chn]).bin_set():
 			try:
-				#Background shapes
-				file = input_dir + "/ztt_" + chn +"_" + bin + "_13TeV.root"
-				datacards.cb.cp().channel([chn]).bin([bin]).backgrounds().ExtractShapes(
-				   file, '$BIN/$PROCESS', '$BIN/$PROCESS_$SYSTEMATIC'
-				)
-				#Signal shapes
-				datacards.cb.cp().channel([chn]).bin([bin]).signals().ExtractShapes(
-					file, '$BIN/$PROCESS', '$BIN/$PROCESS'
-				)
-				print OKGREEN + 'Extracting Shapes for:' + ENDC, bin
+				input_file = os.path.join(input_dir, "ztt_" + chn + "_" + category + "_13TeV.root")
+				datacards.cb.cp().channel([chn]).bin([category]).ExtractShapes(input_file, "$BIN/$PROCESS", "$BIN/$PROCESS_$SYSTEMATIC")
+				print OKGREEN + "Extracting Shapes for:" + ENDC, category
 			except Exception as e:
 				print FAIL + "Extracting Shapes from input files failed:" + ENDC
-				(ty, val, tb)=sys.exc_info()
-				print FAIL + "Error on line :" + ENDC + '{}'.format(sys.exc_info()[-1].tb_lineno)
+				(ty, val, tb) = sys.exc_info()
+				print FAIL + "Error on line :" + ENDC + "{}".format(sys.exc_info()[-1].tb_lineno)
 				print FAIL + "Err Type	  :" + ENDC, ty
 				print FAIL + "Err Value	 :" + ENDC, val
 				print FAIL + "Trace		 :" + ENDC, tb
