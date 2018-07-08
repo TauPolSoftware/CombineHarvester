@@ -213,10 +213,24 @@ class ZttPolarisationDatacards(object):
 			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).AddSyst(self.cb, "CMS_eff_t_$CHANNEL_$ERA", "lnN", ch.SystMap()(1.02))
 
 			######################### Tau Id shape uncertainty (added March 08)
-
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_oneprong_categories+mt_oneprong_categories).AddSyst(self.cb, "CMS_tauDMReco_1prong_$ERA", "shape", ch.SystMap()(1.00))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "CMS_tauDMReco_1prong1pizero_$ERA", "shape", ch.SystMap()(1.00))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_a1_categories+mt_a1_categories).AddSyst(self.cb, "CMS_tauDMReco_3prong_$ERA", "shape", ch.SystMap()(1.00))
+			#self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_oneprong_categories+mt_oneprong_categories).AddSyst(self.cb, "CMS_tauDMReco_1prong_$ERA", "shape", ch.SystMap()(1.00))
+			#self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "CMS_tauDMReco_1prong1pizero_$ERA", "shape", ch.SystMap()(1.00))
+			#self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_a1_categories+mt_a1_categories).AddSyst(self.cb, "CMS_tauDMReco_3prong_$ERA", "shape", ch.SystMap()(1.00))
+			
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_oneprong_categories+mt_oneprong_categories).AddSyst(self.cb, "tauDecayModeFake_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "tauDecayModeFake_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_a1_categories+mt_a1_categories).AddSyst(self.cb, "tauDecayModeFake_a1_$ERA", "shape", ch.SystMap()(1.0))
+			
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["oneprong", "oneprong_1", "oneprong_2"]).AddSyst(self.cb, "tauDecayModeFake_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["rho", "rho_1", "rho_2"]).AddSyst(self.cb, "tauDecayModeFake_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["a1", "a1_1", "a1_2"]).AddSyst(self.cb, "tauDecayModeFake_a1_$ERA", "shape", ch.SystMap()(1.0))
+			
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_oneprong_oneprong"]).AddSyst(self.cb, "tauDecayModeFake_pi_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_rho_oneprong"]).AddSyst(self.cb, "tauDecayModeFake_rho_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_rho_rho"]).AddSyst(self.cb, "tauDecayModeFake_rho_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_a1_oneprong"]).AddSyst(self.cb, "tauDecayModeFake_a1_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_a1_rho"]).AddSyst(self.cb, "tauDecayModeFake_a1_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_a1_a1"]).AddSyst(self.cb, "tauDecayModeFake_a1_a1_$ERA", "shape", ch.SystMap()(1.0))
 
 			###############################################################################
 			# b tag and mistag rate efficiencies
@@ -229,7 +243,7 @@ class ZttPolarisationDatacards(object):
 			###############################################################################
 
 			self.cb.cp().process(all_mc_bkgs+["QCD"]).channel(["em"]).AddSyst(self.cb, "CMS_scale_e_$CHANNEL_$ERA", "shape", ch.SystMap()(1.00))
-
+			
 			# Decay Mode based TES Settings
 			self.cb.cp().process(all_mc_bkgs).channel(["et", "mt", "tt"]).bin(et_oneprong_categories+mt_oneprong_categories+tt_oneprong_categories).AddSyst(self.cb, "CMS_scale_t_1prong_$ERA", "shape", ch.SystMap()(1.00))
 			self.cb.cp().process(all_mc_bkgs).channel(["et", "mt", "tt"]).bin(et_rho_categories+mt_rho_categories+tt_rho_categories).AddSyst(self.cb, "CMS_scale_t_1prong1pizero_$ERA", "shape", ch.SystMap()(1.00))
@@ -317,7 +331,7 @@ class ZttPolarisationDatacards(object):
 			# 0jet normalization only
 			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "ZJ_rest", "EWKZ"]).AddSyst(self.cb, "CMS_htt_zmm_norm_extrap_0jet_$CHANNEL_$ERA", "lnN", ch.SystMap("channel")(["em", "tt"], 1.07))
 			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZL", "ZJ", "ZJ_rest", "EWKZ"]).AddSyst(self.cb, "CMS_htt_zmm_norm_extrap_0jet_lt_$ERA", "lnN", ch.SystMap("channel")(["et", "mt"], 1.07))
-
+			
 			# ======================================================================
 			# Groups of systematics
 			self.cb.SetGroup("syst", [".*"])
