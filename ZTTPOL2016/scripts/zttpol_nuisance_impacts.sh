@@ -2,9 +2,10 @@
 
 # Mandatory options
 # $1: datacards output base directory
+# $2: www base directory
 
 
-for WORKSPACE in `ls $1/best_choice/datacards/combined/workspace.root $1/workspace.root 2> /dev/null`
+for WORKSPACE in `ls $1/best_choice/datacards/{individual/*/*,combined}/workspace.root $1/workspace.root 2> /dev/null`
 do
 	pushd `dirname ${WORKSPACE}`
 	
@@ -27,6 +28,20 @@ do
 	
 	# plot results
 	plotImpacts.py -i impacts.json -o impacts
+	
+	if [ -x "$(command -v www_publish.py)" ]
+	then
+		if [ ! -d websync/`date +%Y_%m_%d`/$2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"` ]
+		then
+			mkdir -p websync/`date +%Y_%m_%d`/$2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"`
+		fi
+		
+		cp impacts.* websync/`date +%Y_%m_%d`/$2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"`
+		
+		${CMSSW_BASE}/src/Artus/HarryPlotter/scripts/www_publish.py \
+				-i websync/`date +%Y_%m_%d`/$2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"` \
+				-o $2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"`
+	fi
 	
 	popd
 done
