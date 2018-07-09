@@ -81,6 +81,13 @@ def BinErrorsAndBBB(datacards, AddThreshold, MergeTreshold, FixNorm):
 
 	return None
 
+
+def ModifySystematics(datacards):
+	# tauDecayModeFake_..._13TeV systematics should only alter the shape but not the normalisation
+	datacards.cb.cp().ForEachSyst(lambda systematic: systematic.set_value_u(1.0 if "tauDecayModeFake" in systematic.name() else systematic.value_u()))
+	datacards.cb.cp().ForEachSyst(lambda systematic: systematic.set_value_d(1.0 if "tauDecayModeFake" in systematic.name() else systematic.value_d()))
+
+
 def WriteDatacard(datacards, datacard_filename_template, root_filename_template, output_directory):
 	''' Write datacards. '''
 	

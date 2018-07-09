@@ -93,8 +93,11 @@ if __name__ == "__main__":
 	
 	#4.-----Add BBB
 	print WARNING + '-----	  Merging bin errors and generating bbb uncertainties...	 -----' + ENDC
-
 	BinErrorsAndBBB(datacards, 0.1, 0.5, True)
+	
+	print WARNING + '-----      Modify systematics...     -----' + ENDC
+	ModifySystematics(datacards)
+	
 	datacards.cb.SetGroup("syst_plus_bbb", [".*"])
 	
 	if args.use_asimov_dataset:
@@ -123,3 +126,4 @@ if __name__ == "__main__":
 				output_root_filename_template.replace("{", "").replace("}", ""),
 				args.output_dir
 		))
+
