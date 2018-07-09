@@ -221,16 +221,16 @@ class ZttPolarisationDatacards(object):
 			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "tauDecayModeFake_rho_$ERA", "shape", ch.SystMap()(1.0))
 			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["et", "mt"]).bin(et_a1_categories+mt_a1_categories).AddSyst(self.cb, "tauDecayModeFake_a1_$ERA", "shape", ch.SystMap()(1.0))
 			
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["oneprong", "oneprong_1", "oneprong_2"]).AddSyst(self.cb, "tauDecayModeFake_pi_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["rho", "rho_1", "rho_2"]).AddSyst(self.cb, "tauDecayModeFake_rho_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["a1", "a1_1", "a1_2"]).AddSyst(self.cb, "tauDecayModeFake_a1_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["tt_"+category for category in ["oneprong", "oneprong_1", "oneprong_2"]]).AddSyst(self.cb, "tauDecayModeFake_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["tt_"+category for category in ["rho", "rho_1", "rho_2"]]).AddSyst(self.cb, "tauDecayModeFake_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["tt_"+category for category in ["a1", "a1_1", "a1_2"]]).AddSyst(self.cb, "tauDecayModeFake_a1_$ERA", "shape", ch.SystMap()(1.0))
 			
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_oneprong_oneprong"]).AddSyst(self.cb, "tauDecayModeFake_pi_pi_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_rho_oneprong"]).AddSyst(self.cb, "tauDecayModeFake_rho_pi_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_rho_rho"]).AddSyst(self.cb, "tauDecayModeFake_rho_rho_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_a1_oneprong"]).AddSyst(self.cb, "tauDecayModeFake_a1_pi_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_a1_rho"]).AddSyst(self.cb, "tauDecayModeFake_a1_rho_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["inclusive", "combined_a1_a1"]).AddSyst(self.cb, "tauDecayModeFake_a1_a1_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_oneprong_oneprong"]]).AddSyst(self.cb, "tauDecayModeFake_pi_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_rho_oneprong"]]).AddSyst(self.cb, "tauDecayModeFake_rho_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_rho_rho"]]).AddSyst(self.cb, "tauDecayModeFake_rho_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_a1_oneprong"]]).AddSyst(self.cb, "tauDecayModeFake_a1_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_a1_rho"]]).AddSyst(self.cb, "tauDecayModeFake_a1_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_a1_a1"]]).AddSyst(self.cb, "tauDecayModeFake_a1_a1_$ERA", "shape", ch.SystMap()(1.0))
 
 			###############################################################################
 			# b tag and mistag rate efficiencies
