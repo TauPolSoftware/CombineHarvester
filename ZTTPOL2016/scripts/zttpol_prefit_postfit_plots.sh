@@ -64,3 +64,12 @@ then
 done | runParallel.py -n 8
 fi
 
+
+# ===== shape uncertainties =======================================================================
+
+if [ -x "$(command -v makePlots_shapeUncertainties.py)" ]
+then
+	${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_shapeUncertainties.py \
+			$1/*/datacards/common/ztt.*.root -r -a " --y-subplot-lims 0 2" --www $2 -n 8
+fi
+
