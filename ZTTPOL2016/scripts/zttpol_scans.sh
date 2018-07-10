@@ -10,16 +10,18 @@
 # combine
 
 # total uncertainty + saving best fit values for each parameter in a workspace
-combineTool.py -M MultiDimFit --algo grid --points 200 --redefineSignalPOIs pol \
+combineTool.py -M MultiDimFit --algo grid --points 200 -P pol --redefineSignalPOIs pol --floatOtherPOIs 1 \
 	--saveWorkspace -n .pol.tot_unc.scan \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
-	--there -m 0 --parallel 8
+	--there -m 0 --parallel 8 \
+	--robustFit 1
 
 # statistical uncertainty
-combineTool.py -M MultiDimFit --algo grid --points 200 --redefineSignalPOIs pol \
-	--freezeNuisanceGroups syst_plus_bbb -n .pol.stat_unc.scan \
+combineTool.py -M MultiDimFit --algo grid --points 200 -P pol --redefineSignalPOIs pol --floatOtherPOIs 0 \
+	--skipInitialFit --fastScan -w w --snapshotName MultiDimFit --freezeParameters r --freezeNuisanceGroups syst_plus_bbb -n .pol.stat_unc.scan \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.tot_unc.scan.MultiDimFit.mH0.root \
-	--there -m 0 --parallel 8
+	--there -m 0 --parallel 8 \
+	--robustFit 1
 
 # plotting
 
@@ -56,16 +58,18 @@ fi
 # combine
 
 # total uncertainty + saving best fit values for each parameter in a workspace
-combineTool.py -M MultiDimFit --algo grid --points 200 --redefineSignalPOIs pol --freezeParameters r \
-	 --saveWorkspace-n .pol_r1.tot_unc.scan \
+combineTool.py -M MultiDimFit --algo grid --points 200 -P pol --redefineSignalPOIs pol --floatOtherPOIs 0 --setParameters "r=1" --freezeParameters r \
+	--saveWorkspace-n .pol_r1.tot_unc.scan \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
-	--there -m 0 --parallel 8
+	--there -m 0 --parallel 8 \
+	--robustFit 1
 
 # statistical uncertainty
-combineTool.py -M MultiDimFit --algo grid --points 200 --redefineSignalPOIs pol --freezeParameters r \
-	--freezeNuisanceGroups syst_plus_bbb -n .pol_r1.stat_unc.scan \
+combineTool.py -M MultiDimFit --algo grid --points 200 -P pol --redefineSignalPOIs pol --floatOtherPOIs 0 --setParameters "r=1" --freezeParameters r \
+	--skipInitialFit --fastScan -w w --snapshotName MultiDimFit --freezeNuisanceGroups syst_plus_bbb -n .pol_r1.stat_unc.scan \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.tot_unc.scan.MultiDimFit.mH0.root \
-	--there -m 0 --parallel 8
+	--there -m 0 --parallel 8 \
+	--robustFit 1
 
 # plotting
 
