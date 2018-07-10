@@ -9,7 +9,9 @@
 
 # combine
 
-combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --there -n .pol -m 0 -d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --parallel 8
+combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --there -n .pol -m 0 --parallel 8 \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root
+
 
 for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/fitDiagnostics.pol.root; do
 
@@ -39,7 +41,9 @@ fi
 
 # combine
 
-combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --freezeParameters r --there -n .pol_r1 -m 0 -d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --parallel 8
+combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --freezeParameters r --there -n .pol_r1 -m 0 --parallel 8 \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root
+
 
 for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/fitDiagnostics.pol_r1.root; do
 

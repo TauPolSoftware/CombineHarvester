@@ -29,8 +29,10 @@ then
 					"\"e#tau_{h}\"" \"\" \"\" \"\" \
 					"\"e#mu\"" \"\" \"\" \"\" \
 					"\"#tau_{h}#tau_{h}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.4 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L LP L L L -C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/combined --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.4 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L LP L L L --marker-sizes 0.5 \
+					-C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/combined \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -49,7 +51,8 @@ then
 					--title \"e#mu, `[[ ${UNC_OPTION} = "tot_unc" ]] && echo "tot. unc." || echo "stat. unc."`, `[[ ${POL_OPTION} = "pol" ]] && echo "r floating" || echo "r=1 fixed"`\" --labels \
 					"\"comb.\"" \"\" \"\" \"\" \
 					--legend 0.45 0.8 0.65 0.9 --legend-markers LP -m LP L L L -C 1 --marker-sizes 0.5 --line-styles 1 1 2 3 \
-					--formats pdf png --www $2/datacards/channel/em --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--formats pdf png --www $2/datacards/channel/em \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -73,8 +76,10 @@ then
 					"\"ea_{1}\"" \"\" \"\" \"\" \
 					"\"e#rho\"" \"\" \"\" \"\" \
 					"\"e#pi\"" \"\" \"\" \"\" \
-					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L -C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/channel/et --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L \
+					-C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/channel/et \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -98,8 +103,10 @@ then
 					"\"#mua_{1}\"" \"\" \"\" \"\" \
 					"\"#mu#rho\"" \"\" \"\" \"\" \
 					"\"#mu#pi\"" \"\" \"\" \"\" \
-					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L -C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/channel/mt --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L \
+					-C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/channel/mt \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -129,8 +136,11 @@ then
 					"\"#rho#rho\"" \"\" \"\" \"\" \
 					"\"#rho#pi+#pi#rho\"" \"\" \"\" \"\" \
 					"\"#pi#pi\"" \"\" \"\" \"\" \
-					--legend 0.45 0.2 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L LP L L L LP L L L LP L L L -C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 6 6 6 6 7 7 7 7 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/channel/tt --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.2 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L LP L L L LP L L L LP L L L \
+					-C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 6 6 6 6 7 7 7 7 --marker-sizes 0.5 \
+					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/channel/tt \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -155,8 +165,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/em/em_combined_oneprong_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/em/em_combined_oneprong_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -178,8 +190,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/et/et_combined_a1_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/et/et_combined_a1_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -203,8 +217,10 @@ then
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
 					"\"#omega^{vis}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/et/et_combined_rho_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/et/et_combined_rho_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -226,8 +242,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/et/et_combined_oneprong_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/et/et_combined_oneprong_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -249,8 +267,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/mt/mt_combined_a1_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/mt/mt_combined_a1_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -274,8 +294,10 @@ then
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
 					"\"#omega^{vis}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/mt/mt_combined_rho_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/mt/mt_combined_rho_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -297,8 +319,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/mt/mt_combined_oneprong_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/mt/mt_combined_oneprong_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -320,8 +344,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/tt/tt_combined_a1_a1 --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/tt/tt_combined_a1_a1 \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -343,8 +369,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/tt/tt_combined_a1_rho --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/tt/tt_combined_a1_rho \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -366,8 +394,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/tt/tt_combined_a1_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/tt/tt_combined_a1_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -391,8 +421,10 @@ then
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
 					"\"#Omega^{vis}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/tt/tt_combined_rho_rho --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.5 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/tt/tt_combined_rho_rho \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -414,8 +446,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/tt/tt_combined_rho_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/tt/tt_combined_rho_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
@@ -437,8 +471,10 @@ then
 					"\"m_{vis}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}\"" \"\" \"\" \"\" \
 					"\"#bar{#Omega}_{m_{Z}}\"" \"\" \"\" \"\" \
-					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
-					--formats pdf png --www $2/datacards/individual/tt/tt_combined_oneprong_oneprong --filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
+					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L \
+					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--formats pdf png --www $2/datacards/individual/tt/tt_combined_oneprong_oneprong \
+					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
 			done
 		done

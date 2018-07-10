@@ -10,10 +10,16 @@
 # combine
 
 # total uncertainty + saving best fit values for each parameter in a workspace
-combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --there -n .pol.tot_unc --saveWorkspace -m 0 -d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --parallel 8
+combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol \
+	--saveWorkspace -n .pol.tot_unc \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
+	--there -m 0 --parallel 8
 
 # statistical uncertainty
-combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --there -n .pol.stat_unc --freezeNuisanceGroups syst_plus_bbb -m 0 -d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.tot_unc.MultiDimFit.mH0.root --parallel 8
+combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol \
+	--freezeNuisanceGroups syst_plus_bbb -n .pol.stat_unc \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.tot_unc.MultiDimFit.mH0.root \
+	--there -m 0 --parallel 8
 
 # plotting
 
@@ -25,14 +31,16 @@ then
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_tot_stat_unc.json \
 			-d `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` \
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -1.0 1.0 --title \"r floating\" --y-grid \
-			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` --filename best_fit_pol_tot_stat_unc --formats pdf png \
+			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` \
+			--filename best_fit_pol_tot_stat_unc --formats pdf png \
 			--no-cache
 	
 		# zoomed
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_tot_stat_unc.json \
 			-d `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` \
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -0.3 0.0 --title \"r floating\" --y-grid \
-			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` --filename best_fit_pol_tot_stat_unc_zoom --formats pdf png \
+			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` \
+			--filename best_fit_pol_tot_stat_unc_zoom --formats pdf png \
 			--no-cache
 
 	done | runParallel.py -n 8
@@ -44,10 +52,16 @@ fi
 # combine
 
 # total uncertainty + saving best fit values for each parameter in a workspace
-combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --freezeParameters r --there -n .pol_r1.tot_unc --saveWorkspace -m 0 -d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root --parallel 8
+combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --freezeParameters r \
+	--saveWorkspace -n .pol_r1.tot_unc \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
+	--there -m 0 --parallel 8
 
 # statistical uncertainty
-combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --freezeParameters r --there -n .pol_r1.stat_unc --freezeNuisanceGroups syst_plus_bbb -m 0 -d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root --parallel 8
+combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --freezeParameters r \
+	--freezeNuisanceGroups syst_plus_bbb -n .pol_r1.stat_unc \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root \
+	--there -m 0 --parallel 8
 
 # plotting
 
@@ -59,14 +73,16 @@ then
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_r1_tot_stat_unc.json \
 			-d `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` \
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -1.0 1.0 --title \"r=1 fixed\" --y-grid \
-			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` --filename best_fit_pol_r1_tot_stat_unc --formats pdf png \
+			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` \
+			--filename best_fit_pol_r1_tot_stat_unc --formats pdf png \
 			--no-cache
 	
 		# zoomed
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_r1_tot_stat_unc.json \
 			-d `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` \
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -0.3 0.0 --title \"r=1 fixed\" --y-grid \
-			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` --filename best_fit_pol_r1_tot_stat_unc_zoom --formats pdf png \
+			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` \
+			--filename best_fit_pol_r1_tot_stat_unc_zoom --formats pdf png \
 			--no-cache
 
 	done | runParallel.py -n 8
@@ -93,7 +109,8 @@ then
 				echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_${POL_OPTION}_over_channel_tot_stat_unc.json \
 					-d "\"${DIRECTORY}/combined ${DIRECTORY}/channel/mt ${DIRECTORY}/channel/et ${DIRECTORY}/channel/em ${DIRECTORY}/channel/tt\"" \
 					--x-ticks 0 1 2 3 4 --x-tick-labels comb. channel_mt_large channel_et_large channel_em_large channel_tt_large --x-lims -0.5 4.5 \
-					--www $2/`echo ${DIRECTORY} | sed -e "s@${1}/@@g"`/combined --formats pdf png --filename best_fit_${POL_OPTION}_over_channel_tot_stat_unc${ZOOM_OPTION} \
+					--www $2/`echo ${DIRECTORY} | sed -e "s@${1}/@@g"`/combined --formats pdf png \
+					--filename best_fit_${POL_OPTION}_over_channel_tot_stat_unc${ZOOM_OPTION} \
 					--no-cache
 			done
 		done
