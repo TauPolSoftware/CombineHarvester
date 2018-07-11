@@ -61,21 +61,21 @@ fi
 # combine
 
 # best fit parameters saved into workspace
-combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=0.98" --freezeParameters r \
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=1.0" --freezeParameters r \
 	--saveWorkspace -n .pol_r1.best_fit \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
 	--there -m 0 --parallel 8 \
 	--robustFit 1
 
 # total uncertainty
-combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=0.98" --freezeParameters r --algo singles \
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=1.0" --freezeParameters r --algo singles \
 	--snapshotName MultiDimFit -w w --saveWorkspace -n .pol_r1.tot_unc \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.best_fit.MultiDimFit.mH0.root \
 	--there -m 0 --parallel 8 \
 	--robustFit 1
 
 # statistical uncertainty
-combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=0.98" --freezeParameters r --algo singles \
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=1.0" --freezeParameters r --algo singles \
 	--snapshotName MultiDimFit -w w --saveWorkspace --freezeNuisanceGroups syst_plus_bbb -n .pol_r1.stat_unc \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.best_fit.MultiDimFit.mH0.root \
 	--there -m 0 --parallel 8 \
