@@ -165,11 +165,13 @@ class ZttPolarisationDatacards(object):
 			#   lumi
 			# ##############################################################################
 
-			self.cb.cp().process(["VV", "VVT", "VVJ"]).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
-			self.cb.cp().process(["W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
+			#self.cb.cp().process(["VV", "VVT", "VVJ"]).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
+			#self.cb.cp().process(["W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
 
 			# Add luminosity uncertainty for W in em, tt, ttbar and the mm region as norm is from MC
-			self.cb.cp().process(["W"]).channel(["tt", "em"]).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
+			#self.cb.cp().process(["W"]).channel(["tt", "em"]).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
+			
+			self.cb.cp().process(all_mc_bkgs_no_W).AddSyst(self.cb, "lumi_13TeV", "lnN", ch.SystMap()(1.025))
 
 			# ##############################################################################
 			#   trigger
