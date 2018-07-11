@@ -9,17 +9,24 @@
 
 # combine
 
-# total uncertainty + saving best fit values for each parameter in a workspace
-combineTool.py -M MultiDimFit --algo grid --points 200 -P pol --redefineSignalPOIs pol --floatOtherPOIs 1 \
-	--saveWorkspace -n .pol.tot_unc.scan \
+# best fit parameters saved into workspace
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 1 \
+	--saveWorkspace -n .pol.best_fit.scan \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
 	--there -m 0 --parallel 8 \
 	--robustFit 1
 
+# total uncertainty
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 1 --algo grid --points 200 \
+	--snapshotName MultiDimFit -w w --saveWorkspace -n .pol.tot_unc.scan \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.best_fit.scan.MultiDimFit.mH0.root \
+	--there -m 0 --parallel 8 \
+	--robustFit 1
+
 # statistical uncertainty
-combineTool.py -M MultiDimFit --algo grid --points 200 -P pol --redefineSignalPOIs pol --floatOtherPOIs 0 \
-	--skipInitialFit --fastScan -w w --snapshotName MultiDimFit --freezeParameters r --freezeNuisanceGroups syst_plus_bbb -n .pol.stat_unc.scan \
-	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.tot_unc.scan.MultiDimFit.mH0.root \
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 1 --algo grid --points 200 \
+	--snapshotName MultiDimFit -w w --saveWorkspace --freezeNuisanceGroups syst_plus_bbb -n .pol.stat_unc.scan \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.best_fit.scan.MultiDimFit.mH0.root \
 	--there -m 0 --parallel 8 \
 	--robustFit 1
 
@@ -57,17 +64,24 @@ fi
 
 # combine
 
-# total uncertainty + saving best fit values for each parameter in a workspace
-combineTool.py -M MultiDimFit --algo grid --points 200 -P pol --redefineSignalPOIs pol --floatOtherPOIs 0 --setParameters "r=1" --freezeParameters r \
-	--saveWorkspace-n .pol_r1.tot_unc.scan \
+# best fit parameters saved into workspace
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=0.98" --freezeParameters r \
+	--saveWorkspace -n .pol_r1.best_fit.scan \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
 	--there -m 0 --parallel 8 \
 	--robustFit 1
 
+# total uncertainty
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=0.98" --freezeParameters r --algo grid --points 200 \
+	--snapshotName MultiDimFit -w w --saveWorkspace -n .pol_r1.tot_unc.scan \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.best_fit.scan.MultiDimFit.mH0.root \
+	--there -m 0 --parallel 8 \
+	--robustFit 1
+
 # statistical uncertainty
-combineTool.py -M MultiDimFit --algo grid --points 200 -P pol --redefineSignalPOIs pol --floatOtherPOIs 0 --setParameters "r=1" --freezeParameters r \
-	--skipInitialFit --fastScan -w w --snapshotName MultiDimFit --freezeNuisanceGroups syst_plus_bbb -n .pol_r1.stat_unc.scan \
-	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.tot_unc.scan.MultiDimFit.mH0.root \
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=0.98" --freezeParameters r --algo grid --points 200 \
+	--snapshotName MultiDimFit -w w --saveWorkspace --freezeNuisanceGroups syst_plus_bbb -n .pol_r1.stat_unc.scan \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.best_fit.scan.MultiDimFit.mH0.root \
 	--there -m 0 --parallel 8 \
 	--robustFit 1
 
@@ -105,17 +119,17 @@ fi
 
 # combine
 
-# total uncertainty + saving best fit values for each parameter in a workspace
-combineTool.py -M MultiDimFit --algo grid --points 400 --setParameterRanges pol=-0.3,0:r=0.5,1.5 \
-	--saveWorkspace -n .pol_r.tot_unc.scan \
-	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
+# total uncertainty
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol --floatOtherPOIs 1 --algo grid --points 900 --setParameterRanges pol=-0.3,0:r=0.5,1.5 \
+	--snapshotName MultiDimFit -w w --saveWorkspace -n .pol_r.tot_unc.scan \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.best_fit.scan.MultiDimFit.mH0.root \
 	--there -m 0 --parallel 8 \
 	--robustFit 1
 
 # statistical uncertainty
-combineTool.py -M MultiDimFit --algo grid --points 400 --setParameterRanges pol=-0.3,0:r=0.5,1.5 \
-	--skipInitialFit --fastScan -w w --snapshotName MultiDimFit --freezeNuisanceGroups syst_plus_bbb -n .pol_r.stat_unc.scan \
-	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r.tot_unc.scan.MultiDimFit.mH0.root \
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol --floatOtherPOIs 1 --algo grid --points 900 --fastScan --setParameterRanges pol=-0.3,0:r=0.5,1.5 \
+	--snapshotName MultiDimFit -w w --saveWorkspace --freezeNuisanceGroups syst_plus_bbb -n .pol_r.stat_unc.scan \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.best_fit.scan.MultiDimFit.mH0.root \
 	--there -m 0 --parallel 8 \
 	--robustFit 1
 
@@ -126,7 +140,7 @@ then
 	for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r.tot_unc.scan.MultiDimFit.mH0.root; do
 	
 		echo higgsplot.py -i ${COMBINE_OUTPUT} -f limit \
-			-x pol -y r -z \"2*deltaNLL\" --tree-draw-options prof --x-bins 20,-0.3,0.0 --y-bins 20,0.5,1.5  \
+			-x pol -y r -z \"2*deltaNLL\" --tree-draw-options prof --x-bins 30,-0.3,0.0 --y-bins 30,0.5,1.5  \
 			--x-label "\"Average Polarisation #LTP_{#tau}#GT\"" --y-label "\"Signal Strength r\"" --z-label "\"Likelihood -2#Deltaln L\"" \
 			--title "\"Stat. + syst. uncertainties\"" -m COLZ --x-lims -0.3 0 --y-lims 0.5 1.5 --z-lims 0 10 \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
@@ -138,7 +152,7 @@ then
 	for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r.stat_unc.scan.MultiDimFit.mH0.root; do
 	
 		echo higgsplot.py -i ${COMBINE_OUTPUT} -f limit \
-			-x pol -y r -z \"2*deltaNLL\" --tree-draw-options prof --x-bins 20,-0.3,0.0 --y-bins 20,0.5,1.5  \
+			-x pol -y r -z \"2*deltaNLL\" --tree-draw-options prof --x-bins 30,-0.3,0.0 --y-bins 30,0.5,1.5  \
 			--x-label "\"Average Polarisation #LTP_{#tau}#GT\"" --y-label "\"Signal Strength r\"" --z-label "\"Likelihood -2#Deltaln L\"" \
 			--title "\"Stat. uncertainties\"" -m COLZ --x-lims -0.3 0 --y-lims 0.5 1.5 --z-lims 0 10 \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \

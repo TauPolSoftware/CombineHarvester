@@ -9,17 +9,26 @@
 
 # combine
 
-# total uncertainty + saving best fit values for each parameter in a workspace
-combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol \
-	--saveWorkspace -n .pol.tot_unc \
+# best fit parameters saved into workspace
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 1 \
+	--saveWorkspace -n .pol.best_fit \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
-	--there -m 0 --parallel 8
+	--there -m 0 --parallel 8 \
+	--robustFit 1
+
+# total uncertainty
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 1 --algo singles \
+	--snapshotName MultiDimFit -w w --saveWorkspace -n .pol.tot_unc \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.best_fit.MultiDimFit.mH0.root \
+	--there -m 0 --parallel 8 \
+	--robustFit 1
 
 # statistical uncertainty
-combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol \
-	--freezeNuisanceGroups syst_plus_bbb -n .pol.stat_unc \
-	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.tot_unc.MultiDimFit.mH0.root \
-	--there -m 0 --parallel 8
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 1 --algo singles \
+	--snapshotName MultiDimFit -w w --saveWorkspace --freezeNuisanceGroups syst_plus_bbb -n .pol.stat_unc \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol.best_fit.MultiDimFit.mH0.root \
+	--there -m 0 --parallel 8 \
+	--robustFit 1
 
 # plotting
 
@@ -31,7 +40,7 @@ then
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_tot_stat_unc.json \
 			-d `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` \
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -1.0 1.0 --title \"r floating\" --y-grid \
-			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` \
+			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename best_fit_pol_tot_stat_unc --formats pdf png \
 			--no-cache
 	
@@ -39,7 +48,7 @@ then
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_tot_stat_unc.json \
 			-d `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` \
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -0.3 0.0 --title \"r floating\" --y-grid \
-			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol.tot_unc.MultiDimFit.mH0.root@@g"` \
+			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename best_fit_pol_tot_stat_unc_zoom --formats pdf png \
 			--no-cache
 
@@ -51,17 +60,26 @@ fi
 
 # combine
 
-# total uncertainty + saving best fit values for each parameter in a workspace
-combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --freezeParameters r \
-	--saveWorkspace -n .pol_r1.tot_unc \
+# best fit parameters saved into workspace
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=0.98" --freezeParameters r \
+	--saveWorkspace -n .pol_r1.best_fit \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root \
-	--there -m 0 --parallel 8
+	--there -m 0 --parallel 8 \
+	--robustFit 1
+
+# total uncertainty
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=0.98" --freezeParameters r --algo singles \
+	--snapshotName MultiDimFit -w w --saveWorkspace -n .pol_r1.tot_unc \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.best_fit.MultiDimFit.mH0.root \
+	--there -m 0 --parallel 8 \
+	--robustFit 1
 
 # statistical uncertainty
-combineTool.py -M MultiDimFit --algo singles -P pol --redefineSignalPOIs pol --freezeParameters r \
-	--freezeNuisanceGroups syst_plus_bbb -n .pol_r1.stat_unc \
-	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root \
-	--there -m 0 --parallel 8
+combineTool.py -M MultiDimFit --redefineSignalPOIs r,pol -P pol --floatOtherPOIs 0 --setParameters "r=0.98" --freezeParameters r --algo singles \
+	--snapshotName MultiDimFit -w w --saveWorkspace --freezeNuisanceGroups syst_plus_bbb -n .pol_r1.stat_unc \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/higgsCombine.pol_r1.best_fit.MultiDimFit.mH0.root \
+	--there -m 0 --parallel 8 \
+	--robustFit 1
 
 # plotting
 
@@ -73,7 +91,7 @@ then
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_r1_tot_stat_unc.json \
 			-d `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` \
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -1.0 1.0 --title \"r=1 fixed\" --y-grid \
-			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` \
+			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename best_fit_pol_r1_tot_stat_unc --formats pdf png \
 			--no-cache
 	
@@ -81,7 +99,7 @@ then
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_r1_tot_stat_unc.json \
 			-d `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` \
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -0.3 0.0 --title \"r=1 fixed\" --y-grid \
-			--www $2/`echo ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g" -e "s@higgsCombine.pol_r1.tot_unc.MultiDimFit.mH0.root@@g"` \
+			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename best_fit_pol_r1_tot_stat_unc_zoom --formats pdf png \
 			--no-cache
 

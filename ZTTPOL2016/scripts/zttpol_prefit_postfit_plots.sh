@@ -41,7 +41,7 @@ fi
 
 # combine
 
-combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --freezeParameters r --there -n .pol_r1 -m 0 --parallel 8 \
+combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --setParameters "r=0.98" --freezeParameters r --there -n .pol_r1 -m 0 --parallel 8 \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root
 
 
