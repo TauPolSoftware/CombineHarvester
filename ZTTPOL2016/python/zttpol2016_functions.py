@@ -116,7 +116,7 @@ def text2workspace(datacards, datacards_cbs, Physicsmodel, workspace_file_name):
 
 	return {datacard : os.path.splitext(datacard)[0]+"_workspace"+".root" for datacard in datacards_cbs.keys()}
 
-def use_asimov_dataset(datacards, pol=-0.159, r=1.0, signal_mass = None, signal_processes=None):
+def use_asimov_dataset(datacards, pol=-0.143, r=1.0, signal_mass = None, signal_processes=None):
 
 	def _replace_observation_by_asimov_dataset(observation):
 		cb = datacards.cb.cp().analysis([observation.analysis()]).era([observation.era()]).channel([observation.channel()]).bin([observation.bin()])
@@ -222,7 +222,7 @@ def GetPolarisationValues(rootfile):
 	file.Close()
 	return [pol, p1s, m1s]
 	
-def find_combination(datacards_path, fit_rootfile_name = 'higgsCombine.Test.MultiDimFit.mH0.root', asimov_value = -0.159):
+def find_combination(datacards_path, fit_rootfile_name = 'higgsCombine.Test.MultiDimFit.mH0.root', asimov_value = -0.143):
 	'''Find the most efficient combination of categories. '''
 	
 	#Get all polarisation values from the root files in the input dir
