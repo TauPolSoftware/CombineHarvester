@@ -263,6 +263,12 @@ class ZttPolarisationDatacards(object):
 			# Background normalization uncertainties
 			###############################################################################
 
+			# DY Normalisation - fully correlated
+			self.cb.cp().process(["ZL", "ZJ", "ZTTPOSPOL", "ZTTNEGPOL"]).AddSyst(self.cb, "CMS_htt_dyXsec_13TeV", "lnN", ch.SystMap()(1.05))
+
+			# top Normalisation - fully correlated
+			self.cb.cp().process(["TTJ", "TTT", "TT"]).AddSyst(self.cb, "CMS_htt_ttXsec_13TeV", "lnN", ch.SystMap()(1.05))
+
 			# Diboson Normalisation - fully correlated
 			self.cb.cp().process(["VV", "VVT", "VVJ", "VVJ_rest"]).AddSyst(self.cb, "CMS_htt_vvXsec_13TeV", "lnN", ch.SystMap()(1.05))
 
@@ -270,6 +276,9 @@ class ZttPolarisationDatacards(object):
 			self.cb.cp().process(["W"]).channel(["em"]).AddSyst(self.cb, "CMS_htt_jetFakeLep_13TeV", "lnN", ch.SystMap()(1.20))
 
 			self.cb.cp().process(["W"]).channel(["tt"]).AddSyst(self.cb, "CMS_htt_wjXsec_13TeV", "lnN", ch.SystMap()(1.04))
+
+			# based on the Ersatz study in Run1
+			self.cb.cp().process(["W"]).channel(["et", "mt"]).AddSyst(self.cb, "WHighMTtoLowMT_0jet_$ERA", "lnN", ch.SystMap()(1.10))
 
 			# QCD norm, just for em decorrelating QCD BG for differenet categories
 			self.cb.cp().process(["QCD"]).channel(["em"]).AddSyst(self.cb, "CMS_htt_QCD_0jet_$CHANNEL_13TeV", "lnN", ch.SystMap()(1.10))
@@ -283,9 +292,6 @@ class ZttPolarisationDatacards(object):
 
 			#This should affect only shape (normalized to nominal values)
 			self.cb.cp().process(["QCD"]).channel(["et", "mt"]).AddSyst(self.cb, "WSFUncert_$CHANNEL_0jet_$ERA", "shape", ch.SystMap()(1.00))
-
-			# based on the Ersatz study in Run1
-			self.cb.cp().process(["W"]).channel(["et", "mt"]).AddSyst(self.cb, "WHighMTtoLowMT_0jet_$ERA", "lnN", ch.SystMap()(1.10))
 
 			###############################################################################
 			# DY LO->NLO reweighting, Between no and twice the correc(on.
