@@ -29,6 +29,8 @@ do
 	# plot results
 	plotImpacts.py -i impacts.json -o impacts
 	
+	popd
+	
 	if [ -x "$(command -v www_publish.py)" ]
 	then
 		if [ ! -d websync/`date +%Y_%m_%d`/$2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"` ]
@@ -36,13 +38,11 @@ do
 			mkdir -p websync/`date +%Y_%m_%d`/$2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"`
 		fi
 		
-		cp impacts.* websync/`date +%Y_%m_%d`/$2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"`
+		cp `echo ${WORKSPACE} | sed -e "s@workspace.root@impacts.*@g"` websync/`date +%Y_%m_%d`/$2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"`
 		
 		${CMSSW_BASE}/src/Artus/HarryPlotter/scripts/www_publish.py \
 				-i websync/`date +%Y_%m_%d`/$2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"` \
 				-o $2/`dirname ${WORKSPACE} | sed -e "s@${1}/@@g"`
 	fi
-	
-	popd
 done
 
