@@ -102,9 +102,9 @@ then
 	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py \
 			-i $1 -n 8 -o $2/best_choice --clear-output-dir --use-asimov-dataset --fixed-variables \
 			-c em --categories em_combined_oneprong_oneprong \
-			-c et --categories et_combined_a1_oneprong et_rho et_combined_oneprong_oneprong \
-			-c mt --categories mt_combined_a1_oneprong mt_rho mt_combined_oneprong_oneprong \
-			-c tt --categories tt_combined_a1_a1 tt_combined_a1_rho tt_combined_a1_oneprong tt_combined_rho_rho tt_combined_rho_oneprong tt_combined_oneprong_oneprong
+			-c et --categories et_a1 et_rho et_oneprong \
+			-c mt --categories mt_a1 mt_rho mt_oneprong \
+			-c tt --categories tt_rho tt_combined_a1_a1 tt_combined_a1_oneprong tt_combined_oneprong_oneprong
 
 fi
 

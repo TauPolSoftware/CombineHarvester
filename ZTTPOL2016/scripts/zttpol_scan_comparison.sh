@@ -67,9 +67,9 @@ then
 			do
 				echo higgsplot.py -f limit -x pol -y "\"2*deltaNLL\"" --tree-draw-options TGraph --analysis-modules LikelihoodScan -i \
 					$1/best_choice/datacards/channel/et/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
-					$1/best_choice/datacards/individual/et/et_combined_a1_oneprong/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
+					$1/best_choice/datacards/individual/et/et_a1/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
 					$1/best_choice/datacards/individual/et/et_rho/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
-					$1/best_choice/datacards/individual/et/et_combined_oneprong_oneprong/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
+					$1/best_choice/datacards/individual/et/et_oneprong/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
 					--x-label "\"Average Polarisation #LTP_{#tau}#GT\"" --y-label "\"Likelihood -2#Deltaln L\"" \
 					--title \"e#tau_{h}, `[[ ${UNC_OPTION} = "tot_unc" ]] && echo "tot. unc." || echo "stat. unc."`, `[[ ${POL_OPTION} = "pol" ]] && echo "r floating" || echo "r=1 fixed"`\" --labels \
 					"\"comb.\"" \"\" \"\" \"\" \
@@ -94,9 +94,9 @@ then
 			do
 				echo higgsplot.py -f limit -x pol -y "\"2*deltaNLL\"" --tree-draw-options TGraph --analysis-modules LikelihoodScan -i \
 					$1/best_choice/datacards/channel/mt/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
-					$1/best_choice/datacards/individual/mt/mt_combined_a1_oneprong/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
+					$1/best_choice/datacards/individual/mt/mt_a1/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
 					$1/best_choice/datacards/individual/mt/mt_rho/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
-					$1/best_choice/datacards/individual/mt/mt_combined_oneprong_oneprong/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
+					$1/best_choice/datacards/individual/mt/mt_oneprong/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
 					--x-label "\"Average Polarisation #LTP_{#tau}#GT\"" --y-label "\"Likelihood -2#Deltaln L\"" \
 					--title \"#mu#tau_{h}, `[[ ${UNC_OPTION} = "tot_unc" ]] && echo "tot. unc." || echo "stat. unc."`, `[[ ${POL_OPTION} = "pol" ]] && echo "r floating" || echo "r=1 fixed"`\" --labels \
 					"\"comb.\"" \"\" \"\" \"\" \
@@ -121,24 +121,20 @@ then
 			do
 				echo higgsplot.py -f limit -x pol -y "\"2*deltaNLL\"" --tree-draw-options TGraph --analysis-modules LikelihoodScan -i \
 					$1/best_choice/datacards/channel/tt/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
+					$1/best_choice/datacards/individual/tt/tt_rho/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
 					$1/best_choice/datacards/individual/tt/tt_combined_a1_a1/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
-					$1/best_choice/datacards/individual/tt/tt_combined_a1_rho/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
 					$1/best_choice/datacards/individual/tt/tt_combined_a1_oneprong/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
-					$1/best_choice/datacards/individual/tt/tt_combined_rho_rho/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
-					$1/best_choice/datacards/individual/tt/tt_combined_rho_oneprong/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
 					$1/best_choice/datacards/individual/tt/tt_combined_oneprong_oneprong/higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0.root \
 					--x-label "\"Average Polarisation #LTP_{#tau}#GT\"" --y-label "\"Likelihood -2#Deltaln L\"" \
 					--title \"#tau_{h}#tau_{h}, `[[ ${UNC_OPTION} = "tot_unc" ]] && echo "tot. unc." || echo "stat. unc."`, `[[ ${POL_OPTION} = "pol" ]] && echo "r floating" || echo "r=1 fixed"`\" --labels \
 					"\"comb.\"" \"\" \"\" \"\" \
+					"\"#tau_{h}#rho+#rho#tau_{h}\"" \"\" \"\" \"\" \
 					"\"a_{1}a_{1}\"" \"\" \"\" \"\" \
-					"\"a_{1}#rho+#rhoa_{1}\"" \"\" \"\" \"\" \
 					"\"a_{1}#pi+#pia_{1}\"" \"\" \"\" \"\" \
-					"\"#rho#rho\"" \"\" \"\" \"\" \
-					"\"#rho#pi+#pi#rho\"" \"\" \"\" \"\" \
 					"\"#pi#pi\"" \"\" \"\" \"\" \
-					--legend 0.45 0.2 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L LP L L L LP L L L LP L L L \
-					-C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 6 6 6 6 7 7 7 7 --marker-sizes 0.5 \
-					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
+					--legend 0.45 0.2 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L LP L L L LP L L L \
+					-C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 \
+					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/channel/tt \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
 					--no-cache
