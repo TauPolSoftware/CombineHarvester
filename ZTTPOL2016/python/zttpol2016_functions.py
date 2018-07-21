@@ -86,7 +86,7 @@ def ModifySystematics(datacards):
 	# systematics that should only affect the shape and not the normalisation
 	shape_only_systematics = ["tauDecayModeFake", "WSFUncert"]
 	datacards.cb.cp().ForEachSyst(lambda systematic: systematic.set_value_u(1.0 if any([unc in systematic.name() for unc in shape_only_systematics]) else systematic.value_u()))
-	datacards.cb.cp().ForEachSyst(lambda systematic: systematic.set_value_d(1.0 if any([unc in systematic.name() for unc in shape_only_systematics]) in systematic.name() else systematic.value_d()))
+	datacards.cb.cp().ForEachSyst(lambda systematic: systematic.set_value_d(1.0 if any([unc in systematic.name() for unc in shape_only_systematics]) else systematic.value_d()))
 
 
 def WriteDatacard(datacards, datacard_filename_template, root_filename_template, output_directory):
