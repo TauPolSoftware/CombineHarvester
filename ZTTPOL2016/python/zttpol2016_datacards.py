@@ -264,7 +264,7 @@ class ZttPolarisationDatacards(object):
 			###############################################################################
 
 			# DY Normalisation - fully correlated
-			self.cb.cp().process(["ZL", "ZJ", "ZTTPOSPOL", "ZTTNEGPOL", "EWKZ"]).AddSyst(self.cb, "CMS_htt_dyXsec_13TeV", "lnN", ch.SystMap()(1.05))
+			self.cb.cp().process(["ZLL", "ZL", "ZJ", "ZTTPOSPOL", "ZTTNEGPOL", "EWKZ"]).AddSyst(self.cb, "CMS_htt_dyXsec_13TeV", "lnN", ch.SystMap()(1.05))
 
 			# top Normalisation - fully correlated
 			self.cb.cp().process(["TTJ", "TTT", "TT"]).AddSyst(self.cb, "CMS_htt_ttXsec_13TeV", "lnN", ch.SystMap()(1.05))
@@ -297,8 +297,7 @@ class ZttPolarisationDatacards(object):
 			# DY LO->NLO reweighting, Between no and twice the correc(on.
 			###############################################################################
 
-			self.cb.cp().process( ["ZTTPOSPOL", "ZTTNEGPOL", "ZJ", "ZL", "ZJ_rest"]).channel(["et", "mt", "tt"]).AddSyst(self.cb, "CMS_htt_dyShape_$ERA", "shape", ch.SystMap()(1.00))
-			self.cb.cp().process( ["ZTTPOSPOL", "ZTTNEGPOL", "ZL"]).channel(["em"]).AddSyst(self.cb, "CMS_htt_dyShape_$ERA", "shape", ch.SystMap()(1.00))
+			self.cb.cp().process( ["ZTTPOSPOL", "ZTTNEGPOL", "ZJ", "ZL", "ZLL"]).AddSyst(self.cb, "CMS_htt_dyShape_$ERA", "shape", ch.SystMap()(1.00))
 
 			###############################################################################
 			# Ttbar shape reweighting, Between no and twice the correction
