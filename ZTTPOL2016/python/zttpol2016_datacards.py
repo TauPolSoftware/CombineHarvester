@@ -324,9 +324,22 @@ class ZttPolarisationDatacards(object):
 			# jet to tau fake only in tt, mt and et channels
 			###############################################################################
 
-			self.cb.cp().process( ["TTJ", "ZJ", "VVJ", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt", "mt", "et"]).AddSyst(self.cb, "CMS_htt_jetToTauFake_$ERA", "shape", ch.SystMap()(1.00))
-
-			self.cb.cp().process( ["W"]).channel(["tt", "mt", "et"]).AddSyst(self.cb, "CMS_htt_jetToTauFake_$ERA", "shape", ch.SystMap()(1.00))
+			#self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt", "mt", "et"]).AddSyst(self.cb, "CMS_htt_jetToTauFake_$ERA", "shape", ch.SystMap()(1.00))
+			
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["et", "mt"]).bin(et_oneprong_categories+mt_oneprong_categories).AddSyst(self.cb, "CMS_htt_jetToTauFake_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["et", "mt"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "CMS_htt_jetToTauFake_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["et", "mt"]).bin(et_a1_categories+mt_a1_categories).AddSyst(self.cb, "CMS_htt_jetToTauFake_a1_$ERA", "shape", ch.SystMap()(1.0))
+			
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).bin(["tt_"+category for category in ["oneprong", "oneprong_1", "oneprong_2"]]).AddSyst(self.cb, "CMS_htt_jetToTauFake_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).bin(["tt_"+category for category in ["rho", "rho_1", "rho_2"]]).AddSyst(self.cb, "CMS_htt_jetToTauFake_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).bin(["tt_"+category for category in ["a1", "a1_1", "a1_2"]]).AddSyst(self.cb, "CMS_htt_jetToTauFake_a1_$ERA", "shape", ch.SystMap()(1.0))
+			
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_oneprong_oneprong"]]).AddSyst(self.cb, "CMS_htt_jetToTauFake_pi_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_rho_oneprong"]]).AddSyst(self.cb, "CMS_htt_jetToTauFake_rho_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_rho_rho"]]).AddSyst(self.cb, "CMS_htt_jetToTauFake_rho_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_a1_oneprong"]]).AddSyst(self.cb, "CMS_htt_jetToTauFake_a1_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_a1_rho"]]).AddSyst(self.cb, "CMS_htt_jetToTauFake_a1_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["TTJ", "ZJ", "VVJ", "W", "W_rest", "ZJ_rest", "TTJ_rest", "VVJ_rest"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_a1_a1"]]).AddSyst(self.cb, "CMS_htt_jetToTauFake_a1_a1_$ERA", "shape", ch.SystMap()(1.0))
 
 			# Recoil corrections
 			# ------------------
