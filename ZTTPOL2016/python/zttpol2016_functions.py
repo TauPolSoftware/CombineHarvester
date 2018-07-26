@@ -83,10 +83,36 @@ def BinErrorsAndBBB(datacards, AddThreshold, MergeTreshold, FixNorm):
 
 
 def ModifySystematics(datacards):
+	
 	# systematics that should only affect the shape and not the normalisation
-	shape_only_systematics = ["tauDecayModeFake", "WSFUncert"]
-	datacards.cb.cp().ForEachSyst(lambda systematic: systematic.set_value_u(1.0 if any([unc in systematic.name() for unc in shape_only_systematics]) else systematic.value_u()))
-	datacards.cb.cp().ForEachSyst(lambda systematic: systematic.set_value_d(1.0 if any([unc in systematic.name() for unc in shape_only_systematics]) else systematic.value_d()))
+	def shape_only_systematics(systematic):
+		return any([unc in systematic.name() for unc in ["tauDecayModeFake_", "WSFUncert_"]])
+	
+	def shape_only(systematic):
+		systematic.set_value_u(1.0)
+		systematic.set_value_d(1.0)
+	
+	tmp_cb = datacards.cb.cp().syst_type(["shape"])
+	if tmp_cb:
+		tmp_cb = tmp_cb.FilterSysts(shape_only_systematics)
+		if tmp_cb:
+			tmp_cb.ForEachSyst(lambda systematic: shape_only(systematic))
+	
+	# convert shape into normalisation uncertainties
+	def shape_to_lnn_systematics(systematic):
+		return any([unc in systematic.name() for unc in ["CMS_scale_t_", "CMS_htt_jetToTauFake_"]])
+	
+	def shape_to_lnn(systematic):
+		systematic.set_type("lnN");
+		min_value = 0.001
+		systematic.set_value_d(max(systematic.value_d(), min_value))
+		systematic.set_value_u(max(systematic.value_u(), min_value))
+	
+	tmp_cb = datacards.cb.cp().syst_type(["shape"])
+	if tmp_cb:
+		tmp_cb = tmp_cb.FilterSysts(shape_only_systematics)
+		if tmp_cb:
+			tmp_cb.ForEachSyst(lambda systematic: shape_to_lnn(systematic))
 
 
 def WriteDatacard(datacards, datacard_filename_template, root_filename_template, output_directory):
@@ -94,7 +120,7 @@ def WriteDatacard(datacards, datacard_filename_template, root_filename_template,
 	
 	# http://cms-analysis.github.io/CombineHarvester/classch_1_1_card_writer.html#details
 	writer = ch.CardWriter(os.path.join("$TAG", datacard_filename_template),
-						   os.path.join("$TAG", root_filename_template))
+	                       os.path.join("$TAG", root_filename_template))
 
 	# enable writing datacards in cases where the mass does not have its original meaning
 	if (len(datacards.cb.mass_set()) == 1) and (datacards.cb.mass_set()[0] == "*"):
