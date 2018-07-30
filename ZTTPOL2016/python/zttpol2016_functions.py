@@ -89,28 +89,30 @@ def ModifySystematics(datacards):
 		return any([unc in systematic.name() for unc in ["tauDecayModeFake_", "WSFUncert_"]])
 	
 	def shape_only(systematic):
-		systematic.set_value_u(1.0)
-		systematic.set_value_d(1.0)
+		if shape_only_systematics(systematic):
+			systematic.set_value_u(1.0)
+			systematic.set_value_d(1.0)
 	
 	tmp_cb = datacards.cb.cp().syst_type(["shape"])
 	if tmp_cb:
-		tmp_cb = tmp_cb.FilterSysts(shape_only_systematics)
+		tmp_cb = tmp_cb # .FilterSysts(lambda systematic: shape_only_systematics(systematic)) # does not work for unknown reason, returns always None
 		if tmp_cb:
 			tmp_cb.ForEachSyst(lambda systematic: shape_only(systematic))
 	
 	# convert shape into normalisation uncertainties
 	def shape_to_lnn_systematics(systematic):
-		return any([unc in systematic.name() for unc in ["CMS_scale_t_", "CMS_htt_jetToTauFake_"]])
+		return any([unc in systematic.name() for unc in ["CMS_scale_t_", "CMS_htt_jetToTauFake_", "CMS_scale_met_"]])
 	
 	def shape_to_lnn(systematic):
-		systematic.set_type("lnN");
-		min_value = 0.001
-		systematic.set_value_d(max(systematic.value_d(), min_value))
-		systematic.set_value_u(max(systematic.value_u(), min_value))
+		if shape_to_lnn_systematics(systematic):
+			systematic.set_type("lnN");
+			min_value = 0.001
+			systematic.set_value_d(max(systematic.value_d(), min_value))
+			systematic.set_value_u(max(systematic.value_u(), min_value))
 	
 	tmp_cb = datacards.cb.cp().syst_type(["shape"])
 	if tmp_cb:
-		tmp_cb = tmp_cb.FilterSysts(shape_only_systematics)
+		tmp_cb = tmp_cb # .FilterSysts(lambda systematic: shape_to_lnn_systematics(systematic)) # does not work for unknown reason, returns always None
 		if tmp_cb:
 			tmp_cb.ForEachSyst(lambda systematic: shape_to_lnn(systematic))
 
