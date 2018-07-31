@@ -4,6 +4,7 @@
 # $1: artus output directory
 # $2: datacards output base directory
 
+
 if [ -x "$(command -v makePlots_datacardsZttPolarisation.py)" ]
 then
 	## ===== omegaBarSvfit =============================================================================

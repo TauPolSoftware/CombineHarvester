@@ -5,7 +5,7 @@
 # $2: www base directory
 
 
-for WORKSPACE in `ls $1/best_choice/datacards/{individual/*/*,combined}/workspace.root $1/workspace.root 2> /dev/null`
+for WORKSPACE in `ls $1/best_choice/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root $1/workspace.root 2> /dev/null`
 do
 	pushd `dirname ${WORKSPACE}`
 	

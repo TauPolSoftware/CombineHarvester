@@ -4,6 +4,7 @@
 # $1: datacards output base directory
 # $2: www base directory
 
+
 if [ -x "$(command -v higgsplot.py)" ]
 then
 
