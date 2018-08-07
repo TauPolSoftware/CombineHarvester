@@ -82,7 +82,7 @@ then
 			-c em --categories em_oneprong_1 \
 			-c et --categories et_oneprong_1 \
 			-c mt --categories mt_oneprong_1 \
-			-c tt --categories inclusive
+			-c tt --categories tt_inclusive
 
 	# m_vis, omega categorisation (tt)
 	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py \
