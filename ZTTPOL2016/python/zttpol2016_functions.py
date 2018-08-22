@@ -31,7 +31,7 @@ UNDERLINE = '\033[4m'
 def CreateDatacard(args):
 	'''Create an instance of the python datacards modul, which includes a combine harvester instance.'''
 
-	datacards = zttdatacards.ZttPolarisationDatacards()
+	datacards = (zttdatacards.TauDecayModeMigrationDatacards() if args.decay_mode_migrations else zttdatacards.ZttPolarisationDatacards())
 
 	for index, (channel, categories) in enumerate(zip(args.channel, args.categories)):
 
