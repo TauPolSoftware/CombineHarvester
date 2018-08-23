@@ -9,9 +9,8 @@
 
 # combine
 
-combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --there -n .pol -m 0 --parallel 8 \
+combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --there -n .pol -m 0 --parallel 8  --robustFit 1 \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root
-
 
 for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/fitDiagnostics.pol.root; do
 
@@ -21,6 +20,7 @@ for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combin
 		-o `echo ${COMBINE_OUTPUT} | sed -e "s@/fitDiagnostics.pol.root@/postFitShapesFromWorkspace.pol.root@g"`
 
 done | runParallel.py -n 8
+
 
 # plotting
 
@@ -41,9 +41,8 @@ fi
 
 # combine
 
-combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --setParameters "r=1.0" --freezeParameters r --there -n .pol_r1 -m 0 --parallel 8 \
+combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --setParameters "r=1.0" --freezeParameters r --there -n .pol_r1 -m 0 --parallel 8 --robustFit 1 \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root
-
 
 for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/fitDiagnostics.pol_r1.root; do
 
@@ -53,6 +52,7 @@ for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combin
 		-o `echo ${COMBINE_OUTPUT} | sed -e "s@/fitDiagnostics.pol_r1.root@/postFitShapesFromWorkspace.pol_r1.root@g"`
 
 done | runParallel.py -n 8
+
 
 # plotting
 

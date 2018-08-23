@@ -33,7 +33,7 @@ then
 	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_prefitPostfitPlots.py -n 8 \
 			-i $2/*/datacards/common/ztt.input_13TeV.root \
 			-b ZTT_GEN_DM_ZERO ZTT_GEN_DM_ONE ZTT_GEN_DM_TWO ZTT_GEN_DM_TEN ZTT_GEN_DM_ELEVEN "ZLL ZL ZJ" "TT TTT TTJ" W "VV VVT VVJ EWKZ" QCD \
-			--www $3/inputs -a " --formats pdf png --x-label mt_m_2 --y-subplot-lims 0.8 1.2" -r --polarisation
+			--polarisation -r -a " --formats pdf png --x-label mt_m_2 --y-subplot-lims 0.5 1.5" --www $3/inputs
 
 fi
 
