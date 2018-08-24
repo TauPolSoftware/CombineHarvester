@@ -8,9 +8,10 @@
 # combine
 
 combineTool.py -M FitDiagnostics --there -n .dmm -m 0 --parallel 8 --robustFit 1 \
-	-d $1/*/datacards/combined/workspace.root \
+	--setParameterRanges r=0.8,1.2:x0=-0.2,0.2:x1=-0.2,0.2:x2=-0.2,0.2:x10=-0.2,0.2:x11=-1.0,1.0 \
+	-d $1/*/datacards/{channel/*,combined}/workspace.root \
 
-for COMBINE_OUTPUT in $1/*/datacards/combined/fitDiagnostics.dmm.root; do
+for COMBINE_OUTPUT in $1/*/datacards/{channel/*,combined}/fitDiagnostics.dmm.root; do
 
 	echo PostFitShapesFromWorkspace --postfit -m 0 -f ${COMBINE_OUTPUT}:fit_s \
 		-w `echo ${COMBINE_OUTPUT} | sed -e "s@/fitDiagnostics.dmm.root@/workspace.root@g"` \
@@ -24,7 +25,7 @@ done | runParallel.py -n 8
 
 if [ -x "$(command -v makePlots_prefitPostfitPlots.py)" ]
 then
-	for SHAPES in $1/*/datacards/combined/postFitShapesFromWorkspace.dmm.root; do
+	for SHAPES in $1/*/datacards/{channel/*,combined}/postFitShapesFromWorkspace.dmm.root; do
 
 		echo ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_prefitPostfitPlots.py -i ${SHAPES} \
 			-b ZTT_GEN_DM_ZERO ZTT_GEN_DM_ONE ZTT_GEN_DM_TWO ZTT_GEN_DM_TEN ZTT_GEN_DM_ELEVEN "\"ZLL ZL ZJ\"" "\"TT TTT TTJ\"" W "\"VV VVT VVJ EWKZ\"" QCD \
