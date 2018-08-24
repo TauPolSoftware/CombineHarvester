@@ -365,6 +365,6 @@ class TauDecayModeMigrationDatacards(ZttPolarisationDatacards):
 		
 		self.cb.channel(["mt", "et"])
 
-		systematics_to_exclude = ["tauDMReco", "tauDecayModeFake"]
+		systematics_to_exclude = ["tauDMReco", "tauDecayModeFake", "scale_met"]
 		self.cb.FilterSysts(lambda syst: any([name in syst.name() for name in systematics_to_exclude]))
 
