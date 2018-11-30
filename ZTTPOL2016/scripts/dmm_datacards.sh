@@ -12,13 +12,13 @@ if [ -x "$(command -v makePlots_datacardsZttPolarisation.py)" ]
 then
 
 	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py \
-			-i $1 -n 8 -o $2/asimov_m_2 --clear-output-dir -x m_2 -a " --x-bins 24,0,1.8" --decay-mode-migrations \
+			-i $1 -n 8 -o $2/asimov_m_2 --clear-output-dir -x m_2 --decay-mode-migrations \
 			-c et --categories et_a1 et_rho et_oneprong \
 			-c mt --categories mt_a1 mt_rho mt_oneprong \
 			--use-asimov-dataset
 
 	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py \
-			-i $1 -n 8 -o $2/data_m_2 --clear-output-dir -x m_2 -a " --x-bins 24,0,1.8" --decay-mode-migrations \
+			-i $1 -n 8 -o $2/data_m_2 --clear-output-dir -x m_2 --decay-mode-migrations \
 			-c et --categories et_a1 et_rho et_oneprong \
 			-c mt --categories mt_a1 mt_rho mt_oneprong
 
@@ -27,7 +27,7 @@ fi
 
 # ===== text2workspace ============================================================================
 
-combineTool.py -M T2W -o workspace.root -P CombineHarvester.ZTTPOL2016.taupolarisationmodels:tau_dm_migrations -m 0 --parallel 8 \
+combineTool.py -M T2W -o workspace.root -P CombineHarvester.ZTTPOL2016.taupolarisationmodels:tau_dm_migrations_reco_mixing -m 0 --parallel 8 \
 		-i $2/*/datacards/{individual/*/*,category/*,channel/*,combined}/ztt*13TeV.txt
 
 
