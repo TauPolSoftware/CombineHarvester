@@ -7,7 +7,7 @@
 
 for WORKSPACE in `ls $1/asimov_m_2/datacards/{channel/*,combined}/workspace.root $1/workspace.root 2> /dev/null`
 do
-	for POI in x0 x1 x2 x10 x11;
+	for POI in x0 x1 x2 x10; # x11;
 	do
 		pushd `dirname ${WORKSPACE}`
 	

@@ -8,10 +8,15 @@
 # combine
 
 # total uncertainty
+#combineTool.py -M MultiDimFit --algo singles \
+#	--saveWorkspace -n .dmm_gen_mixing \
+#	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace_gen_mixing.root \
+#	--there -m 0 --parallel 1 \
+#	--robustFit 1
+
 combineTool.py -M MultiDimFit --algo singles \
-	--setParameterRanges r=0.8,1.2:x0=-0.2,0.2:x1=-0.2,0.2:x2=-0.2,0.2:x10=-0.2,0.2:x11=-1.0,1.0 \
-	--saveWorkspace -n .dmm \
-	-d $1/*/datacards/{channel/*,combined}/workspace.root \
+	--saveWorkspace -n .dmm_reco_mixing \
+	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace_reco_mixing.root \
 	--there -m 0 --parallel 1 \
 	--robustFit 1
 
