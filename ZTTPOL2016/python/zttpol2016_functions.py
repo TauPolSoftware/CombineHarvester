@@ -31,7 +31,13 @@ UNDERLINE = '\033[4m'
 def CreateDatacard(args):
 	'''Create an instance of the python datacards modul, which includes a combine harvester instance.'''
 
-	datacards = (zttdatacards.TauDecayModeMigrationDatacards() if args.decay_mode_migrations else zttdatacards.ZttPolarisationDatacards())
+	datacards = None
+	if args.reco_decay_mode_migrations:
+		datacards = zttdatacards.RecoTauDecayModeMigrationDatacards()
+	elif args.gen_decay_mode_migrations:
+		datacards = zttdatacards.GenTauDecayModeMigrationDatacards()
+	else:
+		datacards = zttdatacards.ZttPolarisationDatacards()
 
 	for index, (channel, categories) in enumerate(zip(args.channel, args.categories)):
 
@@ -86,7 +92,8 @@ def ModifySystematics(datacards):
 	
 	# systematics that should only affect the shape and not the normalisation
 	def shape_only_systematics(systematic):
-		return any([unc in systematic.name() for unc in ["tauDecayModeFake_", "WSFUncert_"]])
+		#return any([unc in systematic.name() for unc in ["tauDMReco_", "tauDecayModeFake_", "WSFUncert_"]])
+		return any([unc in systematic.name() for unc in ["tauDMReco_", "WSFUncert_"]])
 	
 	def shape_only(systematic):
 		if shape_only_systematics(systematic):
@@ -101,7 +108,11 @@ def ModifySystematics(datacards):
 	
 	# convert shape into normalisation uncertainties
 	def shape_to_lnn_systematics(systematic):
-		return any([unc in systematic.name() for unc in ["CMS_scale_t_", "CMS_htt_jetToTauFake_", "CMS_scale_met_"]])
+		#return any([unc in systematic.name() for unc in ["CMS_scale_t_", "CMS_htt_jetToTauFake_", "CMS_scale_met_"]])
+		shape_u = systematic.ShapeUAsTH1F()
+		shape_d = systematic.ShapeDAsTH1F()
+		return ((shape_u.GetEffectiveEntries() / (shape_u.GetNbinsX()*shape_u.GetNbinsY()*shape_u.GetNbinsZ()) < 10.0) and
+		        (shape_d.GetEffectiveEntries() / (shape_d.GetNbinsX()*shape_d.GetNbinsY()*shape_d.GetNbinsZ()) < 10.0))
 	
 	def shape_to_lnn(systematic):
 		if shape_to_lnn_systematics(systematic):

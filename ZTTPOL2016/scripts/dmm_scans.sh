@@ -6,10 +6,10 @@
 
 # combine
 
-#for MODE in gen_mixing reco_mixing;
-for MODE in reco_mixing;
+for MODE in gen_mixing reco_mixing;
+#for MODE in reco_mixing;
 do
-	export POIS=`[[ ${MODE} = "gen_mixing" ]] && echo "r,x0,x1,x2,x10,x11" || echo "r,x0,x1,x10"`
+	export POIS=`[[ ${MODE} = "gen_mixing" ]] && echo "r,x0,x1,x2" || echo "r,x0,x1,x10"`
 #	export POIS=`[[ ${MODE} = "gen_mixing" ]] && echo "r,x0,x1,x2,x10,x11" || echo "x10"`
 	
 	for POI in `echo ${POIS} | tr "," "\n"`;
@@ -23,16 +23,12 @@ do
 #			--robustFit 1
 
 		# total uncertainty
-		combineTool.py -M MultiDimFit --redefineSignalPOIs ${POIS} -P ${POI} --floatOtherPOIs 1 --algo grid --points 500 \
+		combineTool.py -M MultiDimFit --redefineSignalPOIs ${POIS} -P ${POI} --floatOtherPOIs 1 --algo grid --points 100 \
 			--saveWorkspace -n .dmm_${MODE}.tot_unc.scan.${POI} \
-			-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace_${MODE}.root \
+			-d $1/*`[[ ${MODE} = "reco_mixing" ]] && echo "reco" || echo "gen"`*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace_${MODE}.root \
 			--setParameters r=1 --freezeParameters r \
 			--there -m 0 --parallel 8 \
 			--robustFit 1
-#			--setParameters r=1 --freezeParameters r \
-#			-d $1/*/datacards/channel/mt/workspace_${MODE}.root \
-#			-d $1/*/datacards/{channel/*,combined}/workspace_${MODE}.root \
-#			-d $1/*/datacards/{channel/*,combined}/higgsCombine.dmm_${MODE}.best_fit.scan.${POI}.MultiDimFit.mH0.root --snapshotName MultiDimFit -w w \
 
 #		# statistical uncertainty
 #		combineTool.py -M MultiDimFit --redefineSignalPOIs ${POIS} -P ${POI} --floatOtherPOIs 1 --algo grid --points 10 \

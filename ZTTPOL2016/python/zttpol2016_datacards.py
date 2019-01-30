@@ -218,20 +218,9 @@ class ZttPolarisationDatacards(object):
 			#self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["et", "mt"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "CMS_tauDMReco_1prong1pizero_$ERA", "shape", ch.SystMap()(1.00))
 			#self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["et", "mt"]).bin(et_a1_categories+mt_a1_categories).AddSyst(self.cb, "CMS_tauDMReco_3prong_$ERA", "shape", ch.SystMap()(1.00))
 			
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["et", "mt"]).bin(et_oneprong_categories+mt_oneprong_categories).AddSyst(self.cb, "tauDecayModeFake_pi_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["et", "mt"]).bin(et_rho_categories+mt_rho_categories).AddSyst(self.cb, "tauDecayModeFake_rho_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["et", "mt"]).bin(et_a1_categories+mt_a1_categories).AddSyst(self.cb, "tauDecayModeFake_a1_$ERA", "shape", ch.SystMap()(1.0))
-			
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["tt"]).bin(["tt_"+category for category in ["oneprong", "oneprong_1", "oneprong_2"]]).AddSyst(self.cb, "tauDecayModeFake_pi_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["tt"]).bin(["tt_"+category for category in ["rho", "rho_1", "rho_2"]]).AddSyst(self.cb, "tauDecayModeFake_rho_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["tt"]).bin(["tt_"+category for category in ["a1", "a1_1", "a1_2"]]).AddSyst(self.cb, "tauDecayModeFake_a1_$ERA", "shape", ch.SystMap()(1.0))
-			
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_oneprong_oneprong"]]).AddSyst(self.cb, "tauDecayModeFake_pi_pi_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_rho_oneprong"]]).AddSyst(self.cb, "tauDecayModeFake_rho_pi_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_rho_rho"]]).AddSyst(self.cb, "tauDecayModeFake_rho_rho_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_a1_oneprong"]]).AddSyst(self.cb, "tauDecayModeFake_a1_pi_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_a1_rho"]]).AddSyst(self.cb, "tauDecayModeFake_a1_rho_$ERA", "shape", ch.SystMap()(1.0))
-			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["tt"]).bin(["tt_"+category for category in ["inclusive", "combined_a1_a1"]]).AddSyst(self.cb, "tauDecayModeFake_a1_a1_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["et", "mt", "tt"]).bin(et_oneprong_categories+mt_oneprong_categories+tt_oneprong_categories).AddSyst(self.cb, "CMS_recoTauDecayModeFake_pi_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["et", "mt", "tt"]).bin(et_rho_categories+mt_rho_categories+tt_rho_categories).AddSyst(self.cb, "CMS_recoTauDecayModeFake_rho_$ERA", "shape", ch.SystMap()(1.0))
+			self.cb.cp().process(["ZTTPOSPOL", "ZTTNEGPOL", "ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]).channel(["et", "mt", "tt"]).bin(et_a1_categories+mt_a1_categories+tt_a1_categories).AddSyst(self.cb, "CMS_recoTauDecayModeFake_a1_$ERA", "shape", ch.SystMap()(1.0))
 
 			###############################################################################
 			# b tag and mistag rate efficiencies
@@ -357,14 +346,27 @@ class ZttPolarisationDatacards(object):
 
 
 
-class TauDecayModeMigrationDatacards(ZttPolarisationDatacards):
+class RecoTauDecayModeMigrationDatacards(ZttPolarisationDatacards):
 	''' Datacard class for the decay mode migration analysis. '''
 
 	def __init__(self, cb=None, sig_processes=["ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]):
-		super(TauDecayModeMigrationDatacards, self).__init__(cb=cb, sig_processes=sig_processes)
+		super(RecoTauDecayModeMigrationDatacards, self).__init__(cb=cb, sig_processes=sig_processes)
 		
 		self.cb.channel(["mt", "et"])
 
-		systematics_to_exclude = ["tauDMReco", "tauDecayModeFake", "scale_met"]
+		systematics_to_exclude = ["tauDMReco", "CMS_recoTauDecayModeFake", "CMS_genTauDecayModeFake", "scale_met"]
+		self.cb.FilterSysts(lambda syst: any([name in syst.name() for name in systematics_to_exclude]))
+
+
+
+class GenTauDecayModeMigrationDatacards(ZttPolarisationDatacards):
+	''' Datacard class for the decay mode migration analysis. '''
+
+	def __init__(self, cb=None, sig_processes=["ZTT_GEN_DM_ZERO", "ZTT_GEN_DM_ONE", "ZTT_GEN_DM_TWO", "ZTT_GEN_DM_TEN", "ZTT_GEN_DM_ELEVEN"]):
+		super(GenTauDecayModeMigrationDatacards, self).__init__(cb=cb, sig_processes=sig_processes)
+		
+		self.cb.channel(["mt", "et"])
+
+		systematics_to_exclude = ["tauDMReco", "CMS_genTauDecayModeFake", "scale_met"]
 		self.cb.FilterSysts(lambda syst: any([name in syst.name() for name in systematics_to_exclude]))
 

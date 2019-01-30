@@ -95,18 +95,42 @@ class TauDecayModeMigrationsGenMixing(PhysicsModel):
 		# --- POI and other parameters ----
 		
 		channels = ["mt", "et"]
-		gen_decay_modes = [0, 1, 2, 10, 11]
-		reco_decay_modes = [0, 1, 10]
+		gen_decay_modes = [0, 1, 2]#, 10, 11]
 		
+		channel = "mt"
 		self.modelBuilder.doVar("r[1.0,0.5,1.5]")
-		for gen_decay_mode in gen_decay_modes:
-			self.modelBuilder.doVar("x"+str(gen_decay_mode)+"[0.0,-1.0,1.0]")
-#		self.modelBuilder.doVar("r[0.9,0.6,1.5]")
-#		self.modelBuilder.doVar("x0[0.06,-0.04,0.18]")
-#		self.modelBuilder.doVar("x1[0.0,-0.1,0.1]")
-#		self.modelBuilder.doVar("x2[0.02,-0.2,0.25]")
-#		self.modelBuilder.doVar("x10[0.14,0.04,0.22]")
-#		self.modelBuilder.doVar("x11[0.85,0.5,1.0]")
+		self.modelBuilder.doVar("x0[0.0,{norm_plus},{norm_minus}]".format(
+				norm_plus =(self.yields.get(channel, {}).get(  0, {}).get(0, 1.0) * (-1) /
+					        (self.yields.get(channel, {}).get( 0, {}).get(0, 1.0)+
+					         self.yields.get(channel, {}).get( 1, {}).get(0, 1.0)+
+					         self.yields.get(channel, {}).get(10, {}).get(0, 1.0))),
+				norm_minus=(self.yields.get(channel, {}).get(  1, {}).get(0, 1.0) /
+					        (self.yields.get(channel, {}).get( 0, {}).get(0, 1.0)+
+					         self.yields.get(channel, {}).get( 1, {}).get(0, 1.0)+
+					         self.yields.get(channel, {}).get(10, {}).get(0, 1.0)))
+		))
+		self.modelBuilder.doVar("x1[0.0,{norm_plus},{norm_minus}]".format(
+				norm_plus =(self.yields.get(channel, {}).get(  1, {}).get(1, 1.0) * (-1) /
+					        (self.yields.get(channel, {}).get( 0, {}).get(1, 1.0)+
+					         self.yields.get(channel, {}).get( 1, {}).get(1, 1.0)+
+					         self.yields.get(channel, {}).get(10, {}).get(1, 1.0))),
+				norm_minus=(self.yields.get(channel, {}).get(  0, {}).get(1, 1.0) /
+					        (self.yields.get(channel, {}).get( 0, {}).get(1, 1.0)+
+					         self.yields.get(channel, {}).get( 1, {}).get(1, 1.0)+
+					         self.yields.get(channel, {}).get(10, {}).get(1, 1.0)))
+		))
+		self.modelBuilder.doVar("x2[0.0,{norm_plus},{norm_minus}]".format(
+				norm_plus =(self.yields.get(channel, {}).get(  1, {}).get(2, 1.0) * (-1) /
+					        (self.yields.get(channel, {}).get( 0, {}).get(2, 1.0)+
+					         self.yields.get(channel, {}).get( 1, {}).get(2, 1.0)+
+					         self.yields.get(channel, {}).get(10, {}).get(2, 1.0))),
+				norm_minus=(self.yields.get(channel, {}).get(  0, {}).get(2, 1.0) /
+					        (self.yields.get(channel, {}).get( 0, {}).get(2, 1.0)+
+					         self.yields.get(channel, {}).get( 1, {}).get(2, 1.0)+
+					         self.yields.get(channel, {}).get(10, {}).get(2, 1.0)))
+		))
+#		for gen_decay_mode in gen_decay_modes:
+#			self.modelBuilder.doVar("x"+str(gen_decay_mode)+"[0.0,-1.0,1.0]")
 		
 		for channel in channels:
 			self.modelBuilder.factory_('expr::{channel}_oneprong_ZTT_GEN_DM_ZERO("@0*(1+@1*{norm})", r, x0)'.format(
@@ -160,20 +184,8 @@ class TauDecayModeMigrationsGenMixing(PhysicsModel):
 			self.modelBuilder.factory_('expr::{channel}_a1_ZTT_GEN_DM_ZERO("@0", r)'.format(channel=channel))
 			self.modelBuilder.factory_('expr::{channel}_a1_ZTT_GEN_DM_ONE("@0", r)'.format(channel=channel))
 			self.modelBuilder.factory_('expr::{channel}_a1_ZTT_GEN_DM_TWO("@0", r)'.format(channel=channel))
-			self.modelBuilder.factory_('expr::{channel}_a1_ZTT_GEN_DM_TEN("@0*(1+@1*{norm})", r, x10)'.format(
-					channel=channel,
-					norm=((self.yields.get(channel, {}).get( 0, {}).get(10, 1.0)+
-					       self.yields.get(channel, {}).get( 1, {}).get(10, 1.0)+
-					       self.yields.get(channel, {}).get(10, {}).get(10, 1.0)) /
-					      self.yields.get(channel, {}).get( 10, {}).get(10, 1.0))
-			))
-			self.modelBuilder.factory_('expr::{channel}_a1_ZTT_GEN_DM_ELEVEN("@0*(1-@1*{norm})", r, x11)'.format(
-					channel=channel,
-					norm=((self.yields.get(channel, {}).get( 0, {}).get(11, 1.0)+
-					       self.yields.get(channel, {}).get( 1, {}).get(11, 1.0)+
-					       self.yields.get(channel, {}).get(10, {}).get(11, 1.0)) /
-					      self.yields.get(channel, {}).get( 10, {}).get(11, 1.0))
-			))
+			self.modelBuilder.factory_('expr::{channel}_a1_ZTT_GEN_DM_TEN("@0", r)'.format(channel=channel))
+			self.modelBuilder.factory_('expr::{channel}_a1_ZTT_GEN_DM_ELEVEN("@0", r)'.format(channel=channel))
 		
 		self.modelBuilder.doSet("POI", ",".join(["r"]+["x"+str(gen_decay_mode) for gen_decay_mode in gen_decay_modes]))
 
@@ -265,8 +277,7 @@ class TauDecayModeMigrationsRecoMixing(PhysicsModel):
 					         self.yields.get(channel, {}).get(0, {}).get( 1, 1.0)+
 					         self.yields.get(channel, {}).get(0, {}).get( 2, 1.0)+
 					         self.yields.get(channel, {}).get(0, {}).get(10, 1.0)+
-					         self.yields.get(channel, {}).get(0, {}).get(11, 1.0))),
-		
+					         self.yields.get(channel, {}).get(0, {}).get(11, 1.0)))
 		))
 		self.modelBuilder.doVar("x1[0.0,{norm_plus},{norm_minus}]".format(
 				norm_plus =(self.yields.get(channel, {}).get( 1, {}).get( 1, 1.0) * (-1) /
@@ -280,8 +291,7 @@ class TauDecayModeMigrationsRecoMixing(PhysicsModel):
 					         self.yields.get(channel, {}).get(1, {}).get( 1, 1.0)+
 					         self.yields.get(channel, {}).get(1, {}).get( 2, 1.0)+
 					         self.yields.get(channel, {}).get(1, {}).get(10, 1.0)+
-					         self.yields.get(channel, {}).get(1, {}).get(11, 1.0))),
-		
+					         self.yields.get(channel, {}).get(1, {}).get(11, 1.0)))
 		))
 		self.modelBuilder.doVar("x10[0.0,{norm_plus},{norm_minus}]".format(
 				norm_plus =(self.yields.get(channel, {}).get( 10, {}).get(10, 1.0) * (-1) /
@@ -295,15 +305,10 @@ class TauDecayModeMigrationsRecoMixing(PhysicsModel):
 					         self.yields.get(channel, {}).get(10, {}).get( 1, 1.0)+
 					         self.yields.get(channel, {}).get(10, {}).get( 2, 1.0)+
 					         self.yields.get(channel, {}).get(10, {}).get(10, 1.0)+
-					         self.yields.get(channel, {}).get(10, {}).get(11, 1.0))),
-		
+					         self.yields.get(channel, {}).get(10, {}).get(11, 1.0)))
 		))
 #		for reco_decay_mode in reco_decay_modes:
 #			self.modelBuilder.doVar("x"+str(reco_decay_mode)+"[0.0,-1.0,1.0]")
-#		self.modelBuilder.doVar("r[0.95,0.6,1.5]")
-#		self.modelBuilder.doVar("x0[0.1,-0.5,0.6]")
-#		self.modelBuilder.doVar("x1[-0.01,-0.1,0.08]")
-#		self.modelBuilder.doVar("x10[0.12,0.02,0.22]")
 		
 		for channel in channels:
 			self.modelBuilder.factory_('expr::{channel}_oneprong_ZTT_GEN_DM_ZERO("@0*(1+@1*{norm})", r, x0)'.format(
