@@ -161,6 +161,46 @@ std::unique_ptr<TH1> Systematic::ClonedShapeD() const {
   return res;
 }
 
+TH1F Systematic::ShapeUAsTH1F() const {
+  if (!shape_u_) {
+    throw std::runtime_error(
+        FNERROR("Systematic object does not contain a shape_u"));
+  }
+  TH1F res;
+  // Need to get the shape as a concrete type (TH1F or TH1D)
+  // A nice way to do this is just to use TH1D::Copy into a fresh TH1F
+  TH1F const* test_f = dynamic_cast<TH1F const*>(this->shape_u());
+  TH1D const* test_d = dynamic_cast<TH1D const*>(this->shape_u());
+  if (test_f) {
+    test_f->Copy(res);
+  } else if (test_d) {
+    test_d->Copy(res);
+  } else {
+    throw std::runtime_error(FNERROR("TH1 shape is not a TH1F or a TH1D"));
+  }
+  return res;
+}
+
+TH1F Systematic::ShapeDAsTH1F() const {
+  if (!shape_d_) {
+    throw std::runtime_error(
+        FNERROR("Systematic object does not contain a shape_d"));
+  }
+  TH1F res;
+  // Need to get the shape as a concrete type (TH1F or TH1D)
+  // A nice way to do this is just to use TH1D::Copy into a fresh TH1F
+  TH1F const* test_f = dynamic_cast<TH1F const*>(this->shape_d());
+  TH1D const* test_d = dynamic_cast<TH1D const*>(this->shape_d());
+  if (test_f) {
+    test_f->Copy(res);
+  } else if (test_d) {
+    test_d->Copy(res);
+  } else {
+    throw std::runtime_error(FNERROR("TH1 shape is not a TH1F or a TH1D"));
+  }
+  return res;
+}
+
 std::ostream& Systematic::PrintHeader(std::ostream &out) {
   std::string line =
    (boost::format("%-6s %-9s %-6s %-8s %-28s %-3i"

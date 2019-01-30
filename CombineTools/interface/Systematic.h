@@ -45,6 +45,9 @@ class Systematic : public Object {
   RooDataHist const* data_u() const { return data_u_; }
 
   RooDataHist const* data_d() const { return data_d_; }
+  
+  TH1F ShapeUAsTH1F() const;
+  TH1F ShapeDAsTH1F() const;
 
   void set_data(RooDataHist* data_u, RooDataHist* data_d,
                 RooDataHist const* nominal);
