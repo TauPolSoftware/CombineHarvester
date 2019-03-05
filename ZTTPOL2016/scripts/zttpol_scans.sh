@@ -44,7 +44,7 @@ then
 			--labels \"Stat. + Syst.\" \"\" \"\" \"\" \"Stat.\" \"\" \"\" \"\" --legend-markers LP --legend 0.32 0.72 0.7 0.9 \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename higgsCombine.pol.scan.MultiDimFit.mH0 --formats pdf png \
-			--no-cache
+			--redo-cache
 	
 		# zoomed
 		echo higgsplot.py -i ${COMBINE_OUTPUT} `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol.tot_unc.scan.MultiDimFit.mH0.root@higgsCombine.pol.stat_unc.scan.MultiDimFit.mH0.root@g"` \
@@ -54,7 +54,7 @@ then
 			--labels "\"Stat. + Syst.\"" \"\" \"\" \"\" "\"Stat.\"" \"\" \"\" \"\" --legend-markers LP --legend 0.32 0.72 0.7 0.9 \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename higgsCombine.pol.scan.MultiDimFit.mH0_zoom --formats pdf png \
-			--no-cache
+			--redo-cache
 
 	done | runParallel.py -n 8
 fi
@@ -99,7 +99,7 @@ for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combin
 			--labels \"Stat. + Syst.\" \"\" \"\" \"\" \"Stat.\" \"\" \"\" \"\" --legend-markers LP --legend 0.32 0.72 0.7 0.9 \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename higgsCombine.pol_r1.scan.MultiDimFit.mH0 --formats pdf png \
-			--no-cache
+			--redo-cache
 	
 		# zoomed
 		echo higgsplot.py -i ${COMBINE_OUTPUT} `echo ${COMBINE_OUTPUT} | sed -e "s@higgsCombine.pol_r1.tot_unc.scan.MultiDimFit.mH0.root@higgsCombine.pol_r1.stat_unc.scan.MultiDimFit.mH0.root@g"` \
@@ -109,7 +109,7 @@ for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combin
 			--labels "\"Stat. + Syst.\"" \"\" \"\" \"\" "\"Stat.\"" \"\" \"\" \"\" --legend-markers LP --legend 0.32 0.72 0.7 0.9 \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename higgsCombine.pol_r1.scan.MultiDimFit.mH0_zoom --formats pdf png \
-			--no-cache
+			--redo-cache
 
 	done | runParallel.py -n 8
 fi
@@ -145,7 +145,7 @@ then
 			--title "\"Stat. + syst. uncertainties\"" -m COLZ --x-lims -0.3 0 --y-lims 0.5 1.5 --z-lims 0 10 \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename `basename ${COMBINE_OUTPUT} | sed -e "s@.root@_zoom@g"` --formats pdf png \
-			--no-cache
+			--redo-cache
 
 	done | runParallel.py -n 8
 	
@@ -157,7 +157,7 @@ then
 			--title "\"Stat. uncertainties\"" -m COLZ --x-lims -0.3 0 --y-lims 0.5 1.5 --z-lims 0 10 \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename `basename ${COMBINE_OUTPUT} | sed -e "s@.root@_zoom@g"` --formats pdf png \
-			--no-cache
+			--redo-cache
 
 	done | runParallel.py -n 8
 fi

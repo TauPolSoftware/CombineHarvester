@@ -42,7 +42,7 @@ then
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -1.0 1.0 --title \"r floating\" --y-grid \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename best_fit_pol_tot_stat_unc --formats pdf png \
-			--no-cache
+			--redo-cache
 	
 		# zoomed
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_tot_stat_unc.json \
@@ -50,7 +50,7 @@ then
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -0.3 0.0 --title \"r floating\" --y-grid \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename best_fit_pol_tot_stat_unc_zoom --formats pdf png \
-			--no-cache
+			--redo-cache
 
 	done | runParallel.py -n 8
 fi
@@ -93,7 +93,7 @@ then
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -1.0 1.0 --title \"r=1 fixed\" --y-grid \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename best_fit_pol_r1_tot_stat_unc --formats pdf png \
-			--no-cache
+			--redo-cache
 	
 		# zoomed
 		echo higgsplot.py -j ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/plots/configs/combine/best_fit_pol_r1_tot_stat_unc.json \
@@ -101,7 +101,7 @@ then
 			-x 2 --x-lims 0 3 --x-ticks 2 --x-tick-labels \" \" --x-label \"\" --y-lims -0.3 0.0 --title \"r=1 fixed\" --y-grid \
 			--www $2/`dirname ${COMBINE_OUTPUT} | sed -e "s@${1}/@@g"` \
 			--filename best_fit_pol_r1_tot_stat_unc_zoom --formats pdf png \
-			--no-cache
+			--redo-cache
 
 	done | runParallel.py -n 8
 fi
@@ -141,7 +141,7 @@ then
 					--x-ticks 0 1 2 3 4 --x-tick-labels comb. channel_mt_large channel_et_large channel_em_large channel_tt_large --x-lims -0.5 4.5 \
 					--www $2/`echo ${DIRECTORY} | sed -e "s@${1}/@@g"`/combined --formats pdf png --y-grid \
 					--filename best_fit_${POL_OPTION}_over_channel_tot_stat_unc${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -157,7 +157,7 @@ then
 					--y-ticks 0 1 2 3 4 --y-tick-labels comb. channel_mt_large channel_et_large channel_em_large channel_tt_large --y-lims -0.5 4.5 \
 					--www $2/`echo ${DIRECTORY} | sed -e "s@${1}/@@g"`/combined --formats pdf png --x-grid \
 					--filename best_fit_${POL_OPTION}_over_channel_tot_stat_unc_rotated${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -181,7 +181,7 @@ then
 					channel_tt_large channel_tt_rho_large channel_tt_combined_a1_a1_large channel_tt_combined_a1_oneprong_large channel_tt_combined_oneprong_oneprong_large \
 					--www $2/`echo ${DIRECTORY} | sed -e "s@${1}/@@g"`/combined --formats pdf png --y-grid \
 					--filename best_fit_${POL_OPTION}_over_channel_category_tot_stat_unc${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -205,7 +205,7 @@ then
 					channel_tt_large channel_tt_rho_large channel_tt_combined_a1_a1_large channel_tt_combined_a1_oneprong_large channel_tt_combined_oneprong_oneprong_large \
 					--www $2/`echo ${DIRECTORY} | sed -e "s@${1}/@@g"`/combined --formats pdf png --x-grid \
 					--filename best_fit_${POL_OPTION}_over_channel_category_tot_stat_unc_rotated${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8

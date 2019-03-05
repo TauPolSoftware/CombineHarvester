@@ -34,7 +34,7 @@ then
 					-C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/combined \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -54,7 +54,7 @@ then
 					--legend 0.45 0.8 0.65 0.9 --legend-markers LP -m LP L L L -C 1 --marker-sizes 0.5 --line-styles 1 1 2 3 \
 					--formats pdf png --www $2/datacards/channel/em \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -81,7 +81,7 @@ then
 					-C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/channel/et \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -108,7 +108,7 @@ then
 					-C 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/channel/mt \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -138,7 +138,7 @@ then
 					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/channel/tt \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -175,7 +175,7 @@ then
 					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 --marker-sizes 0.5 \
 					--formats pdf png --www $2/datacards/individual/em/em_combined_oneprong_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -205,7 +205,7 @@ then
 					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/et/et_combined_a1_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -237,7 +237,7 @@ then
 					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/et/et_combined_rho_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -267,7 +267,7 @@ then
 					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/et/et_combined_oneprong_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -291,7 +291,7 @@ then
 					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/et/et_inclusive \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -321,7 +321,7 @@ then
 					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/mt/mt_combined_a1_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -353,7 +353,7 @@ then
 					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/mt/mt_combined_rho_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -383,7 +383,7 @@ then
 					--line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/mt/mt_combined_oneprong_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -407,7 +407,7 @@ then
 					--legend 0.45 0.6 0.65 0.9 --legend-markers LP -m LP L L L LP L L L LP L L L -C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/mt/mt_inclusive \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -432,7 +432,7 @@ then
 					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_combined_a1_a1 \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -457,7 +457,7 @@ then
 					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_combined_a1_rho \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -482,7 +482,7 @@ then
 					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_combined_a1_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -509,7 +509,7 @@ then
 					-C 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_combined_rho_rho \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -534,7 +534,7 @@ then
 					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_combined_rho_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -559,7 +559,7 @@ then
 					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_combined_oneprong_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -584,7 +584,7 @@ then
 					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_a1 \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -611,7 +611,7 @@ then
 					-C 2 2 2 2 3 3 3 3 4 4 4 4 kOrange-3 kOrange-3 kOrange-3 kOrange-3 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_rho \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -636,7 +636,7 @@ then
 					-C 2 2 2 2 3 3 3 3 4 4 4 4 --marker-sizes 0.5 --line-styles 1 1 2 3 1 1 2 3 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_oneprong \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8
@@ -656,7 +656,7 @@ then
 					--legend 0.45 0.8 0.65 0.9 --legend-markers LP -m LP L L L -C 2 2 2 2 --marker-sizes 0.5 --line-styles 1 1 2 3 \
 					--formats pdf png --www $2/datacards/individual/tt/tt_inclusive \
 					--filename higgsCombine.${POL_OPTION}.${UNC_OPTION}.scan.MultiDimFit.mH0${ZOOM_OPTION} \
-					--no-cache
+					--redo-cache
 			done
 		done
 	done | runParallel.py -n 8

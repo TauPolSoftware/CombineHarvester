@@ -109,10 +109,13 @@ def ModifySystematics(datacards):
 	# convert shape into normalisation uncertainties
 	def shape_to_lnn_systematics(systematic):
 		#return any([unc in systematic.name() for unc in ["CMS_scale_t_", "CMS_htt_jetToTauFake_", "CMS_scale_met_"]])
-		shape_u = systematic.ShapeUAsTH1F()
-		shape_d = systematic.ShapeDAsTH1F()
-		return ((shape_u.GetEffectiveEntries() / (shape_u.GetNbinsX()*shape_u.GetNbinsY()*shape_u.GetNbinsZ()) < 10.0) and
-		        (shape_d.GetEffectiveEntries() / (shape_d.GetNbinsX()*shape_d.GetNbinsY()*shape_d.GetNbinsZ()) < 10.0))
+		if systematic.type == "shape":
+			shape_u = systematic.ShapeUAsTH1F()
+			shape_d = systematic.ShapeDAsTH1F()
+			return ((shape_u.GetEffectiveEntries() / (shape_u.GetNbinsX()*shape_u.GetNbinsY()*shape_u.GetNbinsZ()) < 10.0) and
+				    (shape_d.GetEffectiveEntries() / (shape_d.GetNbinsX()*shape_d.GetNbinsY()*shape_d.GetNbinsZ()) < 10.0))
+		else:
+			return False
 	
 	def shape_to_lnn(systematic):
 		if shape_to_lnn_systematics(systematic):
@@ -156,7 +159,7 @@ def text2workspace(datacards, datacards_cbs, Physicsmodel, workspace_file_name):
 
 	return {datacard : os.path.splitext(datacard)[0]+"_workspace"+".root" for datacard in datacards_cbs.keys()}
 
-def use_asimov_dataset(datacards, pol=-0.143, r=1.0, signal_mass = None, signal_processes=None):
+def use_asimov_dataset(datacards, pol=-0.17528, r=1.0, signal_mass = None, signal_processes=None):
 
 	def _replace_observation_by_asimov_dataset(observation):
 		cb = datacards.cb.cp().analysis([observation.analysis()]).era([observation.era()]).channel([observation.channel()]).bin([observation.bin()])
@@ -262,7 +265,7 @@ def GetPolarisationValues(rootfile):
 	file.Close()
 	return [pol, p1s, m1s]
 	
-def find_combination(datacards_path, fit_rootfile_name = 'higgsCombine.Test.MultiDimFit.mH0.root', asimov_value = -0.143):
+def find_combination(datacards_path, fit_rootfile_name = 'higgsCombine.Test.MultiDimFit.mH0.root', asimov_value = -0.17528):
 	'''Find the most efficient combination of categories. '''
 	
 	#Get all polarisation values from the root files in the input dir
