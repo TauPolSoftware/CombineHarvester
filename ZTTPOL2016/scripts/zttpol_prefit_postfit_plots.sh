@@ -9,7 +9,7 @@
 
 # combine
 
-combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --there -n .pol -m 0 --parallel 8  --robustFit 1 \
+combineTool.py -M FitDiagnostics --redefineSignalPOIs pol --setParameterRanges r=0.5,1.5:pol=-0.8,0.5 --there -n .pol -m 0 --parallel 8  --robustFit 1 \
 	-d $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/workspace.root
 
 for COMBINE_OUTPUT in $1/*/datacards/{individual/*/*,category/*,channel/*,combined}/fitDiagnostics.pol.root; do
