@@ -1,5 +1,11 @@
 from HiggsAnalysis.CombinedLimit.PhysicsModel import PhysicsModel
 
+import ROOT
+
+import array
+import os
+
+
 class ZttPolarisation(PhysicsModel):
 	def __init__(self):
 		self.verbose = False
@@ -31,6 +37,68 @@ class ZttPolarisation(PhysicsModel):
 			return 1
 
 ztt_pol = ZttPolarisation()
+
+
+class ZttWeakMixingAngle(PhysicsModel):
+	def __init__(self):
+		self.verbose = False
+
+	def setPhysicsOptions(self, physOptions):
+		for po in physOptions:
+			if po.startswith("verbose"):
+				self.verbose = True
+		self.categories = ["mt_oneprong", "mt_rho", "mt_a1",
+		                   "et_oneprong", "et_rho", "et_a1",
+		                   "tt_combined_oneprong_oneprong", "tt_rho", "tt_combined_a1_oneprong", "tt_combined_a1_a1",
+		                   "em_combined_oneprong_oneprong"]
+
+	def getPolarisationVsWeakMixingAngleValues(self):
+		root_file = ROOT.TFile.Open(os.path.expandvars("$CMSSW_BASE/src/TauPolSoftware/CalibrationCurve/data/calibration_curves.root"), "READ")
+		values = {}
+		
+		for category in self.categories:
+			
+			graph = root_file.Get(os.path.join(category, "combined_uncs/pol_vs_sin2theta"))
+			n_points = graph.GetN()
+			x_values = graph.GetX()
+			x_values = array.array("d", [x_values[index] for index in xrange(n_points)])
+			y_values = graph.GetY()
+			y_values = array.array("d", [y_values[index] for index in xrange(n_points)])
+			values[category] = (x_values, y_values)
+		
+		root_file.Close()
+		return values
+			
+	
+	def doParametersOfInterest(self):
+		"""Create POI and other parameters, and define the POI set."""
+		# --- POI and other parameters ----
+		self.modelBuilder.doVar("r[1.0,0.0,5.0]")
+		self.modelBuilder.doVar("sintwotheta[0.2208,0.15,0.3]")
+		sintwotheta = self.modelBuilder.out.var("sintwotheta")
+		
+		spline_values = self.getPolarisationVsWeakMixingAngleValues()
+		for category in self.categories:
+			x_values, y_values = spline_values[category]
+			spline = ROOT.RooSpline1D("pol_"+category, "pol_"+category, sintwotheta, len(x_values), x_values, y_values, "CSPLINE")
+			self.modelBuilder.out._import(spline)
+			self.modelBuilder.factory_('expr::pospol_{category}("@0 * (1 + @1) / 2.0", r, pol_{category})'.format(category=category))
+			self.modelBuilder.factory_('expr::negpol_{category}("@0 * (1 - @1) / 2.0", r, pol_{category})'.format(category=category))
+
+		self.modelBuilder.doSet("POI","r,sintwotheta")
+
+	def getYieldScale(self, bin, process):
+		if self.DC.isSignal[process]:
+			if "pospol" in process.lower():
+				return "pospol_"+bin
+			elif "negpol" in process.lower():
+				return "negpol_"+bin
+			else:
+				return "r"
+		else:
+			return 1
+
+ztt_weak_mixing_angle = ZttWeakMixingAngle()
 
 
 class TauDecayModeMigrationsGenMixing(PhysicsModel):
