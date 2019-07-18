@@ -7,6 +7,29 @@
 
 if [ -x "$(command -v makePlots_datacardsZttPolarisation.py)" ]
 then
+
+	## ===== best choice ===============================================================================
+
+	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py \
+			-i $1 -n 8 -o $2/best_choice --clear-output-dir --use-asimov-dataset --fixed-variables best_choice \
+			-c em --categories em_combined_oneprong_oneprong \
+			-c et --categories et_a1 et_rho et_oneprong \
+			-c mt --categories mt_rho mt_a1 mt_oneprong \
+			-c tt --categories tt_rho tt_combined_a1_a1 tt_combined_a1_oneprong tt_combined_oneprong_oneprong #\
+#			--modify-unpolarisation-value -0.2208
+
+
+	## ===== best choice (no SVfit) ====================================================================
+
+	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py \
+			-i $1 -n 8 -o $2/best_choice_no_svfit --clear-output-dir --use-asimov-dataset --fixed-variables best_choice_no_svfit \
+			-c em --categories em_combined_oneprong_oneprong \
+			-c et --categories et_a1 et_rho et_oneprong \
+			-c mt --categories mt_a1 mt_rho mt_oneprong \
+			-c tt --categories tt_rho tt_combined_a1_a1 tt_combined_a1_oneprong tt_combined_oneprong_oneprong #\
+#			--modify-unpolarisation-value -0.2208
+
+
 	## ===== omegaBarSvfit =============================================================================
 
 	# polarisationOmegaBarSvfit_1 (em, et, mt)
@@ -55,7 +78,7 @@ then
 			-c tt --categories tt_a1 tt_rho tt_oneprong #\
 #			--modify-unpolarisation-value -0.2208
 
-	# polarisationCombinedOmegaBarSvfitM91 (em, et, mt, tt)
+	# combinedOmegaBarSvfit (em, et, mt, tt)
 	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py \
 			-i $1 -n 8 -o $2/combinedOmegaBarSvfit --clear-output-dir --use-asimov-dataset --omega-version BarSvfitM91 \
 			-c em --categories em_combined_oneprong_oneprong \
@@ -106,28 +129,6 @@ then
 			-c et --categories et_combined_a1_oneprong et_combined_rho_oneprong et_combined_oneprong_oneprong \
 			-c mt --categories mt_combined_a1_oneprong mt_combined_rho_oneprong mt_combined_oneprong_oneprong \
 			-c tt --categories tt_combined_a1_a1 tt_combined_a1_rho tt_combined_a1_oneprong tt_combined_rho_rho tt_combined_rho_oneprong tt_combined_oneprong_oneprong #\
-#			--modify-unpolarisation-value -0.2208
-
-
-	## ===== best choice (no SVfit) ====================================================================
-
-	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py \
-			-i $1 -n 8 -o $2/best_choice_no_svfit --clear-output-dir --use-asimov-dataset --fixed-variables best_choice_no_svfit \
-			-c em --categories em_combined_oneprong_oneprong \
-			-c et --categories et_a1 et_rho et_oneprong \
-			-c mt --categories mt_a1 mt_rho mt_oneprong \
-			-c tt --categories tt_rho tt_combined_a1_a1 tt_combined_a1_oneprong tt_combined_oneprong_oneprong #\
-#			--modify-unpolarisation-value -0.2208
-
-
-	## ===== best choice ===============================================================================
-
-	$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/scripts/makePlots_datacardsZttPolarisation.py \
-			-i $1 -n 8 -o $2/best_choice --clear-output-dir --use-asimov-dataset --fixed-variables best_choice \
-			-c em --categories em_combined_oneprong_oneprong \
-			-c et --categories et_a1 et_rho et_oneprong \
-			-c mt --categories mt_rho mt_a1 mt_oneprong \
-			-c tt --categories tt_rho tt_combined_a1_a1 tt_combined_a1_oneprong tt_combined_oneprong_oneprong #\
 #			--modify-unpolarisation-value -0.2208
 
 fi
