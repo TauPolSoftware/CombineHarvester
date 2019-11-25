@@ -11,19 +11,19 @@ do
 	
 	# initial fit
 	combineTool.py -M Impacts --doInitialFit --allPars \
-		--redefineSignalPOIs pol --setParameterRanges r=0.5,1.5:pol=-0.8,0.5 --setParameters r=1,pol=-0.2308 \
+		--redefineSignalPOIs pol --setParameterRanges r=0.5,1.5:pol=-0.8,0.5 --setParameters r=1,pol=-0.175 \
 		--robustFit 1 \
 		-m 0 -d `basename ${WORKSPACE}` --parallel 8
 	
 	# fits for all nuisance parameters
 	combineTool.py -M Impacts --doFits --allPars \
-		--redefineSignalPOIs pol --setParameterRanges r=0.5,1.5:pol=-0.8,0.5 --setParameters r=1,pol=-0.2308 \
+		--redefineSignalPOIs pol --setParameterRanges r=0.5,1.5:pol=-0.8,0.5 --setParameters r=1,pol=-0.175 \
 		--robustFit 1 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --setRobustFitAlgo Minuit2,Migrad \
 		-m 0 -d `basename ${WORKSPACE}` --parallel 8
 	
 	# collect results
 	combineTool.py -M Impacts --allPars \
-		--redefineSignalPOIs pol --setParameterRanges r=0.5,1.5:pol=-0.8,0.5 --setParameters r=1,pol=-0.2308 \
+		--redefineSignalPOIs pol --setParameterRanges r=0.5,1.5:pol=-0.8,0.5 --setParameters r=1,pol=-0.175 \
 		-m 0 -d `basename ${WORKSPACE}` -o impacts.json --parallel 8
 	
 	# plot results
